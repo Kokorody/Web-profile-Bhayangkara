@@ -1,0 +1,49 @@
+/* Hospital Website Styles */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+/* Animation and Transition Classes */
+[data-animate="true"] {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition: all 0.7s ease-out;
+}
+
+[data-animate="true"].animate {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Gradient Backgrounds */
+.bg-gradient-overlay {
+  background: linear-gradient(to right, rgba(13, 148, 136, 0.2), rgba(59, 130, 246, 0.2));
+}
+
+/* Custom Shadows */
+.custom-shadow {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Hover Effects */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Custom Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
