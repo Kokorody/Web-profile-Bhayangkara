@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        'reveal': 'reveal 0.8s forwards',
+        'reveal': 'reveal 1s forwards',
       },
       keyframes: {
         reveal: {
