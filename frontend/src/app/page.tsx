@@ -8,7 +8,6 @@ const HospitalWebsite = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isMounted, setIsMounted] = useState(false);
 
-  // Handle initial mount
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -42,7 +41,7 @@ const HospitalWebsite = () => {
     return () => observer.disconnect();
   }, [isMounted]);
 
-  // Mock data based on the original website
+  // Mock data 
   const doctors = [
     {
       id: 1,
@@ -159,14 +158,11 @@ const HospitalWebsite = () => {
                 (0711) 414
               </span>
             </div>
-            <button className="bg-teal-700 px-3 py-1 rounded text-sm hover:bg-teal-800 transition-colors">
-              Masuk
-            </button>
           </div>
         </div>
 
         {/* Main Header */}
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-4 ">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <img 
@@ -178,7 +174,7 @@ const HospitalWebsite = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8">
-              {['HOME', 'ABOUT', 'VISI DAN MISI', 'GALERI', 'POLI', 'JADWAL'].map((item) => (
+              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
                 <button
                   key={item}
                   className={item === 'HOME' 
@@ -204,7 +200,7 @@ const HospitalWebsite = () => {
         {isMenuOpen && (
           <div className="md:hidden bg-white border-t">
             <nav className="container mx-auto px-4 py-4 space-y-2">
-              {['HOME', 'ABOUT', 'VISI DAN MISI', 'GALERI', 'POLI', 'JADWAL'].map((item) => (
+              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
                 <button
                   key={item}
                   className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-teal-50 hover:text-teal-600 rounded"
@@ -297,109 +293,159 @@ const HospitalWebsite = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-20 bg-gradient-to-br from-teal-50 via-white to-blue-50 overflow-hidden">
-        <div className="container mx-auto px-4 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-teal-100/40 via-transparent to-transparent"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-100/40 via-transparent to-transparent"></div>
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center relative">
-            <div className="space-y-8 relative z-10">
-              <div className="relative px-6 py-8 rounded-3xl bg-white/40 backdrop-blur-sm border border-white/20 shadow-xl">
-                <div className="absolute -left-4 -top-4 w-24 h-24 bg-teal-100 rounded-full opacity-50 blur-xl animate-pulse"></div>
-                <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-blue-100 rounded-full opacity-50 blur-xl animate-pulse delay-700"></div>
-                <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider bg-gradient-to-r from-teal-50 to-blue-50 px-6 py-2 rounded-full inline-block shadow-sm border border-teal-100 hover:shadow-md transition-all relative">
-                  <span className="absolute inset-0 bg-white/50 rounded-full blur"></span>
-                  <span className="relative">Tentang Kami</span>
-                </span>
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">Memberikan Pelayanan Kesehatan <span className="text-teal-600">Terbaik</span> Untuk Anda</h2>
-                <p className="text-gray-600 leading-relaxed text-lg">
-                  RS Bhayangkara Mohammad Hasan Palembang telah melayani masyarakat dengan dedikasi tinggi dan komitmen untuk memberikan pelayanan kesehatan terbaik.
-                </p>
-              </div>
-              
-              <div className="bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 space-y-6 relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-teal-500/5 to-blue-500/5 rounded-2xl transform scale-95 group-hover:scale-100 transition-transform duration-300"></div>
-                <div className="space-y-4 relative">
-                  <div className="flex items-center space-x-3">
-                    <div className="h-10 w-1 bg-gradient-to-b from-teal-600 to-blue-600 rounded-full transform group-hover:scale-y-110 transition-transform duration-300"></div>
-                    <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600">Visi</h3>
-                  </div>
-                  <p className="text-gray-600 pl-8 group-hover:text-gray-800 transition-colors duration-300">
-                    Terwujudnya Pelayanan Kesehatan Paripurna yang Prima dan Unggul di Bidang Kedokteran Kepolisian.
-                  </p>
-                </div>
+      <section className="py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,_rgba(14,165,233,0.1)_0%,_transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,_rgba(20,184,166,0.1)_0%,_transparent_50%)]"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Centered Header */}
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="inline-block px-4 py-2 bg-teal-100 text-teal-700 rounded-full text-sm font-semibold uppercase tracking-wide">
+              Tentang Kami
+            </span>
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mt-4">
+              Memberikan Pelayanan Kesehatan 
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600"> Terbaik </span> 
+              Untuk Anda
+            </h2>
+            <p className="text-xl text-gray-600 leading-relaxed mt-4">
+              RS Bhayangkara Mohammad Hasan Palembang telah melayani masyarakat dengan dedikasi tinggi dan komitmen untuk memberikan pelayanan kesehatan terbaik.
+            </p>
+          </div>
 
-                <div className="space-y-4 relative">
-                  <div className="flex items-center space-x-3">
-                    <div className="h-10 w-1 bg-gradient-to-b from-teal-600 to-blue-600 rounded-full transform group-hover:scale-y-110 transition-transform duration-300"></div>
-                    <h3 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600">Misi</h3>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="space-y-8">
+
+              {/* Main Description Card */}
+              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-blue-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h4M9 7h6m-6 4h6m-6 4h6m-6 4h6" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">Tentang RS Bhayangkara Palembang</h3>
+                      <p className="text-gray-600 leading-relaxed mb-4">
+                        Kami melayani dengan Ikhlas dan Profesional, selain memberikan pelayanan kesehatan kepada Anggota Polri, RS Bhayangkara Palembang juga melayani pasien umum BPJS. Didukung oleh tenaga kesehatan yang Profesional, Terlatih dan Berpengalaman.
+                      </p>
+                      <p className="text-gray-600 leading-relaxed">
+                        RS Bhayangkara Palembang salah satu Rumah Sakit yang memiliki pelayanan hemodialisa anak dan dewasa. Dukungan Peralatan canggih terkini dan terakreditasi seperti CT Scan, Ruang operasi dengan Sistem MOT (Modular Operating System), serta penunjang lainnya seperti Laboratium PCR yang tercanggih.
+                      </p>
+                    </div>
                   </div>
-                  <div className="pl-8">
-                    <ul className="space-y-3">
-                      {[
-                        "Menyelenggarakan pelayanan kesehatan yang profesional, bermutu, akuntabel, dan humanis",
-                        "Mengembangkan kualitas SDM secara profesional",
-                        "Melengkapi sarana prasarana dan teknologi modern",
-                        "Membangun kemitraan lintas sektoral",
-                        "Mendukung tugas operasional kepolisian",
-                        "Meningkatkan layanan kedokteran kepolisian",
-                        "Meningkatkan kesejahteraan pegawai"
-                      ].map((item, index) => (
-                        <li key={index} className="flex items-start space-x-3">
-                          <div className="w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center mt-1">
-                            <ChevronRight className="w-4 h-4 text-teal-600" />
-                          </div>
-                          <span className="text-gray-600 flex-1">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  
+                  <button className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-teal-700 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                    Selengkapnya
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right Content - Image and Stats */}
+            <div className="relative">
+              {/* Background decorative circles */}
+              <div className="absolute -top-8 -right-8 w-64 h-64 bg-gradient-to-br from-teal-100 to-blue-100 rounded-full opacity-20 animate-pulse blur-3xl"></div>
+              <div className="absolute -bottom-8 -left-8 w-48 h-48 bg-gradient-to-br from-blue-100 to-teal-100 rounded-full opacity-20 animate-pulse delay-700 blur-2xl"></div>
+              
+              <div className="relative">
+                {/* Main image */}
+                <div className="bg-white rounded-2xl p-4 shadow-xl">
+                  <img
+                    src="/images/about.jpg"
+                    alt="Hospital Facility"
+                    className="w-full h-80 object-cover rounded-xl"
+                    loading="lazy"
+                  />
+                </div>
+                
+                {/* Stats floating cards */}
+                <div className="absolute -bottom-6 left-4 right-4 grid grid-cols-2 gap-4">
+                  <div className="bg-white rounded-xl p-4 shadow-xl border border-gray-100 hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-6 h-6 text-white group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-gray-900 group-hover:text-teal-600 transition-colors">24/7</div>
+                        <div className="text-sm text-gray-600">Layanan Darurat</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white rounded-xl p-4 shadow-xl border border-gray-100 hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-6 h-6 text-white group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">100+</div>
+                        <div className="text-sm text-gray-600">Tenaga Medis</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            
-            <div className="relative mt-12 md:mt-0">
-              {/* Background decorative elements */}
-              <div className="absolute -top-12 -right-12 w-80 h-80 bg-gradient-to-br from-teal-100 to-blue-100 rounded-full opacity-40 animate-pulse blur-2xl"></div>
-              <div className="absolute top-1/4 -right-8 w-40 h-40 bg-gradient-to-br from-blue-200 to-teal-200 rounded-full opacity-30 animate-pulse delay-150 blur-xl"></div>
-              <div className="absolute -bottom-12 -right-12 w-60 h-60 bg-gradient-to-br from-teal-200 to-blue-100 rounded-full opacity-30 animate-pulse delay-300 blur-xl"></div>
-              <div className="absolute top-1/3 -left-8 w-32 h-32 bg-gradient-to-br from-blue-100 to-teal-100 rounded-full opacity-40 animate-pulse delay-500 blur-lg"></div>
-              
-              {/* Main image container */}
-              <div className="relative bg-gradient-to-br from-white to-teal-50 p-6 rounded-3xl shadow-xl">
-                <div className="absolute inset-0 bg-gradient-to-br from-teal-400/10 to-blue-400/10 rounded-3xl"></div>
-                <img
-                  src="/images/about.jpg"
-                  alt="Hospital Facility"
-                  className="rounded-2xl shadow-xl relative z-10 transform group-hover:scale-105 transition-transform duration-300 w-full h-[400px] object-cover"
-                  loading="lazy"
-                />
-                
-                {/* Stats cards */}
-                <div className="absolute -bottom-8 -left-8 grid grid-cols-2 gap-6 z-20">
-                  <div className="bg-white/95 backdrop-blur p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-teal-50">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-gradient-to-br from-teal-100 to-blue-100 rounded-lg">
-                        <Clock className="w-6 h-6 text-teal-600" />
-                      </div>
-                      <div>
-                        <h4 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600">24/7</h4>
-                        <p className="text-sm text-gray-600">Layanan Darurat</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-white/95 backdrop-blur p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border border-teal-50">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-gradient-to-br from-teal-100 to-blue-100 rounded-lg">
-                        <Users className="w-6 h-6 text-teal-600" />
-                      </div>
-                      <div>
-                        <h4 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600">100+</h4>
-                        <p className="text-sm text-gray-600">Tenaga Medis</p>
-                      </div>
-                    </div>
-                  </div>
+          </div>
+
+          {/* Vision & Mission Cards - Centered */}
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-20">
+            {/* Vision Card */}
+            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
                 </div>
+                <h3 className="text-xl font-bold text-gray-900">Visi</h3>
               </div>
+              <p className="text-gray-600 leading-relaxed">
+                Terwujudnya Pelayanan Kesehatan Paripurna yang Prima dan Unggul di Bidang Kedokteran Kepolisian.
+              </p>
+            </div>
+
+            {/* Mission Card */}
+            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900">Misi</h3>
+              </div>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Menyelenggarakan pelayanan kesehatan yang profesional, bermutu, akuntabel, dan humanis</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Mengembangkan kualitas SDM secara profesional</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Melengkapi sarana prasarana dan teknologi modern</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Membangun kemitraan lintas sektoral</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -637,7 +683,7 @@ const HospitalWebsite = () => {
             <div>
               <h3 className="text-lg font-bold text-white mb-4">Menu Utama</h3>
               <ul className="space-y-2">
-                {['Home', 'About', 'Visi dan Misi', 'Galeri', 'Poli', 'Jadwal'].map((item) => (
+                {['Home', 'Dokter', 'Visi dan Misi', 'Galeri', 'Pelayanan', 'Jadwal'].map((item) => (
                   <li key={item}>
                     <a href="#" className="text-gray-400 hover:text-teal-400 transition-colors duration-300 flex items-center group">
                       <ChevronRight className="w-4 h-4 mr-2 text-teal-500 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
@@ -710,9 +756,32 @@ const HospitalWebsite = () => {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gradient-to-r from-teal-500 to-blue-500 text-white p-4 rounded-lg">
-                  <h4 className="font-bold mb-2">Layanan Darurat 24/7</h4>
-                  <p className="text-sm opacity-90">Kami siap melayani keadaan darurat 24 jam sehari, 7 hari seminggu</p>
+                <div className="bg-gradient-to-r from-teal-500 to-blue-500 text-white p-4 rounded-lg relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="flex-1">
+                      <h4 className="font-bold mb-2 flex items-center gap-2">
+                        <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                        Layanan Darurat 24/7
+                      </h4>
+                      <p className="text-sm opacity-90 mb-3">Kami siap melayani keadaan darurat 24 jam sehari, 7 hari seminggu</p>
+                      
+                      <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
+                        <Phone className="w-4 h-4 text-white animate-pulse" />
+                        <div className="text-sm font-semibold">(0711) 414855 - 410023</div>
+                      </div>
+                    </div>
+                    
+                    <div className="relative w-24 h-24 flex-shrink-0">
+                      <img
+                        src="/images/ninu.png"
+                        alt="Ambulance"
+                        className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-500 drop-shadow-lg"
+                      />
+                      <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-red-500 rounded-full animate-ping opacity-75"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -725,6 +794,36 @@ const HospitalWebsite = () => {
             <div className="relative flex justify-center">
               <div className="bg-gradient-to-r from-teal-600 to-blue-600 text-white px-4 py-2 rounded-full text-sm">
                 RS Bhayangkara
+              </div>
+            </div>
+          </div>
+
+          {/* Partner Logos */}
+          <div className="mt-12 mb-8">
+            <div className="flex flex-wrap justify-center items-center gap-8">
+              <div className="group relative">
+                <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl opacity-25 blur-lg group-hover:opacity-75 transition-all duration-500"></div>
+                <div className="relative bg-white/80 backdrop-blur-sm p-4 rounded-xl hover:bg-white transition-all duration-300 transform hover:scale-105">
+                  <img src="/images/bpjs-kesehatan.png" alt="BPJS Kesehatan" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" />
+                </div>
+              </div>
+              <div className="group relative">
+                <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl opacity-25 blur-lg group-hover:opacity-75 transition-all duration-500"></div>
+                <div className="relative bg-white/80 backdrop-blur-sm p-4 rounded-xl hover:bg-white transition-all duration-300 transform hover:scale-105">
+                  <img src="/images/Kars-Bintang5.png" alt="KARS Bintang 5" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" />
+                </div>
+              </div>
+              <div className="group relative">
+                <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl opacity-25 blur-lg group-hover:opacity-75 transition-all duration-500"></div>
+                <div className="relative bg-white/80 backdrop-blur-sm p-4 rounded-xl hover:bg-white transition-all duration-300 transform hover:scale-105">
+                  <img src="/images/Kementrian-kesehatan.png" alt="Kementerian Kesehatan" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" />
+                </div>
+              </div>
+              <div className="group relative">
+                <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl opacity-25 blur-lg group-hover:opacity-75 transition-all duration-500"></div>
+                <div className="relative bg-white/80 backdrop-blur-sm p-4 rounded-xl hover:bg-white transition-all duration-300 transform hover:scale-105">
+                  <img src="/images/Logo-Blue-Promise.png" alt="Blue Promise" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" />
+                </div>
               </div>
             </div>
           </div>
