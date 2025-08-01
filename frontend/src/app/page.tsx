@@ -7,9 +7,25 @@ const HospitalWebsite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isMounted, setIsMounted] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const heroImages = [
+    '/images/1.png',
+    '/images/2.png',
+    '/images/3.jpg',
+    '/images/4.jpg',
+    '/images/5.jpg'
+  ];
 
   useEffect(() => {
     setIsMounted(true);
+    
+    // Auto-slide effect
+    const slideInterval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 20000); // Change slide every 5 seconds
+
+    return () => clearInterval(slideInterval);
   }, []);
 
   // Scroll reveal animation hook - only run on client side
@@ -214,10 +230,12 @@ const HospitalWebsite = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-teal-600 to-blue-600 text-white py-20">
+      <section className="relative bg-gradient-to-r from-teal-600 to-blue-600 text-white min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center max-w-7xl mx-auto">
+
+            {/* Text Section */}
             <div data-animate="true" className="opacity-0 translate-y-8 transition-all duration-700 ease-out">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
                 Pelayanan Kesehatan Terdepan untuk Anda
@@ -229,25 +247,72 @@ const HospitalWebsite = () => {
                 Pelajari Lebih Lanjut
               </button>
             </div>
-            <div data-animate="true" className="opacity-0 translate-x-8 transition-all duration-700 ease-out">
+
+            {/* Image Slider Section */}
+            <div data-animate="true" className="opacity-0 translate-x-8 transition-all duration-700 ease-out w-full">
               {isMounted && (
-                <img
-                  src="/images/by1.jpg"
-                  alt="Hospital Building"
-                  className="rounded-lg shadow-2xl w-full h-auto"
-                  loading="eager"
-                  decoding="async"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.onerror = null;
-                    target.style.display = 'none';
-                  }}
-                />
+                <div
+                  className="relative w-full flex items-center justify-center rounded-xl shadow-2xl overflow-hidden group bg-black"
+                  style={{ minHeight: '250px' }} 
+                >
+                  {heroImages.map((img, index) => (
+                    <div
+                      key={index}
+                      className={`transition-all duration-1000 ease-in-out absolute inset-0 flex items-center justify-center ${
+                        index === currentSlide ? 'opacity-100 scale-100 z-20' : 'opacity-0 scale-95 z-10'
+                      }`}
+                    >
+                      <img
+                        src={img}
+                        alt="Slide"
+                        className="w-full h-auto max-h-full object-contain rounded-xl z-10"
+                      />
+
+                      {/* Overlays and Tagline */}
+                      <div className="absolute top-4 left-4 bg-white/90 px-4 py-2 rounded-md shadow-md text-black text-sm font-semibold z-30">
+                        test
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent z-20" />
+                      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-blue-600/30 to-transparent z-10 pointer-events-none" />
+                    </div>
+                  ))}
+
+                  {/* Navigation Dots */}
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-30">
+                    {heroImages.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentSlide(index)}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                          index === currentSlide ? 'bg-white w-4' : 'bg-white/50 hover:bg-white/80'
+                        }`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Arrows */}
+                  <button
+                    onClick={() => setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length)}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/30 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-black/50 z-30"
+                    aria-label="Previous slide"
+                  >
+                    ←
+                  </button>
+                  <button
+                    onClick={() => setCurrentSlide((prev) => (prev + 1) % heroImages.length)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/30 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-black/50 z-30"
+                    aria-label="Next slide"
+                  >
+                    →
+                  </button>
+                </div>
               )}
             </div>
           </div>
         </div>
       </section>
+
 
       {/* Quick Info Cards */}
       <section className="py-12 bg-gray-50">
@@ -672,12 +737,21 @@ const HospitalWebsite = () => {
 
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-2xl border border-gray-700/50 hover:border-teal-500/30 transition-all duration-300">
-              <div className="bg-white rounded-lg p-2 inline-block mb-4">
-                <img src="/images/header.png" alt="RS Bhayangkara" className="h-12" />
+              <div className="flex justify-center mb-4">
+                <img 
+                  src="/images/PRESISI.png" 
+                  alt="RS Bhayangkara" 
+                  className="h-50 w-auto object-contain hover:scale-105 transition-transform duration-300"
+                />
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                Memberikan pelayanan kesehatan terbaik dengan teknologi modern dan tenaga medis profesional untuk masyarakat Indonesia.
-              </p>
+              <div className="mt-6 flex justify-center">
+                <button className="group relative inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-teal-400 to-blue-500 text-white font-semibold rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/25">
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-500 to-teal-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <Mail className="w-5 h-5 mr-2 relative z-10" />
+                  <span className="relative z-10">Hubungi Kami</span>
+                  <div className="absolute right-0 w-12 h-full bg-white/10 skew-x-[20deg] -translate-x-20 group-hover:translate-x-32 transition-transform duration-500"></div>
+                </button>
+              </div>
             </div>
 
             <div>
@@ -824,6 +898,21 @@ const HospitalWebsite = () => {
                 <div className="relative bg-white/80 backdrop-blur-sm p-4 rounded-xl hover:bg-white transition-all duration-300 transform hover:scale-105">
                   <img src="/images/Logo-Blue-Promise.png" alt="Blue Promise" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" />
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Logo */}
+          <div className="flex justify-center mt-12 mb-16">
+            <div className="group relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-teal-500 to-blue-500 rounded-2xl opacity-25 blur-xl group-hover:opacity-75 transition-all duration-500"></div>
+              <div className="relative bg-white/90 backdrop-blur-sm p-6 rounded-2xl hover:bg-white transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl">
+                <img 
+                  src="/images/logo-rs-1.png" 
+                  alt="RS Bhayangkara Logo" 
+                  className="h-20 w-auto filter brightness-95 hover:brightness-100 transition-all"
+                />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </div>
           </div>
