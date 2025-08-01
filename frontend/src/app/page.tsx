@@ -236,16 +236,85 @@ const HospitalWebsite = () => {
           <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-8 lg:gap-12">
 
             {/* Text Section */}
-            <div data-animate="true" className="opacity-0 translate-y-8 transition-all duration-700 ease-out flex-1 lg:max-w-lg">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                Pelayanan Kesehatan Terdepan untuk Anda
-              </h2>
-              <p className="text-xl mb-8 opacity-90">
-                RS Bhayangkara Mohammad Hasan Palembang memberikan layanan kesehatan berkualitas dengan teknologi modern dan tenaga medis profesional.
-              </p>
-              <button className="bg-white text-teal-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 transform">
-                Pelajari Lebih Lanjut
-              </button>
+            <div data-animate="true" className="opacity-0 translate-y-8 transition-all duration-700 ease-out flex-1 lg:max-w-2xl">
+              {/* Trust Badge */}
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-sm font-medium text-white/90">Terakreditasi Paripurna • Melayani 24/7</span>
+              </div>
+
+              {/* Main Heading */}
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[0.9] tracking-tight">
+                <span className="block text-white">Kesehatan</span>
+                <span className="block bg-gradient-to-r from-yellow-300 via-white to-blue-200 bg-clip-text text-transparent">
+                  Terdepan
+                </span>
+                <span className="block text-white text-4xl md:text-5xl lg:text-6xl font-semibold mt-2">
+                  untuk Keluarga Anda
+                </span>
+              </h1>
+
+              {/* Enhanced Description */}
+              <div className="space-y-4 mb-8">
+                <p className="text-xl md:text-2xl text-white/95 leading-relaxed font-light">
+                  <span className="font-semibold text-yellow-300">RS Bhayangkara Mohammad Hasan Palembang</span> -
+                  Rumah sakit terpercaya dengan teknologi medis terkini dan tim dokter spesialis berpengalaman.
+                </p>
+                
+                {/* Key Features */}
+                <div className="flex flex-wrap gap-4 text-white/90">
+                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                    <span className="text-sm font-medium">Dokter Spesialis</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                    <span className="text-sm font-medium">BPJS & Umum</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                    <span className="text-sm font-medium">Teknologi Modern</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button className="group relative bg-white text-teal-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 hover:scale-105 transform shadow-xl hover:shadow-2xl overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-blue-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                  <span className="relative z-10 flex items-center gap-2">
+                    Konsultasi Sekarang
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </button>
+                
+                <button className="group bg-transparent border-2 border-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm">
+                  <span className="flex items-center gap-2">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    Hubungi Kami
+                  </span>
+                </button>
+              </div>
+
+              {/* Stats Row */}
+              <div className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/20">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-white mb-1">24/7</div>
+                  <div className="text-sm text-white/70">Layanan Darurat</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-white mb-1">100+</div>
+                  <div className="text-sm text-white/70">Tenaga Medis</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-white mb-1">★★★★★</div>
+                  <div className="text-sm text-white/70">Terakreditasi</div>
+                </div>
+              </div>
             </div>
 
             {/* Image Slider Section */}
