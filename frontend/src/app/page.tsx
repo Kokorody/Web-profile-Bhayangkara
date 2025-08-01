@@ -230,13 +230,13 @@ const HospitalWebsite = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-teal-600 to-blue-600 text-white min-h-screen flex items-center overflow-hidden">
+      <section className="relative bg-gradient-to-r from-teal-600 to-blue-600 text-white min-h-screen overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center max-w-7xl mx-auto">
+        <div className="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
+          <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-8 lg:gap-12">
 
             {/* Text Section */}
-            <div data-animate="true" className="opacity-0 translate-y-8 transition-all duration-700 ease-out">
+            <div data-animate="true" className="opacity-0 translate-y-8 transition-all duration-700 ease-out flex-1 lg:max-w-lg">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
                 Pelayanan Kesehatan Terdepan untuk Anda
               </h2>
@@ -249,31 +249,28 @@ const HospitalWebsite = () => {
             </div>
 
             {/* Image Slider Section */}
-            <div data-animate="true" className="opacity-0 translate-x-8 transition-all duration-700 ease-out w-full">
+            <div data-animate="true" className="opacity-0 translate-x-8 transition-all duration-700 ease-out flex-1 flex justify-center lg:justify-end">
               {isMounted && (
-                <div
-                  className="relative w-full flex items-center justify-center rounded-xl shadow-2xl overflow-hidden group bg-black"
-                  style={{ minHeight: '250px' }} 
-                >
+                <div className="relative rounded-xl shadow-2xl overflow-hidden group bg-transparent">
                   {heroImages.map((img, index) => (
                     <div
                       key={index}
-                      className={`transition-all duration-1000 ease-in-out absolute inset-0 flex items-center justify-center ${
-                        index === currentSlide ? 'opacity-100 scale-100 z-20' : 'opacity-0 scale-95 z-10'
+                      className={`transition-all duration-1000 ease-in-out ${
+                        index === currentSlide ? 'opacity-100 scale-100 relative z-20' : 'opacity-0 scale-95 absolute inset-0 z-10'
                       }`}
                     >
                       <img
                         src={img}
                         alt="Slide"
-                        className="w-full h-auto max-h-full object-contain rounded-xl z-10"
+                        className="w-auto h-auto max-w-full max-h-[70vh] object-contain rounded-xl shadow-2xl"
                       />
 
                       {/* Overlays and Tagline */}
                       <div className="absolute top-4 left-4 bg-white/90 px-4 py-2 rounded-md shadow-md text-black text-sm font-semibold z-30">
                         test
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent z-20" />
-                      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-blue-600/30 to-transparent z-10 pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent z-20 rounded-xl" />
+                      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-blue-600/30 to-transparent z-10 pointer-events-none rounded-xl" />
                     </div>
                   ))}
 
