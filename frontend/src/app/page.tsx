@@ -230,57 +230,78 @@ const HospitalWebsite = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-teal-600 to-blue-600 text-white min-h-screen overflow-hidden">
-        <div className="absolute inset-0 bg-black opacity-20"></div>
+      <section className="relative text-white min-h-screen overflow-hidden">
+        {/* Background Image with Effects */}
+        <div className="absolute inset-0">
+          <img
+            src="/images/herobg.png"
+            alt="Hospital Background"
+            className="w-full h-full object-cover"
+          />
+          {/* Multiple overlay effects for modern look */}
+          <div className="absolute inset-0 bg-gradient-to-r from-teal-900/80 via-blue-900/70 to-teal-800/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50"></div>
+          <div className="absolute inset-0 backdrop-blur-[0.5px]"></div>
+          {/* Subtle pattern overlay */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,_rgba(14,165,233,0.15)_0%,_transparent_50%)] opacity-60"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,_rgba(20,184,166,0.15)_0%,_transparent_50%)] opacity-60"></div>
+        </div>
+        {/* Floating Elements for Modern Effect */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-teal-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 right-1/3 w-48 h-48 bg-blue-400/8 rounded-full blur-2xl animate-pulse delay-500"></div>
+        </div>
+
         <div className="container mx-auto px-4 relative z-10 min-h-screen flex items-center">
           <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-8 lg:gap-12">
 
             {/* Text Section */}
-            <div data-animate="true" className="opacity-0 translate-y-8 transition-all duration-700 ease-out flex-1 lg:max-w-2xl">
+            <div data-animate="true" className="opacity-100 translate-y-0 transition-all duration-700 ease-out flex-1 lg:max-w-2xl">
               {/* Trust Badge */}
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span className="text-sm font-medium text-white/90">Terakreditasi Paripurna • Melayani 24/7</span>
+              <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 rounded-full px-4 py-2 mb-6 shadow-lg">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-sm"></div>
+                <span className="text-sm font-medium text-white drop-shadow-sm">Terakreditasi Paripurna • Melayani 24/7</span>
               </div>
 
               {/* Main Heading */}
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[0.9] tracking-tight">
-                <span className="block text-white">Kesehatan</span>
-                <span className="block bg-gradient-to-r from-yellow-300 via-white to-blue-200 bg-clip-text text-transparent">
+                <span className="block text-white drop-shadow-lg">Kesehatan</span>
+                <span className="block bg-gradient-to-r from-yellow-300 via-white to-blue-200 bg-clip-text text-transparent drop-shadow-lg">
                   Terdepan
                 </span>
-                <span className="block text-white text-4xl md:text-5xl lg:text-6xl font-semibold mt-2">
+                <span className="block text-white text-4xl md:text-5xl lg:text-6xl font-semibold mt-2 drop-shadow-lg">
                   untuk Keluarga Anda
                 </span>
               </h1>
 
               {/* Enhanced Description */}
               <div className="space-y-4 mb-8">
-                <p className="text-xl md:text-2xl text-white/95 leading-relaxed font-light">
-                  <span className="font-semibold text-yellow-300">RS Bhayangkara Mohammad Hasan Palembang</span> -
+                <p className="text-xl md:text-2xl text-white leading-relaxed font-light drop-shadow-sm">
+                  <span className="font-semibold text-yellow-300 drop-shadow-sm">RS Bhayangkara Mohammad Hasan Palembang</span> -
                   Rumah sakit terpercaya dengan teknologi medis terkini dan tim dokter spesialis berpengalaman.
                 </p>
                 
                 {/* Key Features */}
-                <div className="flex flex-wrap gap-4 text-white/90">
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                    <span className="text-sm font-medium">Dokter Spesialis</span>
+                <div className="flex flex-wrap gap-4 text-white">
+                  <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md rounded-lg px-3 py-2 border border-white/20 shadow-lg">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full shadow-sm"></div>
+                    <span className="text-sm font-medium drop-shadow-sm">Dokter Spesialis</span>
                   </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
-                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                    <span className="text-sm font-medium">BPJS & Umum</span>
+                  <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md rounded-lg px-3 py-2 border border-white/20 shadow-lg">
+                    <div className="w-2 h-2 bg-green-400 rounded-full shadow-sm"></div>
+                    <span className="text-sm font-medium drop-shadow-sm">BPJS & Umum</span>
                   </div>
-                  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                    <span className="text-sm font-medium">Teknologi Modern</span>
+                  <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md rounded-lg px-3 py-2 border border-white/20 shadow-lg">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full shadow-sm"></div>
+                    <span className="text-sm font-medium drop-shadow-sm">Teknologi Modern</span>
                   </div>
                 </div>
               </div>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="group relative bg-white text-teal-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 transition-all duration-300 hover:scale-105 transform shadow-xl hover:shadow-2xl overflow-hidden">
+                <button className="group relative bg-white/95 backdrop-blur-sm text-teal-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-all duration-300 hover:scale-105 transform shadow-2xl hover:shadow-3xl overflow-hidden border border-white/20">
                   <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-blue-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                   <span className="relative z-10 flex items-center gap-2">
                     Konsultasi Sekarang
@@ -290,8 +311,8 @@ const HospitalWebsite = () => {
                   </span>
                 </button>
                 
-                <button className="group bg-transparent border-2 border-white/30 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm">
-                  <span className="flex items-center gap-2">
+                <button className="group bg-white/10 backdrop-blur-md border-2 border-white/40 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/20 hover:border-white/60 transition-all duration-300 shadow-xl">
+                  <span className="flex items-center gap-2 drop-shadow-sm">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
@@ -301,24 +322,24 @@ const HospitalWebsite = () => {
               </div>
 
               {/* Stats Row */}
-              <div className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/20">
+              <div className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/30">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-white mb-1">24/7</div>
-                  <div className="text-sm text-white/70">Layanan Darurat</div>
+                  <div className="text-3xl font-bold text-white mb-1 drop-shadow-sm">24/7</div>
+                  <div className="text-sm text-white/80 drop-shadow-sm">Layanan Darurat</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-white mb-1">100+</div>
-                  <div className="text-sm text-white/70">Tenaga Medis</div>
+                  <div className="text-3xl font-bold text-white mb-1 drop-shadow-sm">100+</div>
+                  <div className="text-sm text-white/80 drop-shadow-sm">Tenaga Medis</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-white mb-1">★★★★★</div>
-                  <div className="text-sm text-white/70">Terakreditasi</div>
+                  <div className="text-3xl font-bold text-white mb-1 drop-shadow-sm">★★★★★</div>
+                  <div className="text-sm text-white/80 drop-shadow-sm">Terakreditasi</div>
                 </div>
               </div>
             </div>
 
             {/* Image Slider Section */}
-            <div data-animate="true" className="opacity-0 translate-x-8 transition-all duration-700 ease-out flex-1 flex justify-center lg:justify-end">
+            <div data-animate="true" className="opacity-100 translate-x-0 transition-all duration-700 ease-out flex-1 flex justify-center lg:justify-end">
               {isMounted && (
                 <div className="relative rounded-xl shadow-2xl overflow-hidden group bg-transparent">
                   {heroImages.map((img, index) => (
