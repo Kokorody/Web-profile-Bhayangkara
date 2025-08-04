@@ -159,74 +159,178 @@ const HospitalWebsite = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white shadow-lg sticky top-0 z-50">
-        {/* Top Bar */}
-        <div className="bg-teal-600 text-white py-2">
-          <div className="container mx-auto px-4 flex justify-between items-center text-sm">
-            <div className="flex items-center space-x-4">
-              <span className="flex items-center">
-                <Mail className="w-4 h-4 mr-1" />
-                rs.bhayangkara.palembang@gmail.com
-              </span>
-              <span className="flex items-center">
-                <Phone className="w-4 h-4 mr-1" />
-                (0711) 414
-              </span>
+      {/* Enhanced Header */}
+      <header className="bg-white/95 backdrop-blur-lg shadow-xl sticky top-0 z-50 border-b border-gray-100/50 transition-all duration-300">
+        {/* Enhanced Top Bar */}
+        <div className="bg-gradient-to-r from-teal-600 via-teal-500 to-blue-600 text-white py-3 relative overflow-hidden">
+          {/* Animated background pattern */}
+          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%)] bg-[length:20px_20px] animate-pulse opacity-30"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-pulse"></div>
+          
+          <div className="container mx-auto px-4 flex justify-between items-center text-sm relative z-10">
+            <div className="flex items-center space-x-6">
+              <div className="group flex items-center hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-2 group-hover:bg-white/30 transition-all duration-300 group-hover:rotate-12">
+                  <Mail className="w-4 h-4 group-hover:animate-bounce" />
+                </div>
+                <span className="group-hover:text-yellow-200 transition-colors duration-300 font-medium">
+                  rs.bhayangkara.palembang@gmail.com
+                </span>
+              </div>
+              <div className="group flex items-center hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-2 group-hover:bg-white/30 transition-all duration-300 group-hover:rotate-12">
+                  <Phone className="w-4 h-4 group-hover:animate-bounce" />
+                </div>
+                <span className="group-hover:text-yellow-200 transition-colors duration-300 font-medium">
+                  (0711) 414
+                </span>
+              </div>
+            </div>
+            
+            {/* Emergency indicator */}
+            <div className="hidden sm:flex items-center gap-2 bg-red-500/20 backdrop-blur-sm px-3 py-1 rounded-full border border-red-300/30">
+              <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+              <span className="text-xs font-semibold text-red-100">24/7 Emergency</span>
             </div>
           </div>
         </div>
 
-        {/* Main Header */}
-        <div className="container mx-auto px-4 py-4 ">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <img 
-                src="/images/header.png" 
-                alt="RS Bhayangkara Logo" 
-                className="h-16 w-auto"
-              />
+        {/* Enhanced Main Header */}
+        <div className="container mx-auto px-4 py-4 relative">
+          {/* Subtle background pattern */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,_rgba(14,165,233,0.03)_0%,_transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_50%,_rgba(20,184,166,0.03)_0%,_transparent_50%)]"></div>
+          
+          <div className="flex items-center justify-between relative z-10">
+            {/* Enhanced Logo Section */}
+            <div className="group flex items-center cursor-pointer">
+              <div className="relative">
+                {/* Animated glow effect */}
+                <div className="absolute -inset-2 bg-gradient-to-r from-teal-400 to-blue-500 rounded-xl opacity-0 group-hover:opacity-20 blur-lg transition-all duration-500"></div>
+                <div className="relative bg-gradient-to-br from-gray-50 to-white p-2 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 border border-gray-100 group-hover:border-teal-200">
+                  <img
+                    src="/images/header.png"
+                    alt="RS Bhayangkara Logo"
+                    className="h-16 w-auto transform group-hover:scale-110 transition-all duration-500 filter group-hover:brightness-110"
+                  />
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
+                </div>
+              </div>
+              
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8">
-              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
-                <button
-                  key={item}
-                  className={item === 'HOME' 
-                    ? 'px-4 py-2 rounded transition-colors bg-teal-600 text-white'
-                    : 'px-4 py-2 rounded transition-colors text-gray-700 hover:text-teal-600'}
-                >
-                  {item}
-                </button>
+            {/* Enhanced Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-2">
+              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item, index) => (
+                <div key={item} className="relative group">
+                  {/* Animated background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 scale-95 group-hover:scale-100"></div>
+                  
+                  <button
+                    className={`relative px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 transform hover:scale-105 ${
+                      item === 'HOME'
+                        ? 'bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-lg hover:shadow-xl'
+                        : 'text-gray-700 hover:text-white group-hover:bg-transparent'
+                    }`}
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <span className="relative z-10 flex items-center gap-2">
+                      {item}
+                      {/* Animated underline */}
+                      <div className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-400 transition-all duration-300 ${
+                        item === 'HOME' ? 'w-full' : 'w-0 group-hover:w-full'
+                      }`}></div>
+                    </span>
+                    
+                    {/* Hover effect particles */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute top-1 left-1 w-1 h-1 bg-white/60 rounded-full animate-ping"></div>
+                      <div className="absolute top-2 right-2 w-1 h-1 bg-white/60 rounded-full animate-ping delay-100"></div>
+                      <div className="absolute bottom-1 left-3 w-1 h-1 bg-white/60 rounded-full animate-ping delay-200"></div>
+                    </div>
+                  </button>
+                </div>
               ))}
+              
+              {/* CTA Button */}
+              <div className="ml-4 relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-orange-500 rounded-xl blur opacity-30 group-hover:opacity-60 transition-all duration-300"></div>
+                <button className="relative bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-xl font-bold text-sm hover:from-red-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                  <span className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    DARURAT
+                  </span>
+                </button>
+              </div>
             </nav>
 
-            {/* Mobile Menu Button */}
+            {/* Enhanced Mobile Menu Button */}
             <button
-              className="md:hidden"
+              className="md:hidden relative group p-3 rounded-xl bg-gray-50 hover:bg-teal-50 transition-all duration-300 border border-gray-200 hover:border-teal-200"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <div className="relative w-6 h-6">
+                {/* Animated hamburger/close icon */}
+                <div className={`absolute top-1 left-0 w-6 h-0.5 bg-gray-600 group-hover:bg-teal-600 transition-all duration-300 ${
+                  isMenuOpen ? 'rotate-45 translate-y-2' : ''
+                }`}></div>
+                <div className={`absolute top-3 left-0 w-6 h-0.5 bg-gray-600 group-hover:bg-teal-600 transition-all duration-300 ${
+                  isMenuOpen ? 'opacity-0' : ''
+                }`}></div>
+                <div className={`absolute top-5 left-0 w-6 h-0.5 bg-gray-600 group-hover:bg-teal-600 transition-all duration-300 ${
+                  isMenuOpen ? '-rotate-45 -translate-y-2' : ''
+                }`}></div>
+              </div>
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white border-t">
-            <nav className="container mx-auto px-4 py-4 space-y-2">
-              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
-                <button
-                  key={item}
-                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-teal-50 hover:text-teal-600 rounded"
-                >
-                  {item}
-                </button>
+        {/* Enhanced Mobile Menu */}
+        <div className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
+          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}>
+          <div className="bg-gradient-to-br from-white via-gray-50 to-teal-50 border-t border-gray-100 relative">
+            {/* Background pattern */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-teal-100/20 via-transparent to-transparent"></div>
+            
+            <nav className="container mx-auto px-4 py-6 space-y-2 relative z-10">
+              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item, index) => (
+                <div key={item} className="relative group">
+                  <button
+                    className={`block w-full text-left px-6 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-[1.02] ${
+                      item === 'HOME'
+                        ? 'bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-lg'
+                        : 'text-gray-700 hover:bg-white hover:text-teal-600 hover:shadow-md border border-transparent hover:border-teal-200'
+                    }`}
+                    style={{
+                      animationDelay: `${index * 100}ms`,
+                      animation: isMenuOpen ? 'slideInLeft 0.5s ease-out forwards' : ''
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span>{item}</span>
+                      <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        item === 'HOME' ? 'bg-white' : 'bg-teal-500 opacity-0 group-hover:opacity-100'
+                      }`}></div>
+                    </div>
+                  </button>
+                </div>
               ))}
+              
+              {/* Mobile Emergency Button */}
+              <div className="pt-4 border-t border-gray-200 mt-4">
+                <button className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-4 rounded-xl font-bold hover:from-red-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-[1.02] shadow-lg">
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                    <span>LAYANAN DARURAT 24/7</span>
+                    <Phone className="w-5 h-5" />
+                  </div>
+                </button>
+              </div>
             </nav>
           </div>
-        )}
+        </div>
       </header>
 
       {/* Hero Section */}
