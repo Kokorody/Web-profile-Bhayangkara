@@ -4,7 +4,7 @@
 }
 
 /* Animation and Transition Classes */
-[data-animate="true"] {
+[data-animate="true"]:not(.opacity-100) {
   opacity: 0;
   transform: translateY(2rem);
   transition: all 0.7s ease-out;
@@ -13,6 +13,12 @@
 [data-animate="true"].animate {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+}
+
+/* Hero section specific - always visible */
+.hero-section [data-animate="true"] {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
 }
 
 /* Gradient Backgrounds */
