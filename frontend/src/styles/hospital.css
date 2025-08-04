@@ -1,55 +1,55 @@
-/* Hospital Website Styles */
+/* Hospital Website Styles - Optimized */
 .min-h-screen {
   min-height: 100vh;
 }
 
-/* Animation and Transition Classes */
+/* Simplified Animation Classes */
 [data-animate="true"]:not(.opacity-100) {
   opacity: 0;
-  transform: translateY(2rem);
-  transition: all 0.7s ease-out;
+  transform: translateY(1rem);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
 [data-animate="true"].animate {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: translateY(0);
 }
 
 /* Hero section specific - always visible */
 .hero-section [data-animate="true"] {
   opacity: 1 !important;
-  transform: translate3d(0, 0, 0) !important;
+  transform: translateY(0) !important;
 }
 
-/* Gradient Backgrounds */
+/* Simplified Gradient Backgrounds */
 .bg-gradient-overlay {
-  background: linear-gradient(to right, rgba(13, 148, 136, 0.2), rgba(59, 130, 246, 0.2));
+  background: linear-gradient(to right, rgba(13, 148, 136, 0.1), rgba(59, 130, 246, 0.1));
 }
 
-/* Custom Shadows */
+/* Optimized Shadows */
 .custom-shadow {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover Effects */
+/* Simplified Hover Effects */
 .hover-scale {
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
 .hover-scale:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
-/* Custom Animations */
-@keyframes pulse {
+/* Optimized Pulse Animation */
+@keyframes pulse-light {
   0%, 100% {
     opacity: 1;
   }
   50% {
-    opacity: 0.5;
+    opacity: 0.8;
   }
 }
 
 .animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse-light 3s ease-in-out infinite;
 }
