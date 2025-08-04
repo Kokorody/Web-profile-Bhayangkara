@@ -159,126 +159,90 @@ const HospitalWebsite = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Enhanced Header */}
-      <header className="bg-white/95 backdrop-blur-lg shadow-xl sticky top-0 z-50 border-b border-gray-100/50 transition-all duration-300">
-        {/* Enhanced Top Bar */}
-        <div className="bg-gradient-to-r from-teal-600 via-teal-500 to-blue-600 text-white py-3 relative overflow-hidden">
-          {/* Animated background pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%)] bg-[length:20px_20px] animate-pulse opacity-30"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-pulse"></div>
-          
-          <div className="container mx-auto px-4 flex justify-between items-center text-sm relative z-10">
+      {/* Optimized Header */}
+      <header className="bg-white/95 shadow-xl sticky top-0 z-50 border-b border-gray-100/50">
+        {/* Simplified Top Bar */}
+        <div className="bg-gradient-to-r from-teal-600 to-blue-600 text-white py-3">
+          <div className="container mx-auto px-4 flex justify-between items-center text-sm">
             <div className="flex items-center space-x-6">
-              <div className="group flex items-center hover:scale-105 transition-all duration-300 cursor-pointer">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-2 group-hover:bg-white/30 transition-all duration-300 group-hover:rotate-12">
-                  <Mail className="w-4 h-4 group-hover:animate-bounce" />
+              <div className="flex items-center hover:text-yellow-200 transition-colors duration-200 cursor-pointer">
+                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-2">
+                  <Mail className="w-4 h-4" />
                 </div>
-                <span className="group-hover:text-yellow-200 transition-colors duration-300 font-medium">
+                <span className="font-medium">
                   rs.bhayangkara.palembang@gmail.com
                 </span>
               </div>
-              <div className="group flex items-center hover:scale-105 transition-all duration-300 cursor-pointer">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-2 group-hover:bg-white/30 transition-all duration-300 group-hover:rotate-12">
-                  <Phone className="w-4 h-4 group-hover:animate-bounce" />
+              <div className="flex items-center hover:text-yellow-200 transition-colors duration-200 cursor-pointer">
+                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-2">
+                  <Phone className="w-4 h-4" />
                 </div>
-                <span className="group-hover:text-yellow-200 transition-colors duration-300 font-medium">
+                <span className="font-medium">
                   (0711) 414
                 </span>
               </div>
             </div>
             
             {/* Emergency indicator */}
-            <div className="hidden sm:flex items-center gap-2 bg-red-500/20 backdrop-blur-sm px-3 py-1 rounded-full border border-red-300/30">
+            <div className="hidden sm:flex items-center gap-2 bg-red-500/20 px-3 py-1 rounded-full border border-red-300/30">
               <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
               <span className="text-xs font-semibold text-red-100">24/7 Emergency</span>
             </div>
           </div>
         </div>
 
-        {/* Enhanced Main Header */}
-        <div className="container mx-auto px-4 py-4 relative">
-          {/* Subtle background pattern */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,_rgba(14,165,233,0.03)_0%,_transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_50%,_rgba(20,184,166,0.03)_0%,_transparent_50%)]"></div>
-          
-          <div className="flex items-center justify-between relative z-10">
-            {/* Enhanced Logo Section */}
+        {/* Simplified Main Header */}
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            {/* Simplified Logo Section */}
             <div className="group flex items-center cursor-pointer">
-              <div className="relative">
-                {/* Animated glow effect */}
-                <div className="absolute -inset-2 bg-gradient-to-r from-teal-400 to-blue-500 rounded-xl opacity-0 group-hover:opacity-20 blur-lg transition-all duration-500"></div>
-                <div className="relative bg-gradient-to-br from-gray-50 to-white p-2 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 border border-gray-100 group-hover:border-teal-200">
-                  <img
-                    src="/images/header.png"
-                    alt="RS Bhayangkara Logo"
-                    className="h-16 w-auto transform group-hover:scale-110 transition-all duration-500 filter group-hover:brightness-110"
-                  />
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
-                </div>
+              <div className="bg-white p-2 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                <img
+                  src="/images/header.png"
+                  alt="RS Bhayangkara Logo"
+                  className="h-16 w-auto"
+                  loading="eager"
+                />
               </div>
-              
             </div>
 
-            {/* Enhanced Desktop Navigation */}
+            {/* Simplified Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-2">
-              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item, index) => (
-                <div key={item} className="relative group">
-                  {/* Animated background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 scale-95 group-hover:scale-100"></div>
-                  
-                  <button
-                    className={`relative px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 transform hover:scale-105 ${
-                      item === 'HOME'
-                        ? 'bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-lg hover:shadow-xl'
-                        : 'text-gray-700 hover:text-white group-hover:bg-transparent'
-                    }`}
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <span className="relative z-10 flex items-center gap-2">
-                      {item}
-                      {/* Animated underline */}
-                      <div className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-400 transition-all duration-300 ${
-                        item === 'HOME' ? 'w-full' : 'w-0 group-hover:w-full'
-                      }`}></div>
-                    </span>
-                    
-                    {/* Hover effect particles */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="absolute top-1 left-1 w-1 h-1 bg-white/60 rounded-full animate-ping"></div>
-                      <div className="absolute top-2 right-2 w-1 h-1 bg-white/60 rounded-full animate-ping delay-100"></div>
-                      <div className="absolute bottom-1 left-3 w-1 h-1 bg-white/60 rounded-full animate-ping delay-200"></div>
-                    </div>
-                  </button>
-                </div>
+              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
+                <button
+                  key={item}
+                  className={`px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 ${
+                    item === 'HOME'
+                      ? 'bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-lg'
+                      : 'text-gray-700 hover:text-teal-600 hover:bg-teal-50'
+                  }`}
+                >
+                  {item}
+                </button>
               ))}
               
               {/* CTA Button */}
-              <div className="ml-4 relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-orange-500 rounded-xl blur opacity-30 group-hover:opacity-60 transition-all duration-300"></div>
-                <button className="relative bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-xl font-bold text-sm hover:from-red-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                  <span className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                    DARURAT
-                  </span>
-                </button>
-              </div>
+              <button className="ml-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-3 rounded-xl font-bold text-sm hover:from-red-600 hover:to-orange-600 transition-colors duration-200 shadow-lg">
+                <span className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  DARURAT
+                </span>
+              </button>
             </nav>
 
-            {/* Enhanced Mobile Menu Button */}
+            {/* Simplified Mobile Menu Button */}
             <button
-              className="md:hidden relative group p-3 rounded-xl bg-gray-50 hover:bg-teal-50 transition-all duration-300 border border-gray-200 hover:border-teal-200"
+              className="md:hidden p-3 rounded-xl bg-gray-50 hover:bg-teal-50 transition-colors duration-200 border border-gray-200"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <div className="relative w-6 h-6">
-                {/* Animated hamburger/close icon */}
-                <div className={`absolute top-1 left-0 w-6 h-0.5 bg-gray-600 group-hover:bg-teal-600 transition-all duration-300 ${
+              <div className="w-6 h-6 relative">
+                <div className={`absolute top-1 left-0 w-6 h-0.5 bg-gray-600 transition-transform duration-200 ${
                   isMenuOpen ? 'rotate-45 translate-y-2' : ''
                 }`}></div>
-                <div className={`absolute top-3 left-0 w-6 h-0.5 bg-gray-600 group-hover:bg-teal-600 transition-all duration-300 ${
+                <div className={`absolute top-3 left-0 w-6 h-0.5 bg-gray-600 transition-opacity duration-200 ${
                   isMenuOpen ? 'opacity-0' : ''
                 }`}></div>
-                <div className={`absolute top-5 left-0 w-6 h-0.5 bg-gray-600 group-hover:bg-teal-600 transition-all duration-300 ${
+                <div className={`absolute top-5 left-0 w-6 h-0.5 bg-gray-600 transition-transform duration-200 ${
                   isMenuOpen ? '-rotate-45 -translate-y-2' : ''
                 }`}></div>
               </div>
@@ -286,41 +250,28 @@ const HospitalWebsite = () => {
           </div>
         </div>
 
-        {/* Enhanced Mobile Menu */}
-        <div className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
+        {/* Simplified Mobile Menu */}
+        <div className={`md:hidden transition-all duration-300 ${
           isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-        }`}>
-          <div className="bg-gradient-to-br from-white via-gray-50 to-teal-50 border-t border-gray-100 relative">
-            {/* Background pattern */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-teal-100/20 via-transparent to-transparent"></div>
-            
-            <nav className="container mx-auto px-4 py-6 space-y-2 relative z-10">
-              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item, index) => (
-                <div key={item} className="relative group">
-                  <button
-                    className={`block w-full text-left px-6 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-[1.02] ${
-                      item === 'HOME'
-                        ? 'bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-lg'
-                        : 'text-gray-700 hover:bg-white hover:text-teal-600 hover:shadow-md border border-transparent hover:border-teal-200'
-                    }`}
-                    style={{
-                      animationDelay: `${index * 100}ms`,
-                      animation: isMenuOpen ? 'slideInLeft 0.5s ease-out forwards' : ''
-                    }}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span>{item}</span>
-                      <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        item === 'HOME' ? 'bg-white' : 'bg-teal-500 opacity-0 group-hover:opacity-100'
-                      }`}></div>
-                    </div>
-                  </button>
-                </div>
+        } overflow-hidden`}>
+          <div className="bg-white border-t border-gray-100">
+            <nav className="container mx-auto px-4 py-6 space-y-2">
+              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
+                <button
+                  key={item}
+                  className={`block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 ${
+                    item === 'HOME'
+                      ? 'bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-lg'
+                      : 'text-gray-700 hover:bg-teal-50 hover:text-teal-600'
+                  }`}
+                >
+                  {item}
+                </button>
               ))}
               
               {/* Mobile Emergency Button */}
               <div className="pt-4 border-t border-gray-200 mt-4">
-                <button className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-4 rounded-xl font-bold hover:from-red-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-[1.02] shadow-lg">
+                <button className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-4 rounded-xl font-bold hover:from-red-600 hover:to-orange-600 transition-colors duration-200 shadow-lg">
                   <div className="flex items-center justify-center gap-3">
                     <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
                     <span>LAYANAN DARURAT 24/7</span>
@@ -333,102 +284,109 @@ const HospitalWebsite = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Enhanced Interactive Hero Section */}
       <section className="relative text-white min-h-screen overflow-hidden bg-black">
-        {/* Fixed Background Image with Effects - Only visible during hero section */}
+        {/* Animated Background with Parallax Effect */}
         <div className="absolute inset-0 z-0">
-          <div 
+          <div
             className="fixed inset-0 w-full h-full"
             style={{
               backgroundImage: 'url(/images/herobg.png)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundAttachment: 'fixed',
-              zIndex: -1
+              zIndex: -1,
+              willChange: 'transform',
+              transform: 'translateZ(0)' // Force hardware acceleration
             }}
           />
-          {/* Enhanced overlay effects for modern look */}
-          <div className="absolute inset-0 bg-gradient-to-r from-teal-900/85 via-blue-900/75 to-teal-800/85"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
-          <div className="absolute inset-0 backdrop-blur-[0.8px]"></div>
-          {/* Dynamic pattern overlays */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,_rgba(14,165,233,0.2)_0%,_transparent_50%)] opacity-70"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,_rgba(20,184,166,0.2)_0%,_transparent_50%)] opacity-70"></div>
-          {/* Animated mesh gradient */}
-          <div className="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0deg,rgba(14,165,233,0.1)_60deg,transparent_120deg,rgba(20,184,166,0.1)_180deg,transparent_240deg,rgba(14,165,233,0.1)_300deg,transparent_360deg)] animate-spin" style={{animationDuration: '20s'}}></div>
-        </div>
-
-        {/* Floating Elements for Modern Effect */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
-          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-white/8 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-teal-400/12 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 right-1/3 w-56 h-56 bg-blue-400/10 rounded-full blur-2xl animate-pulse delay-500"></div>
-          {/* Additional floating elements */}
-          <div className="absolute top-3/4 left-1/3 w-40 h-40 bg-yellow-300/8 rounded-full blur-2xl animate-pulse delay-2000"></div>
-          <div className="absolute top-1/6 right-1/6 w-32 h-32 bg-green-400/10 rounded-full blur-xl animate-pulse delay-1500"></div>
+          {/* Static gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-teal-900/80 via-blue-900/70 to-teal-800/80"></div>
+          
+          {/* Floating particles animation */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(20)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-2 h-2 bg-white/20 rounded-full animate-float"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 5}s`,
+                  animationDuration: `${3 + Math.random() * 4}s`
+                }}
+              />
+            ))}
+          </div>
+          
+          {/* Interactive morphing shapes */}
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-teal-400/10 to-blue-500/10 rounded-full blur-3xl animate-morph opacity-60"></div>
+          <div className="absolute bottom-20 left-20 w-48 h-48 bg-gradient-to-br from-blue-400/10 to-teal-500/10 rounded-full blur-2xl animate-morph-reverse opacity-60"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-20 flex items-center py-16 lg:py-20">
           <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-6 lg:gap-8">
 
-            {/* Text Section - Optimized for better viewport usage */}
+            {/* Enhanced Interactive Text Section */}
             <div data-animate="true" className="opacity-0 translate-y-8 transition-all duration-700 ease-out flex-1 lg:max-w-2xl space-y-4">
-              {/* Enhanced Trust Badge */}
-              <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-lg border border-white/40 rounded-full px-5 py-3 mb-4 shadow-2xl hover:bg-white/25 transition-all duration-300">
-                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg"></div>
-                <span className="text-sm font-semibold text-white drop-shadow-sm tracking-wide">Terakreditasi Paripurna • Melayani 24/7</span>
+              {/* Interactive Trust Badge with hover effects */}
+              <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-sm border border-white/40 rounded-full px-5 py-3 mb-4 shadow-lg hover:bg-white/30 hover:scale-105 transition-all duration-300 cursor-pointer group">
+                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse group-hover:animate-bounce"></div>
+                <span className="text-sm font-semibold text-white group-hover:text-green-200 transition-colors">Terakreditasi Paripurna • Melayani 24/7</span>
               </div>
 
-              {/* Optimized Main Heading - Reduced size for better fit */}
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-[0.9] tracking-tight">
-                <span className="block text-white drop-shadow-2xl">Kesehatan</span>
-                <span className="block bg-gradient-to-r from-yellow-300 via-white to-blue-200 bg-clip-text text-transparent drop-shadow-2xl animate-pulse">
+              {/* Animated Main Heading with typewriter effect */}
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+                <span className="block text-white animate-fade-in-up">Kesehatan</span>
+                <span className="block bg-gradient-to-r from-yellow-300 via-blue-200 to-teal-300 bg-clip-text text-transparent animate-gradient-x animate-fade-in-up animation-delay-300">
                   Terdepan
                 </span>
-                <span className="block text-white text-2xl md:text-3xl lg:text-4xl font-semibold mt-2 drop-shadow-2xl">
+                <span className="block text-white text-2xl md:text-3xl lg:text-4xl font-semibold mt-2 animate-fade-in-up animation-delay-600">
                   untuk Keluarga Anda
                 </span>
               </h1>
 
-              {/* Enhanced Description */}
-              <div className="space-y-3 mb-4">
-                <p className="text-base md:text-lg text-white leading-relaxed font-light drop-shadow-lg">
-                  <span className="font-bold text-yellow-300 drop-shadow-lg animate-pulse">RS Bhayangkara Mohammad Hasan Palembang</span> -
+              {/* Enhanced Description with stagger animation */}
+              <div className="space-y-3 mb-4 animate-fade-in-up animation-delay-900">
+                <p className="text-base md:text-lg text-white leading-relaxed">
+                  <span className="font-bold text-yellow-300 hover:text-yellow-200 transition-colors cursor-pointer">RS Bhayangkara Mohammad Hasan Palembang</span> -
                   Rumah sakit terpercaya dengan teknologi medis terkini dan tim dokter spesialis berpengalaman.
                 </p>
                 
-                {/* Enhanced Key Features */}
+                {/* Interactive Key Features with hover animations */}
                 <div className="flex flex-wrap gap-2 text-white">
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-lg rounded-xl px-3 py-2 border border-white/30 shadow-lg hover:bg-white/25 transition-all duration-300 hover:scale-105">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full shadow-lg animate-pulse"></div>
-                    <span className="text-xs font-semibold drop-shadow-sm">Dokter Spesialis</span>
+                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-3 py-2 border border-white/30 hover:bg-white/30 hover:scale-105 transition-all duration-300 cursor-pointer group">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full group-hover:animate-ping"></div>
+                    <span className="text-xs font-semibold group-hover:text-blue-200 transition-colors">Dokter Spesialis</span>
                   </div>
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-lg rounded-xl px-3 py-2 border border-white/30 shadow-lg hover:bg-white/25 transition-all duration-300 hover:scale-105">
-                    <div className="w-2 h-2 bg-green-400 rounded-full shadow-lg animate-pulse delay-200"></div>
-                    <span className="text-xs font-semibold drop-shadow-sm">BPJS & Umum</span>
+                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-3 py-2 border border-white/30 hover:bg-white/30 hover:scale-105 transition-all duration-300 cursor-pointer group">
+                    <div className="w-2 h-2 bg-green-400 rounded-full group-hover:animate-ping"></div>
+                    <span className="text-xs font-semibold group-hover:text-green-200 transition-colors">BPJS & Umum</span>
                   </div>
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-lg rounded-xl px-3 py-2 border border-white/30 shadow-lg hover:bg-white/25 transition-all duration-300 hover:scale-105">
-                    <div className="w-2 h-2 bg-yellow-400 rounded-full shadow-lg animate-pulse delay-400"></div>
-                    <span className="text-xs font-semibold drop-shadow-sm">Teknologi Modern</span>
+                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-3 py-2 border border-white/30 hover:bg-white/30 hover:scale-105 transition-all duration-300 cursor-pointer group">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full group-hover:animate-ping"></div>
+                    <span className="text-xs font-semibold group-hover:text-yellow-200 transition-colors">Teknologi Modern</span>
                   </div>
                 </div>
               </div>
 
-              {/* Enhanced CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 mb-6">
-                <button className="group relative bg-gradient-to-r from-white to-gray-50 text-teal-600 px-6 py-3 rounded-full font-bold text-base hover:from-white hover:to-white transition-all duration-300 hover:scale-110 transform shadow-2xl hover:shadow-3xl overflow-hidden border border-white/30">
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-blue-600 opacity-0 group-hover:opacity-15 transition-opacity duration-300"></div>
-                  <span className="relative z-10 flex items-center justify-center gap-2">
+              {/* Enhanced Interactive CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 mb-6 animate-fade-in-up animation-delay-1200">
+                <button className="group relative bg-white text-teal-600 px-6 py-3 rounded-full font-bold text-base hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-blue-500 opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
+                  <span className="relative flex items-center justify-center gap-2">
                     Konsultasi Sekarang
-                    <svg className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </span>
+                  <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:left-full transition-all duration-700"></div>
                 </button>
                 
-                <button className="group bg-white/15 backdrop-blur-lg border-2 border-white/50 text-white px-6 py-3 rounded-full font-semibold text-base hover:bg-white/25 hover:border-white/70 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:scale-105">
-                  <span className="flex items-center justify-center gap-2 drop-shadow-lg">
-                    <svg className="w-4 h-4 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <button className="group relative bg-white/15 backdrop-blur-sm border-2 border-white/50 text-white px-6 py-3 rounded-full font-semibold text-base hover:bg-white/25 hover:border-white/70 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 overflow-hidden">
+                  <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="relative flex items-center justify-center gap-2">
+                    <svg className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                     Hubungi Kami
@@ -436,93 +394,119 @@ const HospitalWebsite = () => {
                 </button>
               </div>
 
-              {/* Enhanced Stats Row - Now prominently visible and compact */}
-              <div className="grid grid-cols-3 gap-4 pt-6 mt-6 border-t-2 border-white/40">
-                <div className="text-center group hover:scale-110 transition-transform duration-300 cursor-pointer">
-                  <div className="text-2xl lg:text-3xl font-bold text-white mb-1 drop-shadow-lg group-hover:text-yellow-300 transition-colors duration-300">24/7</div>
-                  <div className="text-xs text-white/90 drop-shadow-sm font-medium">Layanan Darurat</div>
+              {/* Interactive Animated Stats Row */}
+              <div className="grid grid-cols-3 gap-4 pt-6 mt-6 border-t-2 border-white/40 animate-fade-in-up animation-delay-1500">
+                <div className="text-center group cursor-pointer hover:scale-110 transition-transform duration-300">
+                  <div className="text-2xl lg:text-3xl font-bold text-white mb-1 group-hover:text-green-300 transition-colors animate-counter" data-target="24">24/7</div>
+                  <div className="text-xs text-white/90 font-medium group-hover:text-white transition-colors">Layanan Darurat</div>
                 </div>
-                <div className="text-center group hover:scale-110 transition-transform duration-300 cursor-pointer">
-                  <div className="text-2xl lg:text-3xl font-bold text-white mb-1 drop-shadow-lg group-hover:text-blue-300 transition-colors duration-300">100+</div>
-                  <div className="text-xs text-white/90 drop-shadow-sm font-medium">Tenaga Medis</div>
+                <div className="text-center group cursor-pointer hover:scale-110 transition-transform duration-300">
+                  <div className="text-2xl lg:text-3xl font-bold text-white mb-1 group-hover:text-blue-300 transition-colors animate-counter" data-target="100">100+</div>
+                  <div className="text-xs text-white/90 font-medium group-hover:text-white transition-colors">Tenaga Medis</div>
                 </div>
-                <div className="text-center group hover:scale-110 transition-transform duration-300 cursor-pointer">
-                  <div className="text-2xl lg:text-3xl font-bold text-yellow-300 mb-1 drop-shadow-lg group-hover:animate-pulse">★★★★★</div>
-                  <div className="text-xs text-white/90 drop-shadow-sm font-medium">Terakreditasi</div>
+                <div className="text-center group cursor-pointer hover:scale-110 transition-transform duration-300">
+                  <div className="text-2xl lg:text-3xl font-bold text-yellow-300 mb-1 group-hover:text-yellow-200 transition-colors">★★★★★</div>
+                  <div className="text-xs text-white/90 font-medium group-hover:text-white transition-colors">Terakreditasi</div>
                 </div>
               </div>
             </div>
 
-            {/* Enhanced Image Slider Section */}
+            {/* Enhanced Interactive Image Slider Section */}
             <div data-animate="true" className="opacity-0 translate-x-8 transition-all duration-700 ease-out flex-1 flex justify-center lg:justify-end">
               {isMounted && (
-                <div className="relative rounded-2xl shadow-2xl overflow-hidden group bg-transparent hover:shadow-3xl transition-shadow duration-500">
+                <div className="relative rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500">
+                  {/* Glassmorphism container */}
+                  <div className="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"></div>
+                  
                   {heroImages.map((img, index) => (
                     <div
                       key={index}
-                      className={`transition-all duration-1000 ease-in-out ${
-                        index === currentSlide ? 'opacity-100 scale-100 relative z-20' : 'opacity-0 scale-95 absolute inset-0 z-10'
+                      className={`transition-all duration-1000 ${
+                        index === currentSlide ? 'opacity-100 relative z-20 scale-100' : 'opacity-0 absolute inset-0 z-10 scale-95'
                       }`}
                     >
                       <img
                         src={img}
-                        alt="Slide"
-                        className="w-auto h-auto max-w-full max-h-[60vh] object-contain rounded-2xl shadow-2xl"
+                        alt={`Hospital slide ${index + 1}`}
+                        className="w-auto h-auto max-w-full max-h-[60vh] object-contain rounded-2xl group-hover:scale-105 transition-transform duration-700"
+                        loading={index === 0 ? "eager" : "lazy"}
                       />
 
-                      {/* Enhanced Overlays and Tagline */}
-                      <div className="absolute top-4 left-4 bg-gradient-to-r from-white to-gray-100 px-4 py-2 rounded-lg shadow-lg text-black text-sm font-bold z-30 backdrop-blur-sm border border-white/30">
+                      {/* Enhanced Interactive Overlay */}
+                      <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg text-black text-sm font-bold z-30 hover:bg-white hover:scale-105 transition-all duration-300 cursor-pointer shadow-lg">
                         RS Bhayangkara
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-black/15 to-transparent z-20 rounded-2xl" />
-                      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-blue-600/40 to-transparent z-10 pointer-events-none rounded-2xl" />
                     </div>
                   ))}
 
-                  {/* Enhanced Navigation Dots */}
+                  {/* Enhanced Navigation Dots with hover effects */}
                   <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
                     {heroImages.map((_, index) => (
                       <button
                         key={index}
                         onClick={() => setCurrentSlide(index)}
                         className={`h-3 rounded-full transition-all duration-300 hover:scale-125 ${
-                          index === currentSlide ? 'bg-white w-8 shadow-lg' : 'bg-white/60 hover:bg-white/90 w-3'
+                          index === currentSlide
+                            ? 'bg-white w-8 shadow-lg'
+                            : 'bg-white/60 w-3 hover:bg-white/80'
                         }`}
                         aria-label={`Go to slide ${index + 1}`}
                       />
                     ))}
                   </div>
 
-                  {/* Enhanced Arrows */}
+                  {/* Enhanced Interactive Arrows */}
                   <button
                     onClick={() => setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length)}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black/60 hover:scale-110 z-30 border border-white/20"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-black/60 hover:scale-110 transition-all duration-300 z-30 border border-white/20"
                     aria-label="Previous slide"
                   >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                   </button>
                   <button
                     onClick={() => setCurrentSlide((prev) => (prev + 1) % heroImages.length)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-black/60 hover:scale-110 z-30 border border-white/20"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-black/60 hover:scale-110 transition-all duration-300 z-30 border border-white/20"
                     aria-label="Next slide"
                   >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </button>
+                  
+                  {/* Progress indicator */}
+                  <div className="absolute top-4 right-4 z-30">
+                    <div className="w-12 h-12 rounded-full border-2 border-white/30 flex items-center justify-center backdrop-blur-sm bg-black/20 hover:bg-black/40 transition-all duration-300">
+                      <div className="text-white text-xs font-bold">{currentSlide + 1}/{heroImages.length}</div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/60 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/80 rounded-full mt-2 animate-pulse"></div>
+        {/* Enhanced Interactive Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 animate-bounce hover:animate-pulse cursor-pointer group">
+          <div className="w-6 h-10 border-2 border-white/60 rounded-full flex justify-center group-hover:border-white group-hover:scale-110 transition-all duration-300">
+            <div className="w-1 h-3 bg-white/80 rounded-full mt-2 animate-pulse group-hover:bg-white"></div>
           </div>
+          <div className="text-white/60 text-xs mt-2 text-center group-hover:text-white transition-colors duration-300">Scroll</div>
+        </div>
+        
+        {/* Floating action buttons */}
+        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 space-y-4">
+          <button className="w-14 h-14 bg-gradient-to-br from-teal-500 to-blue-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group">
+            <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.126-.9L3 20l1.9-4.874A9.863 9.863 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
+            </svg>
+          </button>
+          <button className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group animate-pulse">
+            <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+          </button>
         </div>
       </section>
 
