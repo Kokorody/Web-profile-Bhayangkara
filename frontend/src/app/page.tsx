@@ -230,7 +230,7 @@ const HospitalWebsite = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative text-white h-screen overflow-hidden bg-black">
+      <section className="relative text-white min-h-screen overflow-hidden bg-black">
         {/* Fixed Background Image with Effects - Only visible during hero section */}
         <div className="absolute inset-0 z-0">
           <div 
@@ -264,67 +264,67 @@ const HospitalWebsite = () => {
           <div className="absolute top-1/6 right-1/6 w-32 h-32 bg-green-400/10 rounded-full blur-xl animate-pulse delay-1500"></div>
         </div>
 
-        <div className="container mx-auto px-4 relative z-20 h-full flex items-center">
-          <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-8 lg:gap-12 py-8">
+        <div className="container mx-auto px-4 relative z-20 flex items-center py-16 lg:py-20">
+          <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-6 lg:gap-8">
 
             {/* Text Section - Optimized for better viewport usage */}
-            <div data-animate="true" className="opacity-0 translate-y-8 transition-all duration-700 ease-out flex-1 lg:max-w-2xl">
+            <div data-animate="true" className="opacity-0 translate-y-8 transition-all duration-700 ease-out flex-1 lg:max-w-2xl space-y-4">
               {/* Enhanced Trust Badge */}
-              <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-lg border border-white/40 rounded-full px-5 py-3 mb-6 shadow-2xl hover:bg-white/25 transition-all duration-300">
+              <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-lg border border-white/40 rounded-full px-5 py-3 mb-4 shadow-2xl hover:bg-white/25 transition-all duration-300">
                 <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg"></div>
                 <span className="text-sm font-semibold text-white drop-shadow-sm tracking-wide">Terakreditasi Paripurna • Melayani 24/7</span>
               </div>
 
               {/* Optimized Main Heading - Reduced size for better fit */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 leading-[0.9] tracking-tight">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-[0.9] tracking-tight">
                 <span className="block text-white drop-shadow-2xl">Kesehatan</span>
                 <span className="block bg-gradient-to-r from-yellow-300 via-white to-blue-200 bg-clip-text text-transparent drop-shadow-2xl animate-pulse">
                   Terdepan
                 </span>
-                <span className="block text-white text-3xl md:text-4xl lg:text-5xl font-semibold mt-2 drop-shadow-2xl">
+                <span className="block text-white text-2xl md:text-3xl lg:text-4xl font-semibold mt-2 drop-shadow-2xl">
                   untuk Keluarga Anda
                 </span>
               </h1>
 
               {/* Enhanced Description */}
-              <div className="space-y-4 mb-6">
-                <p className="text-lg md:text-xl text-white leading-relaxed font-light drop-shadow-lg">
+              <div className="space-y-3 mb-4">
+                <p className="text-base md:text-lg text-white leading-relaxed font-light drop-shadow-lg">
                   <span className="font-bold text-yellow-300 drop-shadow-lg animate-pulse">RS Bhayangkara Mohammad Hasan Palembang</span> -
                   Rumah sakit terpercaya dengan teknologi medis terkini dan tim dokter spesialis berpengalaman.
                 </p>
                 
                 {/* Enhanced Key Features */}
-                <div className="flex flex-wrap gap-3 text-white">
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-lg rounded-xl px-4 py-2 border border-white/30 shadow-lg hover:bg-white/25 transition-all duration-300 hover:scale-105">
-                    <div className="w-3 h-3 bg-blue-400 rounded-full shadow-lg animate-pulse"></div>
-                    <span className="text-sm font-semibold drop-shadow-sm">Dokter Spesialis</span>
+                <div className="flex flex-wrap gap-2 text-white">
+                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-lg rounded-xl px-3 py-2 border border-white/30 shadow-lg hover:bg-white/25 transition-all duration-300 hover:scale-105">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full shadow-lg animate-pulse"></div>
+                    <span className="text-xs font-semibold drop-shadow-sm">Dokter Spesialis</span>
                   </div>
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-lg rounded-xl px-4 py-2 border border-white/30 shadow-lg hover:bg-white/25 transition-all duration-300 hover:scale-105">
-                    <div className="w-3 h-3 bg-green-400 rounded-full shadow-lg animate-pulse delay-200"></div>
-                    <span className="text-sm font-semibold drop-shadow-sm">BPJS & Umum</span>
+                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-lg rounded-xl px-3 py-2 border border-white/30 shadow-lg hover:bg-white/25 transition-all duration-300 hover:scale-105">
+                    <div className="w-2 h-2 bg-green-400 rounded-full shadow-lg animate-pulse delay-200"></div>
+                    <span className="text-xs font-semibold drop-shadow-sm">BPJS & Umum</span>
                   </div>
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-lg rounded-xl px-4 py-2 border border-white/30 shadow-lg hover:bg-white/25 transition-all duration-300 hover:scale-105">
-                    <div className="w-3 h-3 bg-yellow-400 rounded-full shadow-lg animate-pulse delay-400"></div>
-                    <span className="text-sm font-semibold drop-shadow-sm">Teknologi Modern</span>
+                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-lg rounded-xl px-3 py-2 border border-white/30 shadow-lg hover:bg-white/25 transition-all duration-300 hover:scale-105">
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full shadow-lg animate-pulse delay-400"></div>
+                    <span className="text-xs font-semibold drop-shadow-sm">Teknologi Modern</span>
                   </div>
                 </div>
               </div>
 
               {/* Enhanced CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <button className="group relative bg-gradient-to-r from-white to-gray-50 text-teal-600 px-8 py-4 rounded-full font-bold text-lg hover:from-white hover:to-white transition-all duration-300 hover:scale-110 transform shadow-2xl hover:shadow-3xl overflow-hidden border border-white/30">
+              <div className="flex flex-col sm:flex-row gap-3 mb-6">
+                <button className="group relative bg-gradient-to-r from-white to-gray-50 text-teal-600 px-6 py-3 rounded-full font-bold text-base hover:from-white hover:to-white transition-all duration-300 hover:scale-110 transform shadow-2xl hover:shadow-3xl overflow-hidden border border-white/30">
                   <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-blue-600 opacity-0 group-hover:opacity-15 transition-opacity duration-300"></div>
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     Konsultasi Sekarang
-                    <svg className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </span>
                 </button>
                 
-                <button className="group bg-white/15 backdrop-blur-lg border-2 border-white/50 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white/25 hover:border-white/70 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:scale-105">
+                <button className="group bg-white/15 backdrop-blur-lg border-2 border-white/50 text-white px-6 py-3 rounded-full font-semibold text-base hover:bg-white/25 hover:border-white/70 transition-all duration-300 shadow-2xl hover:shadow-3xl hover:scale-105">
                   <span className="flex items-center justify-center gap-2 drop-shadow-lg">
-                    <svg className="w-5 h-5 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                     Hubungi Kami
@@ -332,19 +332,19 @@ const HospitalWebsite = () => {
                 </button>
               </div>
 
-              {/* Enhanced Stats Row - Now prominently visible */}
-              <div className="grid grid-cols-3 gap-6 pt-6 border-t-2 border-white/40">
+              {/* Enhanced Stats Row - Now prominently visible and compact */}
+              <div className="grid grid-cols-3 gap-4 pt-6 mt-6 border-t-2 border-white/40">
                 <div className="text-center group hover:scale-110 transition-transform duration-300 cursor-pointer">
-                  <div className="text-3xl lg:text-4xl font-bold text-white mb-2 drop-shadow-lg group-hover:text-yellow-300 transition-colors duration-300">24/7</div>
-                  <div className="text-sm text-white/90 drop-shadow-sm font-medium">Layanan Darurat</div>
+                  <div className="text-2xl lg:text-3xl font-bold text-white mb-1 drop-shadow-lg group-hover:text-yellow-300 transition-colors duration-300">24/7</div>
+                  <div className="text-xs text-white/90 drop-shadow-sm font-medium">Layanan Darurat</div>
                 </div>
                 <div className="text-center group hover:scale-110 transition-transform duration-300 cursor-pointer">
-                  <div className="text-3xl lg:text-4xl font-bold text-white mb-2 drop-shadow-lg group-hover:text-blue-300 transition-colors duration-300">100+</div>
-                  <div className="text-sm text-white/90 drop-shadow-sm font-medium">Tenaga Medis</div>
+                  <div className="text-2xl lg:text-3xl font-bold text-white mb-1 drop-shadow-lg group-hover:text-blue-300 transition-colors duration-300">100+</div>
+                  <div className="text-xs text-white/90 drop-shadow-sm font-medium">Tenaga Medis</div>
                 </div>
                 <div className="text-center group hover:scale-110 transition-transform duration-300 cursor-pointer">
-                  <div className="text-3xl lg:text-4xl font-bold text-yellow-300 mb-2 drop-shadow-lg group-hover:animate-pulse">★★★★★</div>
-                  <div className="text-sm text-white/90 drop-shadow-sm font-medium">Terakreditasi</div>
+                  <div className="text-2xl lg:text-3xl font-bold text-yellow-300 mb-1 drop-shadow-lg group-hover:animate-pulse">★★★★★</div>
+                  <div className="text-xs text-white/90 drop-shadow-sm font-medium">Terakreditasi</div>
                 </div>
               </div>
             </div>
