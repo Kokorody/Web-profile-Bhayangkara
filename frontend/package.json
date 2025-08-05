@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/font": "^14.2.15",
     "aos": "^2.3.4",
     "firebase": "^12.0.0",
     "lucide-react": "^0.530.0",
