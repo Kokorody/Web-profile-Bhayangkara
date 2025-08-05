@@ -8,6 +8,12 @@ const HospitalWebsite = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isMounted, setIsMounted] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [particleStyles, setParticleStyles] = useState<Array<{
+    left: string;
+    top: string;
+    animationDelay: string;
+    animationDuration: string;
+  }>>([]);
 
   const heroImages = [
     '/images/1.png',
@@ -19,6 +25,15 @@ const HospitalWebsite = () => {
 
   useEffect(() => {
     setIsMounted(true);
+    
+    // Generate particle styles on client-side only
+    const styles = Array.from({ length: 20 }, () => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 5}s`,
+      animationDuration: `${3 + Math.random() * 4}s`
+    }));
+    setParticleStyles(styles);
     
     // Auto-slide effect
     const slideInterval = setInterval(() => {
@@ -305,16 +320,11 @@ const HospitalWebsite = () => {
           
           {/* Floating particles animation */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(20)].map((_, i) => (
+            {isMounted && particleStyles.map((style, i) => (
               <div
                 key={i}
                 className="absolute w-2 h-2 bg-white/20 rounded-full animate-float"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 5}s`,
-                  animationDuration: `${3 + Math.random() * 4}s`
-                }}
+                style={style}
               />
             ))}
           </div>
