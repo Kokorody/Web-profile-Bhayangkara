@@ -281,26 +281,6 @@ const HospitalWebsite = () => {
                         <div className="text-xs text-gray-500">Profile & Sejarah Rumah Sakit</div>
                       </div>
                     </a>
-                    <a
-                      href="#layanan"
-                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                    >
-                      <span className="text-lg">⚕️</span>
-                      <div>
-                        <div className="font-semibold">Layanan Medis</div>
-                        <div className="text-xs text-gray-500">Pelayanan Kesehatan Kami</div>
-                      </div>
-                    </a>
-                    <a
-                      href="#dokter"
-                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                    >
-                      <span className="text-lg">👨‍⚕️</span>
-                      <div>
-                        <div className="font-semibold">Tim Dokter</div>
-                        <div className="text-xs text-gray-500">Dokter Spesialis Kami</div>
-                      </div>
-                    </a>
                   </div>
                 </div>
               </div>
