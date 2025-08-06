@@ -16,6 +16,9 @@ const HospitalWebsite = () => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const lastScrollY = useRef(0);
+  const ticking = useRef(false);
+  const lastUpdate = useRef(0);
+  const frameCount = useRef(0);
   const [particleStyles, setParticleStyles] = useState<Array<{
     left: string;
     top: string;
@@ -48,46 +51,79 @@ const HospitalWebsite = () => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
     }, 20000); // Change slide every 5 seconds
 
-    // Scroll event listener for header visibility
+    // Optimized scroll event listener for header visibility
     const handleScroll = () => {
+      const now = performance.now();
+      
+      // Throttle updates to max 60fps (16.67ms)
+      if (now - lastUpdate.current < 16) {
+        return;
+      }
+      lastUpdate.current = now;
+
       const currentScrollY = window.scrollY;
-      const scrollThreshold = 100; // Minimum scroll distance to trigger hide/show
+      const scrollThreshold = 100;
+      const scrollDifference = Math.abs(currentScrollY - lastScrollY.current);
       
-      // Calculate scroll progress
-      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = Math.min((currentScrollY / documentHeight) * 100, 100);
-      setScrollProgress(progress);
+      // Only update if scroll difference is significant (reduces unnecessary updates)
+      if (scrollDifference < 5) {
+        lastScrollY.current = currentScrollY;
+        return;
+      }
       
+      // Simplified logic: Always show header at top, hide when scrolling down significantly, show when scrolling up
       if (currentScrollY < scrollThreshold) {
         // Always show header at the top
         setIsHeaderVisible(true);
-      } else if (currentScrollY > lastScrollY.current && currentScrollY > scrollThreshold) {
-        // Scrolling down - hide header
-        setIsHeaderVisible(false);
-        setIsMenuOpen(false); // Close mobile menu when hiding header
-      } else if (currentScrollY < lastScrollY.current) {
-        // Scrolling up - show header
-        setIsHeaderVisible(true);
+      } else {
+        // Check scroll direction
+        const isScrollingDown = currentScrollY > lastScrollY.current;
+        
+        if (isScrollingDown) {
+          // Scrolling down - hide header
+          setIsHeaderVisible(false);
+          setIsMenuOpen(false);
+        } else {
+          // Scrolling up - show header
+          setIsHeaderVisible(true);
+        }
       }
       
       lastScrollY.current = currentScrollY;
     };
 
-    // Add throttling for better performance
-    let ticking = false;
-    const throttledHandleScroll = () => {
-      if (!ticking) {
+    // Optimized scroll progress calculation (less frequent updates)
+    const updateScrollProgress = () => {
+      const currentScrollY = window.scrollY;
+      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = documentHeight > 0 ? Math.min((currentScrollY / documentHeight) * 100, 100) : 0;
+      setScrollProgress(progress);
+    };
+
+    // Separate throttled function for scroll progress (updates less frequently)
+    const throttledScrollProgress = () => {
+      if (!ticking.current) {
         requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
+          updateScrollProgress();
+          ticking.current = false;
         });
-        ticking = true;
+        ticking.current = true;
       }
     };
 
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    // Use passive listeners and combine handlers efficiently
+    const combinedScrollHandler = () => {
+      handleScroll();
+      // Update progress less frequently (every 10th call instead of random)
+      frameCount.current++;
+      if (frameCount.current % 10 === 0) {
+        throttledScrollProgress();
+      }
+    };
 
-    // Also handle mobile devices better by detecting touch interactions
+    window.addEventListener('scroll', combinedScrollHandler, { passive: true });
+
+    // Optimized mobile touch handling
     let touchStartY = 0;
     const handleTouchStart = (e: TouchEvent) => {
       touchStartY = e.touches[0].clientY;
@@ -97,20 +133,34 @@ const HospitalWebsite = () => {
       const touchY = e.touches[0].clientY;
       const touchDiff = touchStartY - touchY;
       
-      // If user is swiping down significantly, show header
-      if (touchDiff < -50 && window.scrollY > 100) {
+      // Only trigger on significant swipe and reduce frequency
+      if (Math.abs(touchDiff) > 50 && window.scrollY > 100) {
+        if (touchDiff < -50) {
+          // Swiping down (pull to show header)
+          setIsHeaderVisible(true);
+        }
+      }
+    };
+
+    // Also add a simple scroll-to-top trigger
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         setIsHeaderVisible(true);
       }
     };
 
+    // Add touch listeners with reduced frequency
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('keydown', handleKeyPress, { passive: true });
 
     return () => {
       clearInterval(slideInterval);
-      window.removeEventListener('scroll', throttledHandleScroll);
+      window.removeEventListener('scroll', combinedScrollHandler);
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('keydown', handleKeyPress);
     };
   }, []); // Remove lastScrollY from dependencies
 
@@ -150,12 +200,16 @@ const HospitalWebsite = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Optimized Header with Dynamic Visibility */}
-      <header className={`bg-white/95 backdrop-blur-md shadow-xl fixed top-0 left-0 right-0 z-50 border-b border-gray-100/50 transition-all duration-500 ease-in-out transform ${
+      {/* Optimized Header with Dynamic Visibility - GPU Accelerated */}
+      <header className={`bg-white/95 backdrop-blur-md shadow-xl fixed top-0 left-0 right-0 z-50 border-b border-gray-100/50 will-change-transform transition-transform duration-300 ease-out ${
         isHeaderVisible 
-          ? 'translate-y-0 opacity-100 scale-100' 
-          : '-translate-y-full opacity-0 scale-95'
-      }`}>
+          ? 'translate-y-0' 
+          : '-translate-y-full'
+      }`} style={{ 
+        transform: `translateY(${isHeaderVisible ? '0' : '-100%'})`,
+        backfaceVisibility: 'hidden',
+        perspective: '1000px'
+      }}>
         {/* Simplified Top Bar */}
         <div className="bg-gradient-to-r from-teal-600 to-blue-600 text-white py-3">
           <div className="container mx-auto px-4 flex justify-between items-center text-sm">
@@ -281,13 +335,27 @@ const HospitalWebsite = () => {
 
       {/* Enhanced Interactive Hero Section */}
       <section className="relative text-white min-h-screen overflow-hidden bg-black">
-        {/* Scroll Progress Indicator */}
-        <div className="fixed top-0 left-0 w-full h-1 bg-gray-200/10 z-40">
-          <div 
-            className="h-full bg-gradient-to-r from-teal-500 to-blue-500 transition-all duration-300 ease-out shadow-lg shadow-teal-500/50"
-            style={{ width: `${scrollProgress}%` }}
-          />
-        </div>
+        {/* Temporary Debug Info - Remove after testing */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="fixed top-20 left-4 z-50 bg-black/80 text-white p-4 rounded-lg text-xs">
+            <div>Header Visible: {isHeaderVisible ? 'YES' : 'NO'}</div>
+            <div>Scroll Progress: {scrollProgress.toFixed(1)}%</div>
+            <div>Last Scroll Y: {lastScrollY.current}</div>
+          </div>
+        )}
+        
+        {/* Optimized Scroll Progress Indicator */}
+        {scrollProgress > 5 && (
+          <div className="fixed top-0 left-0 w-full h-1 bg-gray-200/10 z-40">
+            <div 
+              className="h-full bg-gradient-to-r from-teal-500 to-blue-500 transition-all duration-200 ease-out will-change-transform"
+              style={{ 
+                transform: `scaleX(${scrollProgress / 100})`,
+                transformOrigin: 'left center'
+              }}
+            />
+          </div>
+        )}
         {/* Animated Background with Parallax Effect */}
         <div className="absolute inset-0 z-0">
           <div
@@ -1290,31 +1358,42 @@ const HospitalWebsite = () => {
         </div>
       </footer>
 
-      {/* Scroll to Top Button - appears when header is hidden */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className={`fixed bottom-6 right-6 z-40 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform ${
-          !isHeaderVisible && scrollProgress > 10
-            ? 'translate-y-0 opacity-100 scale-100' 
-            : 'translate-y-16 opacity-0 scale-75 pointer-events-none'
-        }`}
-        aria-label="Scroll to top"
-      >
-        <svg 
-          className="w-6 h-6" 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
+      {/* Optimized Scroll to Top Button */}
+      {!isHeaderVisible && scrollProgress > 15 && (
+        <button
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setIsHeaderVisible(true); // Force header to show
+          }}
+          className="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 will-change-transform hover:scale-105"
+          aria-label="Scroll to top"
         >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M5 10l7-7m0 0l7 7m-7-7v18" 
-          />
-        </svg>
-        <div className="absolute inset-0 bg-white/20 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-      </button>
+          <svg 
+            className="w-6 h-6" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M5 10l7-7m0 0l7 7m-7-7v18" 
+            />
+          </svg>
+        </button>
+      )}
+
+      {/* Emergency Header Toggle Button - only in development */}
+      {process.env.NODE_ENV === 'development' && (
+        <button
+          onClick={() => setIsHeaderVisible(!isHeaderVisible)}
+          className="fixed bottom-6 left-6 z-40 bg-red-500 hover:bg-red-600 text-white p-3 rounded-full shadow-lg text-xs"
+          aria-label="Toggle header"
+        >
+          {isHeaderVisible ? 'Hide' : 'Show'} Header
+        </button>
+      )}
     </div>
   );
 };
