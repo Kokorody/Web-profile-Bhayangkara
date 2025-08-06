@@ -257,14 +257,59 @@ const HospitalWebsite = () => {
 
             {/* Simplified Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-2">
-              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
+              {/* HOME with Dropdown */}
+              <div className="relative group">
+                <button
+                  className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-lg flex items-center gap-2"
+                >
+                  HOME
+                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                {/* Dropdown Menu */}
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                  <div className="p-3 space-y-1">
+                    <a
+                      href="/tentang-kami"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🏥</span>
+                      <div>
+                        <div className="font-semibold">Tentang Kami</div>
+                        <div className="text-xs text-gray-500">Profile & Sejarah Rumah Sakit</div>
+                      </div>
+                    </a>
+                    <a
+                      href="#layanan"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">⚕️</span>
+                      <div>
+                        <div className="font-semibold">Layanan Medis</div>
+                        <div className="text-xs text-gray-500">Pelayanan Kesehatan Kami</div>
+                      </div>
+                    </a>
+                    <a
+                      href="#dokter"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">👨‍⚕️</span>
+                      <div>
+                        <div className="font-semibold">Tim Dokter</div>
+                        <div className="text-xs text-gray-500">Dokter Spesialis Kami</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Other Navigation Items */}
+              {['DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
                 <button
                   key={item}
-                  className={`px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 ${
-                    item === 'HOME'
-                      ? 'bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-lg'
-                      : 'text-gray-700 hover:text-teal-600 hover:bg-teal-50'
-                  }`}
+                  className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
                 >
                   {item}
                 </button>
@@ -742,12 +787,15 @@ const HospitalWebsite = () => {
                     </div>
                   </div>
                   
-                  <button className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-teal-700 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+                  <a 
+                    href="/tentang-kami"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-teal-700 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl group"
+                  >
                     Selengkapnya
                     <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
-                  </button>
+                  </a>
                 </div>
               </div>
 
