@@ -35,12 +35,54 @@ const AnimatedCounter = ({ end, duration = 2, suffix = '' }: {
 const TentangKamiPage = () => {
   const [activeSection, setActiveSection] = useState('profile');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   // Parallax effects
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+
+  // Header visibility control with throttling for performance
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    
+    const controlNavbar = () => {
+      // Clear previous timeout to throttle the function
+      clearTimeout(timeoutId);
+      
+      timeoutId = setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          const currentScrollY = window.scrollY;
+          const scrollThreshold = 100; // Minimum scroll distance to trigger hide/show
+          
+          // Show header when at top of page
+          if (currentScrollY < 100) {
+            setIsHeaderVisible(true);
+          }
+          // Hide header when scrolling down (after threshold)
+          else if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
+            setIsHeaderVisible(false);
+          }
+          // Show header when scrolling up
+          else if (currentScrollY < lastScrollY) {
+            setIsHeaderVisible(true);
+          }
+          
+          setLastScrollY(currentScrollY);
+        }
+      }, 10); // 10ms throttle for smooth performance
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', controlNavbar, { passive: true });
+      return () => {
+        window.removeEventListener('scroll', controlNavbar);
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [lastScrollY]);
 
   // Intersection Observer for active section
   useEffect(() => {
@@ -137,7 +179,18 @@ const TentangKamiPage = () => {
       />
 
       {/* Header */}
-      <header className="bg-white/95 backdrop-blur-md shadow-xl fixed top-0 left-0 right-0 z-40 border-b border-gray-100/50">
+      <motion.header
+        className="bg-white/95 backdrop-blur-md shadow-xl fixed top-0 left-0 right-0 z-40 border-b border-gray-100/50"
+        initial={{ y: 0 }}
+        animate={{ 
+          y: isHeaderVisible ? 0 : -100,
+          opacity: isHeaderVisible ? 1 : 0
+        }}
+        transition={{ 
+          duration: 0.3, 
+          ease: [0.25, 0.46, 0.45, 0.94] // Custom easing for smooth feel
+        }}
+      >
         <div className="bg-gradient-to-r from-teal-600 to-blue-600 text-white py-2">
           <div className="container mx-auto px-4 flex justify-between items-center text-sm">
             <div className="flex items-center space-x-6">
@@ -193,7 +246,36 @@ const TentangKamiPage = () => {
             </button>
           </div>
         </div>
-      </header>
+      </motion.header>
+
+      {/* Header Peek Indicator - Shows when header is hidden */}
+      <motion.div
+        className="fixed top-0 left-1/2 transform -translate-x-1/2 z-30"
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ 
+          y: !isHeaderVisible && lastScrollY > 200 ? 0 : -50,
+          opacity: !isHeaderVisible && lastScrollY > 200 ? 1 : 0
+        }}
+        transition={{ 
+          duration: 0.3, 
+          ease: [0.25, 0.46, 0.45, 0.94],
+          delay: !isHeaderVisible ? 0.7 : 0
+        }}
+        whileHover={{ y: 10 }}
+      >
+        <div className="bg-gradient-to-r from-teal-500 to-blue-500 text-white px-6 py-2 rounded-b-xl shadow-lg cursor-pointer">
+          <motion.div
+            animate={{ y: [0, 3, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+            <span className="text-xs font-medium">Menu</span>
+          </motion.div>
+        </div>
+      </motion.div>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32">
@@ -286,7 +368,23 @@ const TentangKamiPage = () => {
       </section>
 
       {/* Navigation Sidebar */}
-      <div className="fixed left-6 top-1/2 transform -translate-y-1/2 z-30 hidden lg:block">
+      <motion.div
+        className="fixed left-6 top-1/2 transform -translate-y-1/2 z-30 hidden lg:block"
+        initial={{ x: 0, opacity: 1 }}
+        animate={{ 
+          x: isHeaderVisible ? 0 : -100,
+          opacity: isHeaderVisible ? 1 : 0.3
+        }}
+        transition={{ 
+          duration: 0.3, 
+          ease: [0.25, 0.46, 0.45, 0.94]
+        }}
+        whileHover={{ 
+          x: 0, 
+          opacity: 1,
+          transition: { duration: 0.2 }
+        }}
+      >
         <nav className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-4 space-y-4">
           {[
             { id: 'profile', label: 'Profile', icon: '🏥' },
@@ -308,7 +406,34 @@ const TentangKamiPage = () => {
             </a>
           ))}
         </nav>
-      </div>
+      </motion.div>
+
+      {/* Navigation Peek Indicator - Shows when sidebar is hidden */}
+      <motion.div
+        className="fixed left-0 top-1/2 transform -translate-y-1/2 z-30 hidden lg:block"
+        initial={{ x: -50, opacity: 0 }}
+        animate={{ 
+          x: !isHeaderVisible ? 0 : -50,
+          opacity: !isHeaderVisible ? 1 : 0
+        }}
+        transition={{ 
+          duration: 0.3, 
+          ease: [0.25, 0.46, 0.45, 0.94],
+          delay: !isHeaderVisible ? 0.5 : 0 // Slight delay when appearing
+        }}
+        whileHover={{ x: 10 }}
+      >
+        <div className="bg-gradient-to-r from-teal-500 to-blue-500 text-white p-3 rounded-r-xl shadow-lg cursor-pointer">
+          <motion.div
+            animate={{ x: [0, 5, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </motion.div>
+        </div>
+      </motion.div>
 
       {/* Profile Section */}
       <section id="profile" className="py-24 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
@@ -742,9 +867,14 @@ const TentangKamiPage = () => {
         className="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
+        animate={{ 
+          opacity: lastScrollY > 200 ? 1 : 0, 
+          scale: lastScrollY > 200 ? 1 : 0,
+          y: isHeaderVisible ? 0 : -10
+        }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
+        transition={{ duration: 0.3 }}
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
