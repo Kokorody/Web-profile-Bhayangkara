@@ -334,13 +334,14 @@ const HospitalWebsite = () => {
       </header>
 
       {/* Enhanced Interactive Hero Section */}
-      <section className="relative text-white min-h-screen overflow-hidden bg-black">
+      <section className="relative text-white min-h-screen overflow-hidden bg-black pt-32 md:pt-36">
         {/* Temporary Debug Info - Remove after testing */}
         {process.env.NODE_ENV === 'development' && (
-          <div className="fixed top-20 left-4 z-50 bg-black/80 text-white p-4 rounded-lg text-xs">
+          <div className="fixed top-36 left-4 z-50 bg-black/80 text-white p-4 rounded-lg text-xs">
             <div>Header Visible: {isHeaderVisible ? 'YES' : 'NO'}</div>
             <div>Scroll Progress: {scrollProgress.toFixed(1)}%</div>
             <div>Last Scroll Y: {lastScrollY.current}</div>
+            <div>Current Scroll: {typeof window !== 'undefined' ? window.scrollY : 0}</div>
           </div>
         )}
         
@@ -389,7 +390,7 @@ const HospitalWebsite = () => {
           <div className="absolute bottom-20 left-20 w-48 h-48 bg-gradient-to-br from-blue-400/10 to-teal-500/10 rounded-full blur-2xl animate-morph-reverse opacity-60"></div>
         </div>
 
-        <div className="container mx-auto px-4 relative z-20 flex items-center py-16 lg:py-20">
+        <div className="container mx-auto px-4 relative z-20 flex items-center py-8 lg:py-12 min-h-[calc(100vh-8rem)]">
           <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-6 lg:gap-8">
 
             {/* Enhanced Interactive Text Section */}
@@ -561,7 +562,7 @@ const HospitalWebsite = () => {
         </div>
         
         {/* Floating action buttons */}
-        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 space-y-4">
+        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-30 space-y-4">
           <button className="w-14 h-14 bg-gradient-to-br from-teal-500 to-blue-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group">
             <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.126-.9L3 20l1.9-4.874A9.863 9.863 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
