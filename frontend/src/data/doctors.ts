@@ -3,7 +3,7 @@ export const doctors = [
     id: 1,
     name: "KOMBES POL Dr. BUDI SUSANTO, Sp.BS",
     specialization: "KARUM KIT BHAYANGKARA M. HASAN PALEMBANG",
-    role: "DOKTER SPESIALIS PENYAKIT KANDUNGAN OBSTETRI DAN GINEKOLOGI (OBGYN)",
+    role: "Obgyn",
     image: "/api/placeholder/200/200",
     experience: "test exp",
     schedule: "Senin - Jumat: 08:00 - 16:00"
@@ -12,7 +12,7 @@ export const doctors = [
     id: 2,
     name: "AKBP DR. ANDRIANTO, SPOG",
     specialization: "DOKTER SPESIALIS PENYAKIT KANDUNGAN OBSTETRI DAN GINEKOLOGI (OBGYN)",
-    role: "Spesialis Kandungan",
+    role: "Obgyn",
     image: "/api/placeholder/200/200",
     experience: "test exp 2",
     schedule: "Senin - Sabtu: 09:00 - 17:00"
@@ -21,7 +21,7 @@ export const doctors = [
     id: 3,
     name: "IPTU dr. IRMA YENNI, Sp.A",
     specialization: "DOKTER SPESIALIS ANAK",
-    role: "Spesialis Anak",
+    role: "Anak",
     image: "/api/placeholder/200/200",
     experience: "test exp 3",
     schedule: "Senin - Jumat: 08:00 - 15:00"
