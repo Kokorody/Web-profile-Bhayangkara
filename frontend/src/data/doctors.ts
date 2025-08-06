@@ -5,7 +5,7 @@ export const doctors = [
     specialization: "KARUM KIT BHAYANGKARA M. HASAN PALEMBANG",
     role: "DOKTER SPESIALIS PENYAKIT KANDUNGAN OBSTETRI DAN GINEKOLOGI (OBGYN)",
     image: "/api/placeholder/200/200",
-    experience: "15+ tahun",
+    experience: "test exp",
     schedule: "Senin - Jumat: 08:00 - 16:00"
   },
   {
@@ -14,7 +14,7 @@ export const doctors = [
     specialization: "DOKTER SPESIALIS PENYAKIT KANDUNGAN OBSTETRI DAN GINEKOLOGI (OBGYN)",
     role: "Spesialis Kandungan",
     image: "/api/placeholder/200/200",
-    experience: "12+ tahun",
+    experience: "test exp 2",
     schedule: "Senin - Sabtu: 09:00 - 17:00"
   },
   {
@@ -23,7 +23,7 @@ export const doctors = [
     specialization: "DOKTER SPESIALIS ANAK",
     role: "Spesialis Anak",
     image: "/api/placeholder/200/200",
-    experience: "10+ tahun",
+    experience: "test exp 3",
     schedule: "Senin - Jumat: 08:00 - 15:00"
   },
   {
@@ -32,7 +32,7 @@ export const doctors = [
     specialization: "Specialist 4",
     role: "Role 4",
     image: "/api/placeholder/200/200",
-    experience: "8+ tahun",
+    experience: "test exp 4",
     schedule: "Selasa - Sabtu: 10:00 - 16:00"
   },
   {
@@ -41,7 +41,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 5",
     role: "Test Role 5",
     image: "/api/placeholder/200/200",
-    experience: "5+ tahun",
+    experience: "test exp 5",
     schedule: "Senin - Jumat: 08:00 - 15:00"
   },
   {
@@ -50,7 +50,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 6",
     role: "Test Role 6",
     image: "/api/placeholder/200/200",
-    experience: "6+ tahun",
+    experience: "test exp 6",
     schedule: "Senin - Jumat: 09:00 - 16:00"
   },
   {
@@ -59,7 +59,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 7",
     role: "Test Role 7",
     image: "/api/placeholder/200/200",
-    experience: "7+ tahun",
+    experience: "test exp 7",
     schedule: "Senin - Jumat: 10:00 - 17:00"
   },
   {
@@ -68,7 +68,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 8",
     role: "Test Role 8",
     image: "/api/placeholder/200/200",
-    experience: "8+ tahun",
+    experience: "test exp 8",
     schedule: "Senin - Jumat: 08:00 - 15:00"
   },
   {
@@ -77,7 +77,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 9",
     role: "Test Role 9",
     image: "/api/placeholder/200/200",
-    experience: "9+ tahun",
+    experience: "test exp 9",
     schedule: "Senin - Jumat: 09:00 - 16:00"
   },
   {
@@ -86,7 +86,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 10",
     role: "Test Role 10",
     image: "/api/placeholder/200/200",
-    experience: "10+ tahun",
+    experience: "test exp 10",
     schedule: "Senin - Jumat: 08:00 - 15:00"
   },
   {
@@ -95,7 +95,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 11",
     role: "Test Role 11",
     image: "/api/placeholder/200/200",
-    experience: "11+ tahun",
+    experience: "test exp 11",
     schedule: "Senin - Jumat: 09:00 - 16:00"
   },
   {
@@ -104,7 +104,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 12",
     role: "Test Role 12",
     image: "/api/placeholder/200/200",
-    experience: "12+ tahun",
+    experience: "test exp 12",
     schedule: "Senin - Jumat: 08:00 - 15:00"
   },
   {
@@ -113,7 +113,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 13",
     role: "Test Role 13",
     image: "/api/placeholder/200/200",
-    experience: "13+ tahun",
+    experience: "test exp 13",
     schedule: "Senin - Jumat: 09:00 - 16:00"
   },
   {
@@ -122,7 +122,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 14",
     role: "Test Role 14",
     image: "/api/placeholder/200/200",
-    experience: "14+ tahun",
+    experience: "test exp 14",
     schedule: "Senin - Jumat: 08:00 - 15:00"
   },
   {
@@ -131,7 +131,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 15",
     role: "Test Role 15",
     image: "/api/placeholder/200/200",
-    experience: "15+ tahun",
+    experience: "test exp 15",
     schedule: "Senin - Jumat: 09:00 - 16:00"
   },
   {
@@ -140,7 +140,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 16",
     role: "Test Role 16",
     image: "/api/placeholder/200/200",
-    experience: "16+ tahun",
+    experience: "test exp 16",
     schedule: "Senin - Jumat: 08:00 - 15:00"
   },
   {
@@ -149,7 +149,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 17",
     role: "Test Role 17",
     image: "/api/placeholder/200/200",
-    experience: "17+ tahun",
+    experience: "test exp 17",
     schedule: "Senin - Jumat: 09:00 - 16:00"
   },
   {
@@ -158,7 +158,7 @@ export const doctors = [
     specialization: "TEST SPECIALIST 18",
     role: "Test Role 18",
     image: "/api/placeholder/200/200",
-    experience: "18+ tahun",
+    experience: "test exp 18",
     schedule: "Senin - Jumat: 08:00 - 15:00"
   }
 ];
