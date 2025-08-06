@@ -2,6 +2,10 @@
 
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Phone, Mail, MapPin, Menu, X, Calendar, Clock, Users, Award, ChevronRight, Star } from 'lucide-react';
+import { doctors } from '@/data/doctors';
+import { services } from '@/data/services';
+import { news } from '@/data/news';
+import { testimonials } from '@/data/testimonials';
 
 const HospitalWebsite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -72,105 +76,10 @@ const HospitalWebsite = () => {
     return () => observer.disconnect();
   }, [isMounted]);
 
-  // Mock data 
-  const doctors = [
-    {
-      id: 1,
-      name: "KOMBES POL Dr. BUDI SUSANTO, Sp.BS",
-      specialization: "KARUM KIT BHAYANGKARA M. HASAN PALEMBANG",
-      role: "DOKTER SPESIALIS PENYAKIT KANDUNGAN OBSTETRI DAN GINEKOLOGI (OBGYN)",
-      image: "/api/placeholder/200/200"
-    },
-    {
-      id: 2,
-      name: "AKBP DR. ANDRIANTO, SPOG",
-      specialization: "DOKTER SPESIALIS PENYAKIT KANDUNGAN OBSTETRI DAN GINEKOLOGI (OBGYN)",
-      role: "Spesialis Kandungan",
-      image: "/api/placeholder/200/200"
-    },
-    {
-      id: 3,
-      name: "IPTU dr. IRMA YENNI, Sp.A",
-      specialization: "DOKTER SPESIALIS ANAK",
-      role: "Spesialis Anak",
-      image: "/api/placeholder/200/200"
-    },
-    {
-      id: 4,
-      name: "iptu Dr AFRIYANTO RIDHWAN, Sp.THT-KL., MARs",
-      specialization: "DOKTER SPESIALIS TELINGA HIDUNG TENGGOROKAN (THT)",
-      role: "Spesialis THT",
-      image: "/api/placeholder/200/200"
-    }
-  ];
+  // Mock data
 
-  const services = [
-    {
-      icon: "💊",
-      title: "Perawatan Medis",
-      description: "Memberikan perawatan medis yang berkualitas dan efektif untuk memastikan pemulihan pasien dengan pendekatan yang holistik."
-    },
-    {
-      icon: "🚑",
-      title: "Bantuan Darurat",
-      description: "Layanan darurat yang siap 24 jam untuk menangani kondisi medis kritis dengan cepat dan tanggap."
-    },
-    {
-      icon: "🩺",
-      title: "Dokter Berkualifikasi",
-      description: "Tim medis kami terdiri dari dokter berkualifikasi tinggi yang berpengalaman, memberikan layanan terdepan kepada pasien."
-    },
-    {
-      icon: "🏥",
-      title: "Profesional Medis",
-      description: "Kami memastikan seluruh tenaga medis bekerja dengan penuh profesionalisme, menjamin kualitas layanan yang optimal."
-    }
-  ];
 
-  const news = [
-    {
-      id: 1,
-      title: "Bakti Kesehatan RS Bhayangkara M Hasan Palembang",
-      excerpt: "Dalam rangka memperingati Hari Bhayangkara ke-78, RS Bhayangkara M. Hasan Palembang turut serta menyemarakkan...",
-      date: "14 Jun 2025",
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 2,
-      title: "Memperingati Hari Lahir Pancasila",
-      excerpt: "Kepala Rumah Sakit Bhayangkara Palembang, KBP. Dr. dr. BUDI SUSANTO, Sp.BS, GHLA, beserta Ibu Ny. Aryanti Budi, dan seluruh...",
-      date: "01 Jun 2025",
-      image: "/api/placeholder/300/200"
-    },
-    {
-      id: 3,
-      title: "Polda Sumsel menggelar Bazar & Olahraga",
-      excerpt: "Dalam rangka memperingati Hari Ulang Tahun ke-45 YKB, Polda Sumsel menggelar Bazar & Olahraga Senam pada Sabtu, 23...",
-      date: "18 May 2025",
-      image: "/api/placeholder/300/200"
-    }
-  ];
 
-  const testimonials = [
-    {
-      name: "Ahmad Fauzi",
-      role: "Pasien Umum",
-      message: "Pelayanan di rumah sakit ini sangat memuaskan. Dokter dan perawat sangat profesional dan ramah. Saya merasa nyaman selama perawatan.",
-      rating: 5
-    },
-    {
-      name: "Sobri (Uduk)",
-      role: "Pasien BPJS",
-      message: "Proses administrasi cepat dan tidak berbelit-belit. Fasilitas rumah sakit juga lengkap dan bersih. Kasih nilai terbaik untuk pelayanan terbaiknya.",
-      rating: 5
-    },
-    {
-      name: "Rian Novaria Ncu",
-      role: "Keluarga Pasien",
-      message: "Dokter sangat informatif dalam menjelaskan kondisi pasien. Perawat juga sangat perhatian dan selalu siap membantu. Ruangan bersih dan nyaman.",
-      rating: 5
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-white">
