@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { Phone, Mail, MapPin, Menu, X, Calendar, Clock, Users, Award, ChevronRight, Star } from 'lucide-react';
 import { doctors } from '@/data/doctors';
 import { services } from '@/data/services';
@@ -13,6 +13,9 @@ const HospitalWebsite = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showAllDoctors, setShowAllDoctors] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const lastScrollY = useRef(0);
   const [particleStyles, setParticleStyles] = useState<Array<{
     left: string;
     top: string;
@@ -45,8 +48,71 @@ const HospitalWebsite = () => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
     }, 20000); // Change slide every 5 seconds
 
-    return () => clearInterval(slideInterval);
-  }, []);
+    // Scroll event listener for header visibility
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollThreshold = 100; // Minimum scroll distance to trigger hide/show
+      
+      // Calculate scroll progress
+      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = Math.min((currentScrollY / documentHeight) * 100, 100);
+      setScrollProgress(progress);
+      
+      if (currentScrollY < scrollThreshold) {
+        // Always show header at the top
+        setIsHeaderVisible(true);
+      } else if (currentScrollY > lastScrollY.current && currentScrollY > scrollThreshold) {
+        // Scrolling down - hide header
+        setIsHeaderVisible(false);
+        setIsMenuOpen(false); // Close mobile menu when hiding header
+      } else if (currentScrollY < lastScrollY.current) {
+        // Scrolling up - show header
+        setIsHeaderVisible(true);
+      }
+      
+      lastScrollY.current = currentScrollY;
+    };
+
+    // Add throttling for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+
+    // Also handle mobile devices better by detecting touch interactions
+    let touchStartY = 0;
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const touchY = e.touches[0].clientY;
+      const touchDiff = touchStartY - touchY;
+      
+      // If user is swiping down significantly, show header
+      if (touchDiff < -50 && window.scrollY > 100) {
+        setIsHeaderVisible(true);
+      }
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    return () => {
+      clearInterval(slideInterval);
+      window.removeEventListener('scroll', throttledHandleScroll);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, []); // Remove lastScrollY from dependencies
 
   // Scroll reveal animation hook - only run on client side
   useLayoutEffect(() => {
@@ -84,8 +150,12 @@ const HospitalWebsite = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Optimized Header */}
-      <header className="bg-white/95 shadow-xl sticky top-0 z-50 border-b border-gray-100/50">
+      {/* Optimized Header with Dynamic Visibility */}
+      <header className={`bg-white/95 backdrop-blur-md shadow-xl fixed top-0 left-0 right-0 z-50 border-b border-gray-100/50 transition-all duration-500 ease-in-out transform ${
+        isHeaderVisible 
+          ? 'translate-y-0 opacity-100 scale-100' 
+          : '-translate-y-full opacity-0 scale-95'
+      }`}>
         {/* Simplified Top Bar */}
         <div className="bg-gradient-to-r from-teal-600 to-blue-600 text-white py-3">
           <div className="container mx-auto px-4 flex justify-between items-center text-sm">
@@ -211,6 +281,13 @@ const HospitalWebsite = () => {
 
       {/* Enhanced Interactive Hero Section */}
       <section className="relative text-white min-h-screen overflow-hidden bg-black">
+        {/* Scroll Progress Indicator */}
+        <div className="fixed top-0 left-0 w-full h-1 bg-gray-200/10 z-40">
+          <div 
+            className="h-full bg-gradient-to-r from-teal-500 to-blue-500 transition-all duration-300 ease-out shadow-lg shadow-teal-500/50"
+            style={{ width: `${scrollProgress}%` }}
+          />
+        </div>
         {/* Animated Background with Parallax Effect */}
         <div className="absolute inset-0 z-0">
           <div
@@ -1212,6 +1289,32 @@ const HospitalWebsite = () => {
           </div>
         </div>
       </footer>
+
+      {/* Scroll to Top Button - appears when header is hidden */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className={`fixed bottom-6 right-6 z-40 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform ${
+          !isHeaderVisible && scrollProgress > 10
+            ? 'translate-y-0 opacity-100 scale-100' 
+            : 'translate-y-16 opacity-0 scale-75 pointer-events-none'
+        }`}
+        aria-label="Scroll to top"
+      >
+        <svg 
+          className="w-6 h-6" 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth={2} 
+            d="M5 10l7-7m0 0l7 7m-7-7v18" 
+          />
+        </svg>
+        <div className="absolute inset-0 bg-white/20 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+      </button>
     </div>
   );
 };
