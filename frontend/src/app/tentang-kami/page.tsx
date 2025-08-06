@@ -601,10 +601,10 @@ const TentangKamiPage = () => {
                       'Menambah sarana dan prasarana untuk meningkatkan kualitas pelayanan.',
                       'Membangun kemitraan dan jejaring kerja.',
                       'Meningkatkan kemampuan SDM melalui pelatihan.',
-                      'Meningkatkan kemampuan SDM melalui pelatihan.'
+                      'Mengembangkan sistem informasi dan teknologi medis terkini.'
                     ].map((item, itemIndex) => (
                       <motion.div
-                        key={item.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '-')}
+                        key={`misi-${itemIndex}-${item.substring(0, 20).replace(/[^a-zA-Z0-9]/g, '-')}`}
                         className="flex items-start gap-3"
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
