@@ -95,31 +95,27 @@ const JadwalDokterPage = () => {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-700 text-white overflow-hidden min-h-[90vh] flex items-center">
-        {/* Dynamic Calendar Background Pattern */}
+        {/* Simplified Background Pattern */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_79px,rgba(255,255,255,0.03)_81px),linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[length:80px_80px] animate-pulse"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(255,255,255,0.1)_0%,transparent_50%)] animate-breathing"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,rgba(255,255,255,0.05)_0%,transparent_40%)] animate-pulse delay-1000"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_79px,rgba(255,255,255,0.03)_81px),linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[length:80px_80px]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(255,255,255,0.1)_0%,transparent_50%)]"></div>
         </div>
         
-        {/* Floating Calendar Elements */}
+        {/* Simplified Floating Calendar Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-16 left-16 bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/30 shadow-xl animate-float">
+          <div className="absolute top-16 left-16 bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/30 shadow-xl">
             <div className="text-center">
               <div className="text-2xl font-bold">09</div>
               <div className="text-xs text-white/80">AUG</div>
             </div>
           </div>
-          <div className="absolute top-32 right-20 bg-white/15 backdrop-blur-md rounded-2xl p-3 border border-white/30 shadow-xl animate-float delay-500">
+          <div className="absolute top-32 right-20 bg-white/15 backdrop-blur-md rounded-2xl p-3 border border-white/30 shadow-xl">
             <Calendar className="w-8 h-8" />
           </div>
-          <div className="absolute bottom-32 left-24 bg-white/15 backdrop-blur-md rounded-2xl p-3 border border-white/30 shadow-xl animate-float delay-1000">
+          <div className="absolute bottom-32 left-24 bg-white/15 backdrop-blur-md rounded-2xl p-3 border border-white/30 shadow-xl">
             <Clock className="w-8 h-8" />
           </div>
-          <div className="absolute top-1/2 right-32 bg-white/15 backdrop-blur-md rounded-2xl p-3 border border-white/30 shadow-xl animate-float delay-1500">
-            <User className="w-6 h-6" />
-          </div>
-          <div className="absolute bottom-48 right-16 bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/30 shadow-xl animate-float delay-2000">
+          <div className="absolute bottom-48 right-16 bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/30 shadow-xl">
             <div className="text-center">
               <div className="text-lg font-bold">24/7</div>
               <div className="text-xs text-white/80">SIAGA</div>
@@ -127,25 +123,24 @@ const JadwalDokterPage = () => {
           </div>
         </div>
 
-        {/* Digital Clock Background */}
+        {/* Simplified Digital Clock Background */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-10 text-8xl font-mono text-white/10 animate-pulse">
+          <div className="absolute top-20 right-10 text-8xl font-mono text-white/5">
             {getCurrentTime()}
           </div>
-          <div className="absolute bottom-20 left-10 text-6xl font-mono text-white/10 animate-pulse delay-1000">
+          <div className="absolute bottom-20 left-10 text-6xl font-mono text-white/5">
             {currentDay.slice(0, 3).toUpperCase()}
           </div>
         </div>
 
-        {/* Geometric Calendar Grid */}
+        {/* Simplified Geometric Background */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-10 w-40 h-40 border-2 border-white/20 rounded-2xl animate-spin-slow grid grid-cols-7 gap-1 p-2">
+          <div className="absolute top-1/4 left-10 w-40 h-40 border-2 border-white/10 rounded-2xl grid grid-cols-7 gap-1 p-2">
             {Array.from({ length: 35 }, (_, i) => (
-              <div key={i} className="w-4 h-4 bg-white/15 rounded"></div>
+              <div key={i} className="w-4 h-4 bg-white/10 rounded"></div>
             ))}
           </div>
-          <div className="absolute bottom-1/4 right-10 w-32 h-32 border border-white/20 rounded-full animate-reverse-spin"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-indigo-400/10 to-purple-400/10 rounded-full blur-3xl animate-breathing"></div>
+          <div className="absolute bottom-1/4 right-10 w-32 h-32 border border-white/10 rounded-full"></div>
         </div>
 
         <div className="relative z-10 container mx-auto px-4">
@@ -177,38 +172,37 @@ const JadwalDokterPage = () => {
               <div className="mb-8 flex justify-center lg:justify-start">
                 <div className="relative">
                   <div className="flex items-center gap-4">
-                    <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/40 animate-pulse shadow-2xl">
+                    <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/40 shadow-2xl">
                       <Calendar className="w-10 h-10 text-white drop-shadow-lg" />
                     </div>
-                    <div className="w-16 h-16 bg-gradient-to-br from-yellow-400/20 to-orange-400/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/40 animate-bounce-slow shadow-xl">
+                    <div className="w-16 h-16 bg-gradient-to-br from-yellow-400/20 to-orange-400/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/40 shadow-xl">
                       <Clock className="w-8 h-8 text-white drop-shadow-lg" />
                     </div>
                   </div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full animate-ping shadow-lg"></div>
                 </div>
               </div>
 
               {/* Title */}
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
-                <span className="block text-white drop-shadow-2xl animate-fade-in-up" style={{ textShadow: '3px 3px 6px rgba(0,0,0,0.8), 0 0 30px rgba(255,255,255,0.3)' }}>
+                <span className="block text-white">
                   JADWAL
                 </span>
-                <span className="block bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-300 bg-clip-text text-transparent drop-shadow-lg animate-fade-in-up delay-300" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+                <span className="block bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-300 bg-clip-text text-transparent">
                   DOKTER
                 </span>
               </h1>
 
               {/* Description */}
-              <p className="text-xl md:text-2xl text-white mb-8 max-w-2xl mx-auto lg:mx-0 animate-fade-in-up delay-600" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+              <p className="text-xl md:text-2xl text-white mb-8 max-w-2xl mx-auto lg:mx-0">
                 Temukan jadwal praktik dokter spesialis kami dan{' '}
                 <span className="font-bold bg-gradient-to-r from-yellow-200 to-pink-200 bg-clip-text text-transparent">buat janji temu dengan mudah</span>
               </p>
 
               {/* Live Time Display */}
-              <div className="mb-8 animate-fade-in-up delay-900">
+              <div className="mb-8">
                 <div className="inline-flex items-center bg-gradient-to-r from-white/20 to-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/40 shadow-xl">
                   <div className="flex items-center space-x-4">
-                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
                     <div className="text-center">
                       <div className="text-white font-bold text-lg">{currentDay}</div>
                       <div className="text-white/80 text-sm">{new Date().toLocaleDateString('id-ID')}</div>
@@ -223,7 +217,7 @@ const JadwalDokterPage = () => {
               </div>
 
               {/* Quick Stats */}
-              <div className="grid grid-cols-2 gap-4 mb-8 max-w-md mx-auto lg:mx-0 animate-fade-in-up delay-1200">
+              <div className="grid grid-cols-2 gap-4 mb-8 max-w-md mx-auto lg:mx-0">
                 <div className="bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/30 text-center shadow-xl">
                   <div className="text-2xl font-bold text-white mb-1">50+</div>
                   <div className="text-white/90 text-sm">Dokter Tersedia</div>
@@ -276,15 +270,12 @@ const JadwalDokterPage = () => {
                   </div>
                 </div>
                 
-                {/* Floating Elements Around Calendar */}
-                <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-r from-pink-400 to-purple-400 rounded-2xl flex items-center justify-center animate-bounce-slow shadow-xl">
+                {/* Simplified Floating Elements Around Calendar */}
+                <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-r from-pink-400 to-purple-400 rounded-2xl flex items-center justify-center shadow-xl">
                   <span className="text-white font-bold">09</span>
                 </div>
-                <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center animate-pulse shadow-xl">
+                <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-2xl flex items-center justify-center shadow-xl">
                   <Clock className="w-6 h-6 text-white" />
-                </div>
-                <div className="absolute top-1/2 -left-8 w-10 h-10 bg-gradient-to-r from-green-400 to-emerald-400 rounded-2xl flex items-center justify-center animate-ping shadow-xl">
-                  <div className="w-3 h-3 bg-white rounded-full"></div>
                 </div>
               </div>
             </div>
