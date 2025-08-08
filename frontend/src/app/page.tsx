@@ -286,7 +286,7 @@ const HospitalWebsite = () => {
               </div>
 
               {/* Other Navigation Items */}
-              {['DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
+              {['DOKTER', 'INFORMASI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
                 <button
                   key={item}
                   className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
@@ -330,7 +330,7 @@ const HospitalWebsite = () => {
         } overflow-hidden`}>
           <div className="bg-white border-t border-gray-100">
             <nav className="container mx-auto px-4 py-6 space-y-2">
-              {['HOME', 'DOKTER', 'VISI DAN MISI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
+              {['HOME', 'DOKTER', 'INFORMASI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
                 <button
                   key={item}
                   className={`block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 ${
@@ -1012,13 +1012,21 @@ const HospitalWebsite = () => {
                       </div>
                     </div>
                     
-                    {/* Action Buttons */}
-                    <div className="mt-6 flex gap-2">
-                      <button className="flex-1 bg-gradient-to-r from-teal-500 to-blue-500 text-white py-2 px-4 rounded-lg text-sm font-medium hover:from-teal-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg">
-                        Konsultasi
-                      </button>
-                      <button className="px-4 py-2 border-2 border-gray-200 rounded-lg text-gray-600 hover:border-teal-500 hover:text-teal-600 transition-all duration-300 transform hover:scale-105">
-                        <Users className="w-4 h-4" />
+                    {/* Action Button */}
+                    <div className="mt-6">
+                      <button className="group relative w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl overflow-hidden">
+                        {/* Background shine effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
+                        
+                        {/* Button content */}
+                        <div className="relative flex items-center justify-center gap-2">
+                          <Users className="w-4 h-4 transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
+                          <span className="font-medium tracking-wide">Lihat Profile</span>
+                          <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+                        </div>
+                        
+                        {/* Pulse effect on hover */}
+                        <div className="absolute inset-0 rounded-xl border-2 border-white/30 opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300"></div>
                       </button>
                     </div>
                   </div>
