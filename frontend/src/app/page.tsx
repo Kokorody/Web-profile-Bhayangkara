@@ -287,12 +287,43 @@ const HospitalWebsite = () => {
               </div>
 
               {/* Other Navigation Items */}
-              <Link
-                href="/dokter"
-                className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
-              >
-                DOKTER
-              </Link>
+              {/* DOKTER with Dropdown */}
+              <div className="relative group">
+                <button
+                  className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50 flex items-center gap-2"
+                >
+                  DOKTER
+                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                {/* Dropdown Menu */}
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                  <div className="p-3 space-y-1">
+                    <Link
+                      href="/dokter"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">👨‍⚕️</span>
+                      <div>
+                        <div className="font-semibold">Daftar Dokter</div>
+                        <div className="text-xs text-gray-500">Lihat semua dokter & spesialisasi</div>
+                      </div>
+                    </Link>
+                    <Link
+                      href="/jadwal-dokter"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">📅</span>
+                      <div>
+                        <div className="font-semibold">Jadwal Dokter</div>
+                        <div className="text-xs text-gray-500">Cek jadwal praktik dokter</div>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </div>
               {['INFORMASI', 'E-LIBRARY', 'PELAYANAN', 'SOP RS'].map((item) => (
                 <button
                   key={item}
@@ -333,7 +364,7 @@ const HospitalWebsite = () => {
 
         {/* Simplified Mobile Menu */}
         <div className={`md:hidden transition-all duration-300 ${
-          isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          isMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
         } overflow-hidden`}>
           <div className="bg-white border-t border-gray-100">
             <nav className="container mx-auto px-4 py-6 space-y-2">
@@ -342,12 +373,36 @@ const HospitalWebsite = () => {
               >
                 HOME
               </button>
-              <Link
-                href="/dokter"
-                className="block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 text-gray-700 hover:bg-teal-50 hover:text-teal-600"
-              >
-                DOKTER
-              </Link>
+              
+              {/* DOKTER Section */}
+              <div className="bg-gray-50 rounded-xl p-3">
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
+                  DOKTER
+                </div>
+                <div className="space-y-1">
+                  <Link
+                    href="/dokter"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">👨‍⚕️</span>
+                    <div>
+                      <div className="font-semibold">Daftar Dokter</div>
+                      <div className="text-xs text-gray-500">Lihat semua dokter & spesialisasi</div>
+                    </div>
+                  </Link>
+                  <Link
+                    href="/jadwal-dokter"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">📅</span>
+                    <div>
+                      <div className="font-semibold">Jadwal Dokter</div>
+                      <div className="text-xs text-gray-500">Cek jadwal praktik dokter</div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+              
               {['INFORMASI', 'E-LIBRARY', 'PELAYANAN', 'SOP RS'].map((item) => (
                 <button
                   key={item}
