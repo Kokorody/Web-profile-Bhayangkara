@@ -58,42 +58,58 @@ const DoctorProfilePage = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-teal-600 via-blue-600 to-blue-700 text-white overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: "url('/images/doctor.png')",
-              backgroundBlendMode: 'overlay'
-            }}
-          />
+      <section className="relative bg-gradient-to-br from-rose-600 via-pink-600 to-purple-700 text-white overflow-hidden min-h-[100vh] flex items-center">
+        {/* Dynamic Background Pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[conic-gradient(from_45deg,transparent,rgba(255,255,255,0.03),transparent)] animate-spin-slow"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)] animate-pulse"></div>
         </div>
         
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full animate-pulse"></div>
-          <div className="absolute top-1/2 -left-10 w-32 h-32 bg-white/5 rounded-full animate-bounce"></div>
+        {/* Medical Icons Background */}
+        <div className="absolute inset-0 overflow-hidden opacity-10">
+          <div className="absolute top-20 left-20 text-4xl animate-float">⚕️</div>
+          <div className="absolute top-40 right-32 text-3xl animate-float delay-700">🔬</div>
+          <div className="absolute bottom-40 left-32 text-5xl animate-float delay-1400">🩺</div>
+          <div className="absolute top-60 right-20 text-3xl animate-float delay-2100">💉</div>
+          <div className="absolute bottom-60 right-40 text-4xl animate-float delay-2800">🏥</div>
         </div>
 
-        <div className="relative z-10 container mx-auto px-4 pt-32 pb-20">
+        {/* Geometric Background */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-10 left-10 w-32 h-32 border-2 border-white/10 rounded-full animate-spin"></div>
+          <div className="absolute bottom-20 right-20 w-48 h-48 border border-white/5 rounded-full animate-reverse-spin"></div>
+          <div className="absolute top-1/3 right-1/4 w-20 h-20 bg-gradient-to-r from-rose-400/10 to-pink-400/10 rounded-full blur-xl animate-pulse"></div>
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4">
           {/* Breadcrumb */}
-          <nav className="mb-8" aria-label="Breadcrumb">
-            <ol className="flex items-center space-x-2 text-sm">
+          <nav className="mb-8 flex justify-center lg:justify-start" aria-label="Breadcrumb">
+            <ol className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20 text-sm">
               <li>
-                <Link href="/" className="text-white/80 hover:text-white transition-colors">
+                <Link href="/" className="text-white/80 hover:text-white transition-colors flex items-center">
+                  <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                  </svg>
                   Home
                 </Link>
               </li>
-              <li className="text-white/60">/</li>
+              <li className="text-white/60">
+                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
+                </svg>
+              </li>
               <li>
                 <Link href="/dokter" className="text-white/80 hover:text-white transition-colors">
-                  Profil Dokter
+                  Dokter
                 </Link>
               </li>
               {specialist && (
                 <>
-                  <li className="text-white/60">/</li>
+                  <li className="text-white/60">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
+                    </svg>
+                  </li>
                   <li>
                     <Link href={`/dokter/${specialist.id}`} className="text-white/80 hover:text-white transition-colors">
                       {specialist.name}
@@ -101,76 +117,143 @@ const DoctorProfilePage = () => {
                   </li>
                 </>
               )}
-              <li className="text-white/60">/</li>
-              <li className="text-white font-medium">{doctor.name}</li>
+              <li className="text-white/60">
+                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
+                </svg>
+              </li>
+              <li className="text-white font-medium truncate max-w-[200px]">{doctor.name}</li>
             </ol>
           </nav>
 
           {/* Doctor Hero Info */}
-          <div className="flex flex-col lg:flex-row items-center gap-8">
-            {/* Doctor Image */}
-            <div className="relative">
-              <div className="w-48 h-48 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
-                <img
-                  src={doctor.image}
-                  alt={doctor.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {specialist && (
-                <div className="absolute -top-2 -right-2 bg-white text-teal-600 p-3 rounded-full shadow-lg">
-                  <span className="text-2xl">{specialist.icon}</span>
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            {/* Doctor Image Section */}
+            <div className="relative flex-shrink-0 animate-fade-in-up">
+              {/* Main Image Container */}
+              <div className="relative group">
+                <div className="w-72 h-72 lg:w-80 lg:h-80 rounded-3xl overflow-hidden border-4 border-white/20 shadow-2xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm">
+                  <img
+                    src={doctor.image}
+                    alt={doctor.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                 </div>
-              )}
+                
+                {/* Specialist Badge */}
+                {specialist && (
+                  <div className="absolute -top-4 -right-4 bg-gradient-to-r from-yellow-400 to-orange-400 text-white p-4 rounded-2xl shadow-xl border-4 border-white/20 animate-bounce-slow">
+                    <span className="text-3xl">{specialist.icon}</span>
+                  </div>
+                )}
+                
+                {/* Status Indicator */}
+                <div className="absolute -bottom-4 -left-4 bg-gradient-to-r from-green-400 to-emerald-400 text-white px-6 py-3 rounded-2xl shadow-xl border-4 border-white/20">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                    <span className="font-bold text-sm">Tersedia</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Elements Around Image */}
+              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full animate-ping"></div>
+              <div className="absolute top-1/2 -right-8 w-4 h-4 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-pulse delay-500"></div>
+              <div className="absolute -bottom-8 left-1/4 w-5 h-5 bg-gradient-to-r from-rose-400 to-pink-400 rounded-full animate-ping delay-1000"></div>
             </div>
 
             {/* Doctor Details */}
-            <div className="text-center lg:text-left flex-1">
-              <h1 className="text-3xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
-                {doctor.name}
+            <div className="flex-1 text-center lg:text-left animate-fade-in-up delay-300">
+              {/* Doctor Name */}
+              <h1 className="text-4xl lg:text-6xl xl:text-7xl font-black mb-6 leading-tight">
+                <span className="block bg-gradient-to-r from-white via-rose-100 to-pink-100 bg-clip-text text-transparent">
+                  {doctor.name.split(' ').slice(0, -1).join(' ')}
+                </span>
+                <span className="block bg-gradient-to-r from-pink-100 via-white to-rose-100 bg-clip-text text-transparent text-3xl lg:text-4xl xl:text-5xl mt-2">
+                  {doctor.name.split(' ').slice(-1)[0]}
+                </span>
               </h1>
-              <p className="text-xl lg:text-2xl text-blue-100 mb-4">
-                {doctor.specialization}
-              </p>
-              {specialist && (
-                <div className="inline-flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-                  <span className="text-lg mr-2">{specialist.icon}</span>
-                  <span className="text-white font-medium">{specialist.description}</span>
-                </div>
-              )}
-              <p className="text-lg text-blue-200 mb-6 max-w-2xl">
+
+              {/* Specialization */}
+              <div className="mb-6">
+                <p className="text-xl lg:text-2xl xl:text-3xl text-rose-100 font-semibold mb-2">
+                  {doctor.specialization}
+                </p>
+                {specialist && (
+                  <div className="inline-flex items-center bg-gradient-to-r from-white/15 to-white/10 backdrop-blur-sm px-6 py-3 rounded-2xl border border-white/20">
+                    <span className="text-2xl mr-3">{specialist.icon}</span>
+                    <span className="text-white font-medium text-lg">{specialist.description}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Experience */}
+              <p className="text-lg lg:text-xl text-rose-200 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 {doctor.experience}
               </p>
               
-              {/* Quick Actions */}
+              {/* Quick Stats */}
+              <div className="grid grid-cols-2 gap-4 mb-8 max-w-md mx-auto lg:mx-0">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 text-center">
+                  <div className="text-2xl font-bold text-white mb-1">yeays+</div>
+                  <div className="text-rose-100 text-sm">Tahun Pengalaman</div>
+                </div>
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 text-center">
+                  <div className="text-2xl font-bold text-white mb-1">patients+</div>
+                  <div className="text-rose-100 text-sm">Pasien Ditangani</div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link
                   href="/reservasi"
-                  className="bg-white text-teal-600 px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors duration-200 shadow-lg"
+                  className="group bg-gradient-to-r from-white to-rose-50 text-rose-600 px-8 py-4 rounded-2xl font-bold text-lg hover:from-rose-50 hover:to-white transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl"
                 >
-                  Buat Janji
+                  <span className="flex items-center justify-center">
+                    <svg className="w-5 h-5 mr-2 group-hover:animate-bounce" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"/>
+                    </svg>
+                    Buat Janji Temu
+                  </span>
                 </Link>
                 <a
                   href={`tel:${doctor.phone}`}
-                  className="border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-teal-600 transition-all duration-200"
+                  className="group border-2 border-white text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-rose-600 transition-all duration-300 transform hover:scale-105"
                 >
-                  Hubungi Dokter
+                  <span className="flex items-center justify-center">
+                    <svg className="w-5 h-5 mr-2 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                    </svg>
+                    Hubungi Langsung
+                  </span>
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Wave Separator */}
+        {/* Artistic Wave Separator */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden">
           <svg
-            className="relative block w-full h-20"
-            viewBox="0 0 1200 120"
+            className="relative block w-full h-40"
+            viewBox="0 0 1440 400"
             preserveAspectRatio="none"
           >
+            <defs>
+              <linearGradient id="waveGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8"/>
+                <stop offset="20%" stopColor="#ffffff" stopOpacity="1"/>
+                <stop offset="40%" stopColor="#ffffff" stopOpacity="0.6"/>
+                <stop offset="60%" stopColor="#ffffff" stopOpacity="1"/>
+                <stop offset="80%" stopColor="#ffffff" stopOpacity="0.8"/>
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="0.9"/>
+              </linearGradient>
+            </defs>
             <path
-              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-              fill="#ffffff"
+              fill="url(#waveGradient3)"
+              d="M0,256L40,240C80,224,160,192,240,181.3C320,171,400,181,480,208C560,235,640,277,720,282.7C800,288,880,256,960,234.7C1040,213,1120,203,1200,213.3C1280,224,1360,256,1400,272L1440,288L1440,400L1400,400C1360,400,1280,400,1200,400C1120,400,1040,400,960,400C880,400,800,400,720,400C640,400,560,400,480,400C400,400,320,400,240,400C160,400,80,400,40,400L0,400Z"
             ></path>
           </svg>
         </div>
