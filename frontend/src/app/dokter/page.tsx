@@ -143,14 +143,6 @@ const DoctorPage = () => {
 
             {/* Enhanced CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-1200">
-              <button className="group bg-white/95 backdrop-blur-md text-emerald-600 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-white/30 border border-white/60">
-                <span className="flex items-center justify-center">
-                  <svg className="w-5 h-5 mr-2 group-hover:animate-bounce" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd"/>
-                  </svg>
-                  Mulai Konsultasi
-                </span>
-              </button>
               <button className="group border-2 border-white/90 bg-white/15 backdrop-blur-md text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white hover:text-emerald-600 transition-all duration-300 transform hover:scale-105 shadow-2xl">
                 <span className="flex items-center justify-center">
                   <svg className="w-5 h-5 mr-2 group-hover:animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
