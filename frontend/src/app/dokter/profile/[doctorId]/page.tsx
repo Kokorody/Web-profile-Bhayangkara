@@ -12,6 +12,7 @@ const DoctorProfilePage = () => {
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [specialist, setSpecialist] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('overview');
+  const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {
     setIsMounted(true);
@@ -25,7 +26,78 @@ const DoctorProfilePage = () => {
       const foundSpecialist = specialists.find(s => s.id === foundDoctor.role);
       setSpecialist(foundSpecialist);
     }
+
+    // Update current time every minute
+    const updateTime = () => {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      setCurrentTime(`${hours}:${minutes}`);
+    };
+
+    updateTime();
+    const timeInterval = setInterval(updateTime, 60000); // Update every minute
+
+    return () => clearInterval(timeInterval);
   }, [doctorId]);
+
+  // Get current day in Indonesian
+  const getCurrentDay = () => {
+    return new Date().toLocaleDateString('id-ID', { weekday: 'long' });
+  };
+
+  // Check if doctor is currently available
+  const isCurrentlyAvailable = () => {
+    if (!doctor) return false;
+    
+    const currentDay = getCurrentDay();
+    const todaySchedule = doctor.detailedSchedule[currentDay];
+    
+    if (!todaySchedule) return false;
+    
+    const timeRanges = todaySchedule.split(', ');
+    return timeRanges.some(range => {
+      const [start, end] = range.split(' - ');
+      return currentTime >= start && currentTime <= end;
+    });
+  };
+
+  // Get next available schedule
+  const getNextAvailableSchedule = () => {
+    if (!doctor) return null;
+    
+    const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+    const currentDay = getCurrentDay();
+    const currentDayIndex = days.indexOf(currentDay);
+    
+    // Check today's remaining schedule
+    const todaySchedule = doctor.detailedSchedule[currentDay];
+    if (todaySchedule) {
+      const timeRanges = todaySchedule.split(', ');
+      const nextTimeRange = timeRanges.find(range => {
+        const [start] = range.split(' - ');
+        return currentTime < start;
+      });
+      
+      if (nextTimeRange) {
+        return { day: currentDay, time: nextTimeRange };
+      }
+    }
+    
+    // Check next days
+    for (let i = 1; i <= 7; i++) {
+      const nextDayIndex = (currentDayIndex + i) % 7;
+      const nextDay = days[nextDayIndex];
+      const nextDaySchedule = doctor.detailedSchedule[nextDay];
+      
+      if (nextDaySchedule) {
+        const timeRanges = nextDaySchedule.split(', ');
+        return { day: nextDay, time: timeRanges[0] };
+      }
+    }
+    
+    return null;
+  };
 
   if (!isMounted) {
     return (
@@ -149,10 +221,18 @@ const DoctorProfilePage = () => {
                 )}
                 
                 {/* Status Indicator */}
-                <div className="absolute -bottom-4 -left-4 bg-gradient-to-r from-green-400 to-emerald-400 text-white px-6 py-3 rounded-2xl shadow-xl border-4 border-white/20">
+                <div className={`absolute -bottom-4 -left-4 ${
+                  isCurrentlyAvailable() 
+                    ? 'bg-gradient-to-r from-green-400 to-emerald-400' 
+                    : 'bg-gradient-to-r from-orange-400 to-red-400'
+                } text-white px-6 py-3 rounded-2xl shadow-xl border-4 border-white/20`}>
                   <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
-                    <span className="font-bold text-sm">Tersedia</span>
+                    <div className={`w-3 h-3 bg-white rounded-full ${
+                      isCurrentlyAvailable() ? 'animate-pulse' : 'animate-ping'
+                    }`}></div>
+                    <span className="font-bold text-sm">
+                      {isCurrentlyAvailable() ? 'Tersedia' : 'Tidak Tersedia'}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -286,36 +366,105 @@ const DoctorProfilePage = () => {
           {/* Tab Content */}
           <div className="max-w-4xl mx-auto">
             {activeTab === 'overview' && (
-              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                  <span className="text-2xl mr-3">👨‍⚕️</span>
-                  Profil Dokter
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">Informasi Pribadi</h3>
-                    <div className="space-y-3">
+              <div className="space-y-6">
+                {/* Real-time Status Card */}
+                <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                  <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <span className="text-xl mr-3">⏰</span>{' '}
+                    Status Saat Ini
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Current Time */}
+                    <div className="bg-gradient-to-r from-blue-50 to-teal-50 p-4 rounded-xl">
+                      <h3 className="text-sm font-medium text-gray-600 mb-1">Waktu Sekarang</h3>
+                      <p className="text-lg font-bold text-gray-800">
+                        {getCurrentDay()}, {currentTime}
+                      </p>
+                    </div>
+                    
+                    {/* Availability Status */}
+                    <div className={`p-4 rounded-xl ${
+                      isCurrentlyAvailable() 
+                        ? 'bg-gradient-to-r from-green-50 to-emerald-50' 
+                        : 'bg-gradient-to-r from-orange-50 to-red-50'
+                    }`}>
+                      <h3 className="text-sm font-medium text-gray-600 mb-1">Status Praktik</h3>
                       <div className="flex items-center">
-                        <span className="font-medium text-gray-600 w-32">Nama Lengkap:</span>
-                        <span className="text-gray-800">{doctor.name}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <span className="font-medium text-gray-600 w-32">Tanggal Lahir:</span>
-                        <span className="text-gray-800">{doctor.birthDate}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <span className="font-medium text-gray-600 w-32">Spesialisasi:</span>
-                        <span className="text-gray-800">{doctor.specialization}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <span className="font-medium text-gray-600 w-32">Bahasa:</span>
-                        <span className="text-gray-800">{doctor.languages.join(', ')}</span>
+                        <div className={`w-3 h-3 rounded-full mr-2 ${
+                          isCurrentlyAvailable() 
+                            ? 'bg-green-500 animate-pulse' 
+                            : 'bg-red-500 animate-ping'
+                        }`}></div>
+                        <p className={`text-lg font-bold ${
+                          isCurrentlyAvailable() ? 'text-green-700' : 'text-red-700'
+                        }`}>
+                          {isCurrentlyAvailable() ? 'Sedang Praktik' : 'Tidak Praktik'}
+                        </p>
                       </div>
                     </div>
+                    
+                    {/* Next Schedule */}
+                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-xl">
+                      <h3 className="text-sm font-medium text-gray-600 mb-1">Jadwal Selanjutnya</h3>
+                      {(() => {
+                        const nextSchedule = getNextAvailableSchedule();
+                        return nextSchedule ? (
+                          <div>
+                            <p className="text-sm font-semibold text-purple-700">{nextSchedule.day}</p>
+                            <p className="text-sm text-purple-600">{nextSchedule.time}</p>
+                          </div>
+                        ) : (
+                          <p className="text-sm text-gray-500">Tidak ada jadwal</p>
+                        );
+                      })()}
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800 mb-4">Pengalaman</h3>
-                    <p className="text-gray-600 leading-relaxed">{doctor.experience}</p>
+                  
+                  {/* Today's Schedule */}
+                  <div className="mt-4 p-4 bg-gray-50 rounded-xl">
+                    <h3 className="text-sm font-medium text-gray-600 mb-2">Jadwal Hari Ini ({getCurrentDay()})</h3>
+                    {doctor.detailedSchedule[getCurrentDay()] ? (
+                      <p className="text-lg font-semibold text-gray-800">
+                        {doctor.detailedSchedule[getCurrentDay()]}
+                      </p>
+                    ) : (
+                      <p className="text-gray-500">Tidak ada jadwal praktik hari ini</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Doctor Profile Information */}
+                <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                  <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span className="text-2xl mr-3">👨‍⚕️</span>{' '}
+                    Profil Dokter
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-800 mb-4">Informasi Pribadi</h3>
+                      <div className="space-y-3">
+                        <div className="flex items-center">
+                          <span className="font-medium text-gray-600 w-32">Nama Lengkap:</span>
+                          <span className="text-gray-800">{doctor.name}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <span className="font-medium text-gray-600 w-32">Tanggal Lahir:</span>
+                          <span className="text-gray-800">{doctor.birthDate}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <span className="font-medium text-gray-600 w-32">Spesialisasi:</span>
+                          <span className="text-gray-800">{doctor.specialization}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <span className="font-medium text-gray-600 w-32">Bahasa:</span>
+                          <span className="text-gray-800">{doctor.languages.join(', ')}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-800 mb-4">Pengalaman</h3>
+                      <p className="text-gray-600 leading-relaxed">{doctor.experience}</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -324,7 +473,7 @@ const DoctorProfilePage = () => {
             {activeTab === 'education' && (
               <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                  <span className="text-2xl mr-3">🎓</span>
+                  <span className="text-2xl mr-3">🎓</span>{' '}
                   Riwayat Pendidikan
                 </h2>
                 <div className="space-y-6">
@@ -345,17 +494,89 @@ const DoctorProfilePage = () => {
             {activeTab === 'schedule' && (
               <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                  <span className="text-2xl mr-3">📅</span>
+                  <span className="text-2xl mr-3">📅</span>{' '}
                   Jadwal Praktik
                 </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {Object.entries(doctor.detailedSchedule).map(([day, time]) => (
-                    <div key={day} className="flex items-center justify-between p-4 bg-gradient-to-r from-teal-50 to-blue-50 rounded-xl">
-                      <span className="font-semibold text-gray-800">{day}</span>
-                      <span className="text-teal-600 font-medium">{time}</span>
+                
+                {/* Current Status */}
+                <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-teal-50 rounded-xl border border-blue-200">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-800">Status Saat Ini</h3>
+                      <p className="text-sm text-gray-600">{getCurrentDay()}, {currentTime}</p>
                     </div>
-                  ))}
+                    <div className="flex items-center">
+                      <div className={`w-4 h-4 rounded-full mr-3 ${
+                        isCurrentlyAvailable() 
+                          ? 'bg-green-500 animate-pulse' 
+                          : 'bg-red-500'
+                      }`}></div>
+                      <span className={`font-semibold ${
+                        isCurrentlyAvailable() ? 'text-green-700' : 'text-red-700'
+                      }`}>
+                        {isCurrentlyAvailable() ? 'Sedang Praktik' : 'Tidak Praktik'}
+                      </span>
+                    </div>
+                  </div>
                 </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {Object.entries(doctor.detailedSchedule).map(([day, time]) => {
+                    const isToday = day === getCurrentDay();
+                    const isCurrentlyActive = isToday && isCurrentlyAvailable();
+                    
+                    // Determine card styling based on status
+                    let cardClasses = 'flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-200 ';
+                    if (isToday) {
+                      if (isCurrentlyActive) {
+                        cardClasses += 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-300 shadow-lg';
+                      } else {
+                        cardClasses += 'bg-gradient-to-r from-blue-50 to-teal-50 border-blue-300 shadow-md';
+                      }
+                    } else {
+                      cardClasses += 'bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200';
+                    }
+
+                    // Determine text color based on status
+                    let timeTextColor = 'font-medium ';
+                    if (isCurrentlyActive) {
+                      timeTextColor += 'text-green-600';
+                    } else if (isToday) {
+                      timeTextColor += 'text-blue-600';
+                    } else {
+                      timeTextColor += 'text-gray-600';
+                    }
+                    
+                    return (
+                      <div 
+                        key={day} 
+                        className={cardClasses}
+                      >
+                        <div className="flex items-center">
+                          <span className={`font-semibold ${
+                            isToday ? 'text-blue-800' : 'text-gray-800'
+                          }`}>
+                            {day}
+                            {isToday && (
+                              <span className="ml-2 px-2 py-1 bg-blue-200 text-blue-800 text-xs rounded-full">
+                                Hari Ini
+                              </span>
+                            )}
+                          </span>
+                        </div>
+                        <div className="flex items-center">
+                          <span className={timeTextColor}>
+                            {time}
+                          </span>
+                          {isCurrentlyActive && (
+                            <div className="ml-3 w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                
                 <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
                   <p className="text-yellow-800 text-sm">
                     <strong>Catatan:</strong> Jadwal dapat berubah sewaktu-waktu. Silakan hubungi rumah sakit untuk konfirmasi jadwal terkini.
@@ -367,7 +588,7 @@ const DoctorProfilePage = () => {
             {activeTab === 'contact' && (
               <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                  <span className="text-2xl mr-3">📞</span>
+                  <span className="text-2xl mr-3">📞</span>{' '}
                   Informasi Kontak
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
