@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import Link from 'next/link';
 import { Phone, Mail, MapPin, Menu, X, Calendar, Clock, Users, Award, ChevronRight, Star } from 'lucide-react';
 import { doctors } from '@/data/doctors';
 import { services } from '@/data/services';
@@ -286,7 +287,13 @@ const HospitalWebsite = () => {
               </div>
 
               {/* Other Navigation Items */}
-              {['DOKTER', 'INFORMASI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
+              <Link
+                href="/dokter"
+                className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
+              >
+                DOKTER
+              </Link>
+              {['INFORMASI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
                 <button
                   key={item}
                   className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
@@ -330,14 +337,21 @@ const HospitalWebsite = () => {
         } overflow-hidden`}>
           <div className="bg-white border-t border-gray-100">
             <nav className="container mx-auto px-4 py-6 space-y-2">
-              {['HOME', 'DOKTER', 'INFORMASI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
+              <button
+                className="block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-lg"
+              >
+                HOME
+              </button>
+              <Link
+                href="/dokter"
+                className="block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 text-gray-700 hover:bg-teal-50 hover:text-teal-600"
+              >
+                DOKTER
+              </Link>
+              {['INFORMASI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
                 <button
                   key={item}
-                  className={`block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 ${
-                    item === 'HOME'
-                      ? 'bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-lg'
-                      : 'text-gray-700 hover:bg-teal-50 hover:text-teal-600'
-                  }`}
+                  className="block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 text-gray-700 hover:bg-teal-50 hover:text-teal-600"
                 >
                   {item}
                 </button>
@@ -647,12 +661,12 @@ const HospitalWebsite = () => {
                 <p className="text-gray-600 text-sm leading-relaxed flex-grow">
                   Dokter terbaik di Bhayangkara selalu memberikan profesionalisme, memberikan pelayanan medis yang berkualitas, serta penuh perhatian terhadap kesejahteraan.
                 </p>
-                <div className="mt-4 flex items-center text-teal-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <Link href="/dokter" className="mt-4 flex items-center text-teal-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300">
                   <span>Lihat Tim Dokter</span>
                   <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </div>
+                </Link>
               </div>
             </div>
             
@@ -1014,7 +1028,10 @@ const HospitalWebsite = () => {
                     
                     {/* Action Button */}
                     <div className="mt-6">
-                      <button className="group relative w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl overflow-hidden">
+                      <Link
+                        href={`/dokter/profile/${doctor.id}`}
+                        className="group relative w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl overflow-hidden block text-center"
+                      >
                         {/* Background shine effect */}
                         <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                         
@@ -1027,7 +1044,7 @@ const HospitalWebsite = () => {
                         
                         {/* Pulse effect on hover */}
                         <div className="absolute inset-0 rounded-xl border-2 border-white/30 opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300"></div>
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -1038,23 +1055,45 @@ const HospitalWebsite = () => {
           {/* Show More/Less Button */}
           {doctors.length > 6 && (
             <div className="text-center">
-              <button
-                onClick={() => setShowAllDoctors(!showAllDoctors)}
-                className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="relative flex items-center gap-3">
-                  <span className="text-lg">
-                    {showAllDoctors ? 'Tampilkan Lebih Sedikit' : `Lihat Semua Dokter (${doctors.length})`}
-                  </span>
-                  <div className={`transform transition-transform duration-300 ${showAllDoctors ? 'rotate-180' : ''}`}>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
+              {!showAllDoctors && (
+                <Link
+                  href="/dokter"
+                  className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative flex items-center gap-3">
+                    <span className="text-lg">
+                      Lihat Semua Dokter ({doctors.length})
+                    </span>
+                    <div className="transform transition-transform duration-300">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </div>
                   </div>
-                </div>
-                <div className="absolute right-0 w-12 h-full bg-white/10 skew-x-[20deg] -translate-x-20 group-hover:translate-x-32 transition-transform duration-500"></div>
-              </button>
+                  <div className="absolute right-0 w-12 h-full bg-white/10 skew-x-[20deg] -translate-x-20 group-hover:translate-x-32 transition-transform duration-500"></div>
+                </Link>
+              )}
+              
+              {showAllDoctors && (
+                <button
+                  onClick={() => setShowAllDoctors(false)}
+                  className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-gray-600 to-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative flex items-center gap-3">
+                    <span className="text-lg">
+                      Tampilkan Lebih Sedikit
+                    </span>
+                    <div className="transform transition-transform duration-300 rotate-180">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="absolute right-0 w-12 h-full bg-white/10 skew-x-[20deg] -translate-x-20 group-hover:translate-x-32 transition-transform duration-500"></div>
+                </button>
+              )}
               
               {/* Statistics */}
               <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
