@@ -3,11 +3,11 @@
     "source": ".",
     "ignore": [
       "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+  "**/.git/**",
+  "**/node_modules/**"
     ],
     "frameworksBackend": {
-      "region": "us-central1"
+      "region": "asia-southeast2"
     }
   }
 }
