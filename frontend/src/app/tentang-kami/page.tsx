@@ -52,7 +52,7 @@ const TentangKamiPage = () => {
       // Clear previous timeout to throttle the function
       clearTimeout(timeoutId);
       
-      timeoutId = setTimeout(() => {
+      timeoutId = setTimeout(() => { 
         if (typeof window !== 'undefined') {
           const currentScrollY = window.scrollY;
           const scrollThreshold = 100; // Minimum scroll distance to trigger hide/show
