@@ -293,7 +293,7 @@ const HospitalWebsite = () => {
               >
                 DOKTER
               </Link>
-              {['INFORMASI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
+              {['INFORMASI', 'E-LIBRARY', 'PELAYANAN', 'SOP RS'].map((item) => (
                 <button
                   key={item}
                   className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
@@ -348,7 +348,7 @@ const HospitalWebsite = () => {
               >
                 DOKTER
               </Link>
-              {['INFORMASI', 'GALERI', 'PELAYANAN', 'JADWAL'].map((item) => (
+              {['INFORMASI', 'E-LIBRARY', 'PELAYANAN', 'SOP RS'].map((item) => (
                 <button
                   key={item}
                   className="block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 text-gray-700 hover:bg-teal-50 hover:text-teal-600"
@@ -487,6 +487,19 @@ const HospitalWebsite = () => {
                   </span>
                   <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 group-hover:left-full transition-all duration-700"></div>
                 </button>
+                
+                <Link 
+                  href="/jadwal-dokter"
+                  className="group relative bg-gradient-to-r from-blue-600 to-teal-600 text-white px-6 py-3 rounded-full font-bold text-base hover:from-blue-700 hover:to-teal-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="relative flex items-center justify-center gap-2">
+                    <svg className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4m-6 0h6m-6 0V3m6 4v10.5a2.5 2.5 0 01-2.5 2.5h-3a2.5 2.5 0 01-2.5-2.5V7" />
+                    </svg>
+                    Lihat Jadwal
+                  </span>
+                </Link>
                 
                 <button className="group relative bg-white/15 backdrop-blur-sm border-2 border-white/50 text-white px-6 py-3 rounded-full font-semibold text-base hover:bg-white/25 hover:border-white/70 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 overflow-hidden">
                   <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -1054,25 +1067,43 @@ const HospitalWebsite = () => {
           
           {/* Show More/Less Button */}
           {doctors.length > 6 && (
-            <div className="text-center">
+            <div className="text-center space-y-4">
               {!showAllDoctors && (
-                <Link
-                  href="/dokter"
-                  className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative flex items-center gap-3">
-                    <span className="text-lg">
-                      Lihat Semua Dokter ({doctors.length})
-                    </span>
-                    <div className="transform transition-transform duration-300">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <Link
+                    href="/dokter"
+                    className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative flex items-center gap-3">
+                      <span className="text-lg">
+                        Lihat Semua Dokter ({doctors.length})
+                      </span>
+                      <div className="transform transition-transform duration-300">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                  <div className="absolute right-0 w-12 h-full bg-white/10 skew-x-[20deg] -translate-x-20 group-hover:translate-x-32 transition-transform duration-500"></div>
-                </Link>
+                    <div className="absolute right-0 w-12 h-full bg-white/10 skew-x-[20deg] -translate-x-20 group-hover:translate-x-32 transition-transform duration-500"></div>
+                  </Link>
+                  
+                  <Link
+                    href="/jadwal-dokter"
+                    className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative flex items-center gap-3">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4m-6 0h6m-6 0V3m6 4v10.5a2.5 2.5 0 01-2.5 2.5h-3a2.5 2.5 0 01-2.5-2.5V7" />
+                      </svg>
+                      <span className="text-lg">
+                        Lihat Jadwal Dokter
+                      </span>
+                    </div>
+                    <div className="absolute right-0 w-12 h-full bg-white/10 skew-x-[20deg] -translate-x-20 group-hover:translate-x-32 transition-transform duration-500"></div>
+                  </Link>
+                </div>
               )}
               
               {showAllDoctors && (
@@ -1268,7 +1299,7 @@ const HospitalWebsite = () => {
             <div>
               <h3 className="text-lg font-bold text-white mb-4">Menu Utama</h3>
               <ul className="space-y-2">
-                {['Home', 'Dokter', 'Visi dan Misi', 'Galeri', 'Pelayanan', 'Jadwal'].map((item) => (
+                {['Home', 'Dokter', 'Visi dan Misi', 'E-Library', 'Pelayanan', 'SOP RS'].map((item) => (
                   <li key={item}>
                     <a href="#" className="text-gray-400 hover:text-teal-400 transition-colors duration-300 flex items-center group">
                       <ChevronRight className="w-4 h-4 mr-2 text-teal-500 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
