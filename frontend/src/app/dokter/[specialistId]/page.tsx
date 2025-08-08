@@ -48,69 +48,155 @@ const SpecialistPage = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-teal-600 via-blue-600 to-blue-700 text-white overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: "url('/images/doctor.png')",
-              backgroundBlendMode: 'overlay'
-            }}
-          />
+      <section className="relative bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 text-white overflow-hidden min-h-[90vh] flex items-center">
+        {/* Dynamic Background Pattern */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_35%,rgba(255,255,255,0.05)_50%,transparent_65%)] animate-pulse"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(255,255,255,0.1)_0%,transparent_60%)] animate-breathing"></div>
         </div>
         
-        {/* Animated Background Elements */}
+        {/* Floating Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full animate-pulse"></div>
-          <div className="absolute top-1/2 -left-10 w-32 h-32 bg-white/5 rounded-full animate-bounce"></div>
-          <div className="absolute bottom-10 right-1/4 w-24 h-24 bg-white/10 rounded-full animate-pulse delay-1000"></div>
+          <div className="absolute top-1/4 left-10 w-2 h-2 bg-white/30 rounded-full animate-ping"></div>
+          <div className="absolute top-1/3 right-20 w-3 h-3 bg-white/20 rounded-full animate-pulse delay-500"></div>
+          <div className="absolute bottom-1/4 left-1/4 w-1 h-1 bg-white/40 rounded-full animate-ping delay-1000"></div>
+          <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-white/25 rounded-full animate-pulse delay-1500"></div>
         </div>
 
-        <div className="relative z-10 container mx-auto px-4 pt-32 pb-20">
+        {/* Geometric Background */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 right-10 w-40 h-40 border border-white/10 rounded-full animate-spin-slow"></div>
+          <div className="absolute bottom-20 left-10 w-60 h-60 border border-white/5 rounded-full animate-reverse-spin"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-purple-400/5 to-blue-400/5 rounded-full blur-3xl animate-pulse"></div>
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4">
           {/* Breadcrumb */}
-          <nav className="mb-8" aria-label="Breadcrumb">
-            <ol className="flex items-center space-x-2 text-sm">
+          <nav className="mb-12 flex justify-center lg:justify-start" aria-label="Breadcrumb">
+            <ol className="flex items-center space-x-3 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20">
               <li>
-                <Link href="/" className="text-white/80 hover:text-white transition-colors">
+                <Link href="/" className="text-white/80 hover:text-white transition-colors flex items-center">
+                  <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
+                  </svg>
                   Home
                 </Link>
               </li>
-              <li className="text-white/60">/</li>
+              <li className="text-white/60">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
+                </svg>
+              </li>
               <li>
                 <Link href="/dokter" className="text-white/80 hover:text-white transition-colors">
-                  Profil Dokter
+                  Dokter
                 </Link>
               </li>
-              <li className="text-white/60">/</li>
+              <li className="text-white/60">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
+                </svg>
+              </li>
               <li className="text-white font-medium">{specialist.name}</li>
             </ol>
           </nav>
 
-          <div className="text-center">
-            <div className="text-6xl mb-6">{specialist.icon}</div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
-              {specialist.name}
-            </h1>
-            <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
-              {specialist.description}
-            </p>
-            <p className="text-lg text-blue-200 mb-8">
-              Dokter Spesialis {specialist.description} di Kota Palembang, Sumatera Selatan SDM Unggul RSUP. Dr. Mohammad Hoesin
-            </p>
+          {/* Main Content */}
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            {/* Left Content */}
+            <div className="flex-1 text-center lg:text-left">
+              {/* Specialist Icon */}
+              <div className="mb-8 flex justify-center lg:justify-start">
+                <div className="relative">
+                  <div className="text-8xl lg:text-9xl filter drop-shadow-2xl animate-bounce-slow">
+                    {specialist.icon}
+                  </div>
+                  <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full animate-ping"></div>
+                  <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full animate-pulse delay-500"></div>
+                </div>
+              </div>
+
+              {/* Title */}
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
+                <span className="block bg-gradient-to-r from-white via-purple-100 to-blue-100 bg-clip-text text-transparent animate-fade-in-up">
+                  SPESIALIS
+                </span>
+                <span className="block bg-gradient-to-r from-blue-100 via-white to-purple-100 bg-clip-text text-transparent animate-fade-in-up delay-300">
+                  {specialist.name}
+                </span>
+              </h1>
+
+              {/* Description */}
+              <p className="text-xl md:text-2xl text-purple-100 mb-8 max-w-2xl mx-auto lg:mx-0 animate-fade-in-up delay-600">
+                Pelayanan medis terdepan untuk{' '}
+                <span className="text-white font-semibold">{specialist.description}</span>
+                {' '}dengan teknologi modern dan tim ahli berpengalaman
+              </p>
+
+              {/* Features */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 animate-fade-in-up delay-900">
+                <div className="flex items-center justify-center lg:justify-start space-x-3 bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/20">
+                  <svg className="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                  </svg>
+                  <span className="text-white font-medium">Dokter Berpengalaman</span>
+                </div>
+                <div className="flex items-center justify-center lg:justify-start space-x-3 bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/20">
+                  <svg className="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                  </svg>
+                  <span className="text-white font-medium">Teknologi Modern</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Content - Decorative */}
+            <div className="flex-1 hidden lg:flex justify-center items-center">
+              <div className="relative">
+                {/* Main Circle */}
+                <div className="w-80 h-80 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-full border border-white/20 flex items-center justify-center">
+                  <div className="w-60 h-60 bg-gradient-to-br from-purple-400/20 to-blue-400/20 rounded-full flex items-center justify-center">
+                    <div className="text-6xl">{specialist.icon}</div>
+                  </div>
+                </div>
+                
+                {/* Orbiting Elements */}
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full flex items-center justify-center animate-orbit">
+                  <span className="text-2xl">🏥</span>
+                </div>
+                <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full flex items-center justify-center animate-orbit delay-1000">
+                  <span className="text-xl">💊</span>
+                </div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-14 h-14 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full flex items-center justify-center animate-orbit delay-2000">
+                  <span className="text-xl">🩺</span>
+                </div>
+                <div className="absolute top-1/2 left-0 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full flex items-center justify-center animate-orbit delay-3000">
+                  <span className="text-lg">❤️</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Wave Separator */}
+        {/* Advanced Wave Separator */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden">
           <svg
-            className="relative block w-full h-20"
-            viewBox="0 0 1200 120"
+            className="relative block w-full h-32"
+            viewBox="0 0 1440 320"
             preserveAspectRatio="none"
           >
+            <defs>
+              <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9"/>
+                <stop offset="25%" stopColor="#ffffff" stopOpacity="1"/>
+                <stop offset="50%" stopColor="#ffffff" stopOpacity="0.8"/>
+                <stop offset="75%" stopColor="#ffffff" stopOpacity="1"/>
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="0.9"/>
+              </linearGradient>
+            </defs>
             <path
-              d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-              fill="#ffffff"
+              fill="url(#waveGradient2)"
+              d="M0,224L60,213.3C120,203,240,181,360,181.3C480,181,600,203,720,224C840,245,960,267,1080,261.3C1200,256,1320,224,1380,208L1440,192L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"
             ></path>
           </svg>
         </div>
