@@ -489,14 +489,10 @@ const RawatInapPage = () => {
                       ))}
                     </div>
 
-                    <div className="mt-6 grid grid-cols-2 gap-3">
-                      <a href="#kontak" className={`px-4 py-3 bg-gradient-to-r ${facility.color} text-white rounded-xl font-semibold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2`}>
+                    <div className="mt-6">
+                      <a href="#kontak" className={`w-full px-4 py-3 bg-gradient-to-r ${facility.color} text-white rounded-xl font-semibold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2`}>
                         <span>Hubungi</span>
                         <Phone className="w-4 h-4" />
-                      </a>
-                      <a href="https://maps.app.goo.gl/KAVjdZuMNDDQW7Su9" target="_blank" rel="noopener noreferrer" className="px-4 py-3 bg-gray-50 hover:bg-gray-100 text-gray-700 rounded-xl font-semibold text-sm border border-gray-200 transition-colors flex items-center justify-center gap-2">
-                        <MapPin className="w-4 h-4" />
-                        <span>Rute</span>
                       </a>
                     </div>
                   </div>
@@ -513,29 +509,29 @@ const RawatInapPage = () => {
                 <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
                   <UserCheck className="w-6 h-6" />
                 </div>
-                <div className="font-semibold mb-1">1. Pendaftaran</div>
-                <p className="text-sm text-gray-600">Daftar di loket dengan identitas dan kartu asuransi/rujukan.</p>
+                <div className="font-bold text-gray-800 mb-2">1. Pendaftaran</div>
+                <p className="text-sm text-gray-700">Daftar di loket dengan identitas dan kartu asuransi/rujukan.</p>
               </div>
               <div className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
                 <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
                   <Stethoscope className="w-6 h-6" />
                 </div>
-                <div className="font-semibold mb-1">2. Evaluasi Dokter</div>
-                <p className="text-sm text-gray-600">Penilaian kondisi pasien dan kebutuhan kamar/perawatan.</p>
+                <div className="font-bold text-gray-800 mb-2">2. Evaluasi Dokter</div>
+                <p className="text-sm text-gray-700">Penilaian kondisi pasien dan kebutuhan kamar/perawatan.</p>
               </div>
               <div className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
                 <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
                   <Bed className="w-6 h-6" />
                 </div>
-                <div className="font-semibold mb-1">3. Pilih Kamar</div>
-                <p className="text-sm text-gray-600">Pemilihan tipe kamar sesuai ketersediaan dan kebutuhan.</p>
+                <div className="font-bold text-gray-800 mb-2">3. Pilih Kamar</div>
+                <p className="text-sm text-gray-700">Pemilihan tipe kamar sesuai ketersediaan dan kebutuhan.</p>
               </div>
               <div className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
                 <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
                   <CheckCircle className="w-6 h-6" />
                 </div>
-                <div className="font-semibold mb-1">4. Masuk Perawatan</div>
-                <p className="text-sm text-gray-600">Proses administrasi akhir dan pasien masuk ke kamar.</p>
+                <div className="font-bold text-gray-800 mb-2">4. Masuk Perawatan</div>
+                <p className="text-sm text-gray-700">Proses administrasi akhir dan pasien masuk ke kamar.</p>
               </div>
             </div>
           </div>
