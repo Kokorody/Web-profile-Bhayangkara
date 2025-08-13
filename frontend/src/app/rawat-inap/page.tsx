@@ -340,7 +340,7 @@ const RawatInapPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-10 overflow-hidden bg-gradient-to-br from-teal-50 via-blue-50 to-indigo-100">
+      <section className="relative pt-45 pb-10 overflow-hidden bg-gradient-to-br from-teal-50 via-blue-50 to-indigo-100">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-teal-400/20 via-blue-400/10 to-transparent"></div>
         <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-teal-400/20 rounded-full blur-3xl"></div>
         <div className="absolute bottom-10 left-10 w-96 h-96 bg-gradient-to-br from-indigo-400/15 to-purple-400/15 rounded-full blur-3xl"></div>
