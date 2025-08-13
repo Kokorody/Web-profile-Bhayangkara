@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Mail, 
   Phone, 
@@ -18,12 +18,23 @@ import {
   UserCheck,
   Zap,
   Award,
-  CheckCircle
+  CheckCircle,
+  Search,
+  Filter,
+  ChevronDown,
+  Sparkles,
+  TrendingUp,
+  Eye,
+  MessageCircle
 } from 'lucide-react';
 
 const RawatInapPage = () => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [visibleCards, setVisibleCards] = useState<number[]>([]);
+  const [isStatsVisible, setIsStatsVisible] = useState(false);
+  const statsRef = useRef<HTMLDivElement>(null);
 
   // Filters and UI state
   const [query, setQuery] = useState('');
@@ -50,11 +61,52 @@ const RawatInapPage = () => {
     return () => window.removeEventListener("scroll", updateScrollDirection);
   }, [isHeaderVisible]);
 
+  // Intersection Observer for animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const cardIndex = Number(entry.target.getAttribute('data-card-index'));
+            if (!isNaN(cardIndex)) {
+              setVisibleCards(prev => [...prev, cardIndex]);
+            }
+            if (entry.target.getAttribute('data-stats') === 'true') {
+              setIsStatsVisible(true);
+            }
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const cardElements = document.querySelectorAll('[data-card-index]');
+    const statsElement = document.querySelector('[data-stats]');
+    
+    cardElements.forEach(el => observer.observe(el));
+    if (statsElement) observer.observe(statsElement);
+
+    return () => observer.disconnect();
+  }, []);
+
   // Debounce search query for performance
   useEffect(() => {
     const t = setTimeout(() => setDebouncedQuery(query.trim().toLowerCase()), 250);
     return () => clearTimeout(t);
   }, [query]);
+
+  // Helper function to get background color based on facility color
+  const getBackgroundColor = (color: string) => {
+    if (color.includes('blue')) return '#f0f9ff';
+    if (color.includes('teal')) return '#f0fdfa';
+    if (color.includes('pink')) return '#fdf2f8';
+    if (color.includes('amber')) return '#fffbeb';
+    if (color.includes('red')) return '#fef2f2';
+    if (color.includes('purple')) return '#faf5ff';
+    if (color.includes('green')) return '#f0fdf4';
+    if (color.includes('cyan')) return '#ecfeff';
+    return '#f9fafb';
+  };
 
   const inpatientFacilities = [
     {
@@ -340,64 +392,168 @@ const RawatInapPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-45 pb-10 overflow-hidden bg-gradient-to-br from-teal-50 via-blue-50 to-indigo-100">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-teal-400/20 via-blue-400/10 to-transparent"></div>
-        <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-teal-400/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-gradient-to-br from-indigo-400/15 to-purple-400/15 rounded-full blur-3xl"></div>
+      <section className="relative pt-40 pb-20 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-teal-400/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-10 left-10 w-96 h-96 bg-gradient-to-br from-indigo-400/15 to-purple-400/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-teal-300/10 via-blue-300/10 to-indigo-300/10 rounded-full blur-3xl animate-spin" style={{ animationDuration: '60s' }}></div>
+        </div>
+
+        {/* Floating Medical Icons */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-32 left-16 animate-bounce" style={{ animationDelay: '0s', animationDuration: '3s' }}>
+            <div className="w-12 h-12 bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+              <Heart className="w-6 h-6 text-red-400" />
+            </div>
+          </div>
+          <div className="absolute top-48 right-20 animate-bounce" style={{ animationDelay: '1s', animationDuration: '3s' }}>
+            <div className="w-10 h-10 bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+              <Activity className="w-5 h-5 text-blue-400" />
+            </div>
+          </div>
+          <div className="absolute bottom-32 left-32 animate-bounce" style={{ animationDelay: '2s', animationDuration: '3s' }}>
+            <div className="w-14 h-14 bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+              <Shield className="w-7 h-7 text-teal-400" />
+            </div>
+          </div>
+          <div className="absolute bottom-48 right-16 animate-bounce" style={{ animationDelay: '0.5s', animationDuration: '3s' }}>
+            <div className="w-8 h-8 bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
+              <Stethoscope className="w-4 h-4 text-purple-400" />
+            </div>
+          </div>
+        </div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-lg border border-white/20 mb-6">
-              <Bed className="w-6 h-6 text-teal-600" />
-              <span className="text-teal-600 font-semibold text-sm">LAYANAN UNGGULAN</span>
+          <div className="text-center mb-12">
+            {/* Enhanced Badge */}
+            <div className="inline-flex items-center gap-3 bg-white/90 backdrop-blur-md px-8 py-4 rounded-full shadow-xl border border-white/40 mb-8 hover:scale-105 transition-all duration-300 group">
+              <div className="relative">
+                <Bed className="w-6 h-6 text-teal-600 group-hover:rotate-12 transition-transform duration-300" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></div>
+              </div>
+              <span className="text-teal-600 font-bold text-sm tracking-wide">LAYANAN UNGGULAN 24/7</span>
+              <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse"></div>
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-teal-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4 leading-tight">
-              Instalasi Rawat Inap
+            {/* Enhanced Title with Gradient Text */}
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-teal-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent animate-pulse">
+                Instalasi
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-teal-600 bg-clip-text text-transparent">
+                Rawat Inap
+              </span>
             </h1>
             
-            <p className="text-base md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Fasilitas rawat inap lengkap dengan tenaga medis profesional dan pelayanan 24 jam.
+            <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-4xl mx-auto leading-relaxed font-medium">
+              Fasilitas rawat inap terdepan dengan teknologi modern, tenaga medis berpengalaman, dan pelayanan 24 jam untuk kesembuhan optimal Anda.
             </p>
 
-            {/* Quick stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 max-w-3xl mx-auto">
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-white/40">
-                <div className="text-3xl font-bold text-teal-600 mb-1">{inpatientFacilities.length}</div>
-                <div className="text-sm font-semibold text-gray-600">Unit Instalasi</div>
+            {/* Enhanced Quick Stats with Animations */}
+            <div 
+              className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto mb-12"
+              data-stats="true"
+              ref={statsRef}
+            >
+              <div className={`group bg-white/90 backdrop-blur-md rounded-3xl p-8 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 transform ${isStatsVisible ? 'animate-bounce' : ''}`} style={{ animationDelay: '0s' }}>
+                <div className="relative">
+                  <div className="text-4xl font-black text-teal-600 mb-2 group-hover:scale-110 transition-transform duration-300">
+                    {inpatientFacilities.length}
+                  </div>
+                  <div className="text-sm font-bold text-gray-600 uppercase tracking-wider">Unit Instalasi</div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-teal-400 to-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                    <Sparkles className="w-3 h-3 text-white" />
+                  </div>
+                </div>
               </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-white/40">
-                <div className="text-3xl font-bold text-blue-600 mb-1">{totalBeds}</div>
-                <div className="text-sm font-semibold text-gray-600">Total Tempat Tidur</div>
+              <div className={`group bg-white/90 backdrop-blur-md rounded-3xl p-8 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 transform ${isStatsVisible ? 'animate-bounce' : ''}`} style={{ animationDelay: '0.2s' }}>
+                <div className="relative">
+                  <div className="text-4xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform duration-300">
+                    {totalBeds}
+                  </div>
+                  <div className="text-sm font-bold text-gray-600 uppercase tracking-wider">Total Tempat Tidur</div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                    <TrendingUp className="w-3 h-3 text-white" />
+                  </div>
+                </div>
               </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-white/40">
-                <div className="text-3xl font-bold text-indigo-600 mb-1">24/7</div>
-                <div className="text-sm font-semibold text-gray-600">Pelayanan</div>
+              <div className={`group bg-white/90 backdrop-blur-md rounded-3xl p-8 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 transform ${isStatsVisible ? 'animate-bounce' : ''}`} style={{ animationDelay: '0.4s' }}>
+                <div className="relative">
+                  <div className="text-4xl font-black text-indigo-600 mb-2 group-hover:scale-110 transition-transform duration-300">
+                    24/7
+                  </div>
+                  <div className="text-sm font-bold text-gray-600 uppercase tracking-wider">Pelayanan Siaga</div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-red-400 to-red-500 rounded-full animate-pulse flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            {/* Interactive CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <button 
+                onClick={() => document.getElementById('fasilitas')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group relative px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-600 text-white rounded-2xl font-bold text-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="relative flex items-center gap-3">
+                  <Eye className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+                  <span>Lihat Fasilitas</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
+                <div className="absolute bottom-0 left-0 h-1 bg-white/30 w-0 group-hover:w-full transition-all duration-500"></div>
+              </button>
+              
+              <button 
+                onClick={() => document.getElementById('kontak')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group relative px-8 py-4 bg-white/90 backdrop-blur-md text-gray-800 rounded-2xl font-bold text-lg border-2 border-gray-200 hover:border-teal-400 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-teal-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                <div className="relative flex items-center gap-3">
+                  <Phone className="w-6 h-6 text-teal-600 group-hover:rotate-12 transition-transform duration-300" />
+                  <span>Hubungi Sekarang</span>
+                </div>
+              </button>
             </div>
           </div>
 
-          {/* Filters */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-white/60 shadow-lg p-4 md:p-6">
-            <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4">
+          {/* Enhanced Filters Section */}
+          <div className="bg-white/95 backdrop-blur-md rounded-3xl border border-white/60 shadow-2xl p-6 md:p-8 hover:shadow-3xl transition-all duration-300">
+            <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-6">
               <div className="relative flex-1">
+                <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                  <Search className="w-6 h-6" />
+                </div>
                 <input
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Cari unit atau fasilitas (misal: Anak, ICU, VIP)"
+                  placeholder="Cari unit rawat inap (misal: ICU, Anak, VIP, Jantung, dll)"
                   aria-label="Pencarian unit rawat inap"
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-teal-400 focus:ring-4 focus:ring-teal-100/60 outline-none px-12 py-3 text-sm md:text-base"
+                  className="w-full rounded-2xl border-2 border-gray-200 bg-gray-50 focus:bg-white focus:border-teal-400 focus:ring-4 focus:ring-teal-100/60 outline-none pl-14 pr-6 py-4 text-base font-medium transition-all duration-300"
                 />
-                <svg className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                {query && (
+                  <button
+                    onClick={() => setQuery('')}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    ×
+                  </button>
+                )}
               </div>
-              <div className="flex items-center gap-3">
-                <label htmlFor="sort" className="text-sm text-gray-600">Urutkan:</label>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
+                  <Filter className="w-5 h-5 text-gray-600" />
+                  <label htmlFor="sort" className="text-sm font-semibold text-gray-700">Urutkan:</label>
+                </div>
                 <select
                   id="sort"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 text-sm focus:border-teal-400 focus:ring-4 focus:ring-teal-100/60 outline-none"
+                  className="rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-sm font-medium focus:border-teal-400 focus:ring-4 focus:ring-teal-100/60 outline-none transition-all duration-300"
                 >
                   <option value="relevance">Relevan</option>
                   <option value="az">A-Z</option>
@@ -406,20 +562,23 @@ const RawatInapPage = () => {
                 </select>
               </div>
             </div>
-            <div className="mt-4 overflow-x-auto">
-              <div className="flex gap-2 min-w-max">
+            <div className="mt-6 overflow-x-auto">
+              <div className="flex gap-3 min-w-max pb-2">
                 {categories.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-4 py-2 rounded-full border text-sm transition-all ${
+                    className={`px-6 py-3 rounded-full border-2 text-sm font-semibold transition-all duration-300 hover:scale-105 ${
                       activeCategory === cat
-                        ? 'bg-gradient-to-r from-teal-500 to-blue-600 text-white border-transparent shadow'
-                        : 'bg-white text-gray-700 border-gray-200 hover:border-teal-300 hover:text-teal-700'
+                        ? 'bg-gradient-to-r from-teal-500 to-blue-600 text-white border-transparent shadow-lg'
+                        : 'bg-white text-gray-700 border-gray-200 hover:border-teal-300 hover:text-teal-700 hover:bg-teal-50'
                     }`}
                     aria-pressed={activeCategory === cat}
                   >
                     {cat}
+                    {activeCategory === cat && (
+                      <div className="inline-block ml-2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    )}
                   </button>
                 ))}
               </div>
@@ -429,163 +588,383 @@ const RawatInapPage = () => {
       </section>
 
       {/* Main Content */}
-      <section className="py-16 md:py-20 bg-white">
+      <section id="fasilitas" className="py-20 md:py-24 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-4">
-          <div className="flex items-end justify-between mb-8 md:mb-12">
-            <div>
-              <h2 className="text-2xl md:text-4xl font-bold text-gray-800">Fasilitas Rawat Inap</h2>
-              <p className="text-gray-600 mt-2 text-sm md:text-base">Pilihan unit dengan spesialisasi berbeda untuk kebutuhan Anda</p>
+          <div className="flex items-end justify-between mb-12 md:mb-16">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-teal-100 to-blue-100 px-6 py-3 rounded-full mb-6">
+                <Sparkles className="w-5 h-5 text-teal-600" />
+                <span className="text-teal-700 font-bold text-sm tracking-wide">FASILITAS TERDEPAN</span>
+              </div>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">
+                Fasilitas Rawat Inap
+                <span className="block text-teal-600">Berkelas Dunia</span>
+              </h2>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                Pilihan unit dengan spesialisasi berbeda untuk kebutuhan medis Anda dengan standar internasional
+              </p>
             </div>
-            <div className="text-sm text-gray-500">{filteredFacilities.length} unit ditemukan</div>
+            <div className="hidden md:flex items-center gap-4">
+              <div className="text-right">
+                <div className="text-3xl font-black text-teal-600">{filteredFacilities.length}</div>
+                <div className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Unit Tersedia</div>
+              </div>
+              <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-blue-600 rounded-full flex items-center justify-center">
+                <Bed className="w-6 h-6 text-white" />
+              </div>
+            </div>
           </div>
 
           {filteredFacilities.length === 0 ? (
-            <div className="bg-gray-50 border border-dashed border-gray-200 rounded-2xl p-10 text-center">
-              <p className="text-gray-600">Tidak ada unit yang sesuai pencarian Anda.</p>
+            <div className="bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-dashed border-gray-300 rounded-3xl p-16 text-center">
+              <div className="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Search className="w-12 h-12 text-gray-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-600 mb-4">Tidak ada unit yang ditemukan</h3>
+              <p className="text-gray-500 mb-6">Coba ubah kata kunci pencarian atau filter kategori Anda</p>
+              <button
+                onClick={() => {
+                  setQuery('');
+                  setActiveCategory('Semua');
+                }}
+                className="px-6 py-3 bg-teal-500 text-white rounded-xl font-semibold hover:bg-teal-600 transition-colors"
+              >
+                Reset Pencarian
+              </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10">
               {filteredFacilities.map((facility, index) => (
                 <article
                   key={facility.id}
-                  className="group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
-                  style={{ animationDelay: `${index * 80}ms` }}
+                  data-card-index={index}
+                  className={`group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-700 border border-gray-100 overflow-hidden transform hover:-translate-y-2 ${
+                    visibleCards.includes(index) ? 'animate-fadeInUp' : 'opacity-0'
+                  }`}
+                  style={{ 
+                    animationDelay: `${index * 150}ms`,
+                    backgroundImage: `linear-gradient(135deg, white 0%, ${getBackgroundColor(facility.color)} 100%)`
+                  }}
+                  onMouseEnter={() => setHoveredCard(facility.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
                 >
-                  {/* Accent background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${facility.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
+                  {/* Animated Background Glow */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${facility.color} opacity-0 group-hover:opacity-10 transition-all duration-700`}></div>
+                  
+                  {/* Floating Badge */}
+                  <div className="absolute top-4 right-4 z-10">
+                    <div className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${facility.color} shadow-lg`}>
+                      {facility.category}
+                    </div>
+                  </div>
 
-                  {/* Header */}
-                  <div className="relative p-6 pb-4">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className={`p-4 rounded-2xl bg-gradient-to-br ${facility.color} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  {/* Content */}
+                  <div className="relative p-8">
+                    {/* Header with Icon */}
+                    <div className="flex items-start justify-between mb-6">
+                      <div className={`relative p-4 rounded-2xl bg-gradient-to-br ${facility.color} text-white shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                         {facility.icon}
+                        {hoveredCard === facility.id && (
+                          <div className="absolute -inset-2 bg-white/20 rounded-2xl animate-ping"></div>
+                        )}
                       </div>
-                      <div className="text-right">
-                        <div className="text-xs inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-50 border border-gray-200 text-gray-600 mb-2">
-                          <Shield className="w-3.5 h-3.5 text-teal-600" />
-                          {facility.category}
+                      <div className="text-right ml-4">
+                        <div className="text-3xl font-black text-gray-800 group-hover:text-teal-600 transition-colors duration-300">
+                          {facility.beds}
                         </div>
-                        <div className="text-2xl font-bold text-gray-800">{facility.beds}</div>
-                        <div className="text-sm text-gray-500">Tempat Tidur</div>
+                        <div className="text-sm text-gray-500 font-semibold uppercase tracking-wider">
+                          Tempat Tidur
+                        </div>
                       </div>
                     </div>
 
-                    <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-teal-700 transition-colors duration-300">
+                    {/* Title and Description */}
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-teal-700 transition-colors duration-300 leading-tight">
                       {facility.name}
                     </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
+                    <p className="text-gray-600 text-sm leading-relaxed mb-6">
                       {facility.description}
                     </p>
-                  </div>
 
-                  {/* Features */}
-                  <div className="px-6 pb-6">
-                    <div className="grid grid-cols-1 gap-2">
-                      {facility.features.map((feature) => (
-                        <div key={feature} className="flex items-center gap-3">
-                          <CheckCircle className="w-4 h-4 text-teal-500 flex-shrink-0" />
-                          <span className="text-sm text-gray-600">{feature}</span>
+                    {/* Features with Enhanced Design */}
+                    <div className="space-y-3 mb-8">
+                      {facility.features.map((feature, idx) => (
+                        <div 
+                          key={feature} 
+                          className="flex items-center gap-3 group/feature"
+                          style={{ animationDelay: `${idx * 100}ms` }}
+                        >
+                          <div className="relative">
+                            <CheckCircle className="w-5 h-5 text-teal-500 group-hover/feature:scale-110 transition-transform duration-300" />
+                            {hoveredCard === facility.id && (
+                              <div className="absolute inset-0 bg-teal-500/30 rounded-full animate-ping"></div>
+                            )}
+                          </div>
+                          <span className="text-sm text-gray-700 font-medium group-hover/feature:text-gray-900 transition-colors duration-300">
+                            {feature}
+                          </span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="mt-6">
-                      <a href="#kontak" className={`w-full px-4 py-3 bg-gradient-to-r ${facility.color} text-white rounded-xl font-semibold text-sm hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2`}>
-                        <span>Hubungi</span>
-                        <Phone className="w-4 h-4" />
+                    {/* Enhanced CTA Button */}
+                    <div className="space-y-3">
+                      <a 
+                        href="#kontak" 
+                        className={`group/btn relative w-full px-6 py-4 bg-gradient-to-r ${facility.color} text-white rounded-2xl font-bold text-sm overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 flex items-center justify-center gap-3`}
+                      >
+                        <div className="absolute inset-0 bg-white/20 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+                        <Phone className="w-5 h-5 group-hover/btn:rotate-12 transition-transform duration-300 relative z-10" />
+                        <span className="relative z-10">Hubungi Sekarang</span>
+                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300 relative z-10" />
+                        <div className="absolute bottom-0 left-0 h-1 bg-white/40 w-0 group-hover/btn:w-full transition-all duration-500"></div>
                       </a>
+                      
+                      {/* View Details Button */}
+                      <button 
+                        className="w-full px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 group/detail"
+                        onClick={() => {
+                          // You can add a modal or expand functionality here
+                          alert(`Detail lengkap untuk ${facility.name} akan segera tersedia`);
+                        }}
+                      >
+                        <Eye className="w-4 h-4 group-hover/detail:scale-110 transition-transform duration-300" />
+                        <span>Lihat Detail</span>
+                      </button>
                     </div>
                   </div>
+
+                  {/* Bottom Accent */}
+                  <div className={`h-2 bg-gradient-to-r ${facility.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
                 </article>
               ))}
             </div>
           )}
 
-          {/* Admission Process */}
-          <div className="mt-16 md:mt-20">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 md:mb-8">Alur Pendaftaran Rawat Inap</h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
-              <div className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
-                  <UserCheck className="w-6 h-6" />
-                </div>
-                <div className="font-bold text-gray-800 mb-2">1. Pendaftaran</div>
-                <p className="text-sm text-gray-700">Daftar di loket dengan identitas dan kartu asuransi/rujukan.</p>
+          {/* Enhanced Statistics Section */}
+          <div className="mt-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-teal-500/20 via-blue-500/10 to-transparent"></div>
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-teal-400/10 to-blue-400/10 rounded-full blur-3xl"></div>
+            
+            <div className="relative z-10">
+              <div className="text-center mb-12">
+                <h3 className="text-3xl md:text-4xl font-bold mb-4">Mengapa Memilih Kami?</h3>
+                <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+                  Komitmen kami adalah memberikan pelayanan kesehatan terbaik dengan fasilitas modern dan tim profesional
+                </p>
               </div>
-              <div className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
-                  <Stethoscope className="w-6 h-6" />
+              
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="text-center group">
+                  <div className="w-16 h-16 bg-gradient-to-r from-teal-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Award className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="text-2xl font-bold text-teal-400 mb-2">Terakreditasi</div>
+                  <div className="text-sm text-gray-300">Standar Internasional</div>
                 </div>
-                <div className="font-bold text-gray-800 mb-2">2. Evaluasi Dokter</div>
-                <p className="text-sm text-gray-700">Penilaian kondisi pasien dan kebutuhan kamar/perawatan.</p>
-              </div>
-              <div className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
-                  <Bed className="w-6 h-6" />
+                <div className="text-center group">
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Users className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="text-2xl font-bold text-blue-400 mb-2">50+ Dokter</div>
+                  <div className="text-sm text-gray-300">Tim Medis Berpengalaman</div>
                 </div>
-                <div className="font-bold text-gray-800 mb-2">3. Pilih Kamar</div>
-                <p className="text-sm text-gray-700">Pemilihan tipe kamar sesuai ketersediaan dan kebutuhan.</p>
-              </div>
-              <div className="p-6 bg-white rounded-2xl border border-gray-100 shadow-sm">
-                <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center mb-4">
-                  <CheckCircle className="w-6 h-6" />
+                <div className="text-center group">
+                  <div className="w-16 h-16 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Shield className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="text-2xl font-bold text-indigo-400 mb-2">24/7</div>
+                  <div className="text-sm text-gray-300">Layanan Darurat</div>
                 </div>
-                <div className="font-bold text-gray-800 mb-2">4. Masuk Perawatan</div>
-                <p className="text-sm text-gray-700">Proses administrasi akhir dan pasien masuk ke kamar.</p>
+                <div className="text-center group">
+                  <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Heart className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="text-2xl font-bold text-purple-400 mb-2">1000+</div>
+                  <div className="text-sm text-gray-300">Pasien Puas per Bulan</div>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* FAQ */}
-          <div className="mt-16 md:mt-20">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 md:mb-8">Pertanyaan yang Sering Diajukan</h3>
-            <div className="space-y-3">
+      {/* Enhanced Admission Process */}
+      <section className="py-20 md:py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="mt-20 md:mt-24">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-100 to-indigo-100 px-6 py-3 rounded-full mb-6">
+                <UserCheck className="w-5 h-5 text-blue-600" />
+                <span className="text-blue-700 font-bold text-sm tracking-wide">PANDUAN PENDAFTARAN</span>
+              </div>
+              <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+                Alur Pendaftaran
+                <span className="block text-blue-600">Rawat Inap</span>
+              </h3>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                Proses mudah dan cepat untuk mendapatkan pelayanan rawat inap terbaik
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+              <div className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-teal-200 transform hover:-translate-y-2">
+                <div className="absolute -top-4 left-8">
+                  <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    1
+                  </div>
+                </div>
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-50 to-teal-100 text-teal-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <UserCheck className="w-8 h-8" />
+                </div>
+                <h4 className="font-bold text-gray-800 mb-3 text-lg">Pendaftaran</h4>
+                <p className="text-sm text-gray-700 leading-relaxed">Daftar di loket dengan identitas diri, kartu BPJS/asuransi, dan surat rujukan dokter.</p>
+              </div>
+              
+              <div className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-blue-200 transform hover:-translate-y-2">
+                <div className="absolute -top-4 left-8">
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    2
+                  </div>
+                </div>
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Stethoscope className="w-8 h-8" />
+                </div>
+                <h4 className="font-bold text-gray-800 mb-3 text-lg">Evaluasi Dokter</h4>
+                <p className="text-sm text-gray-700 leading-relaxed">Penilaian kondisi pasien dan penentuan kebutuhan perawatan yang sesuai.</p>
+              </div>
+              
+              <div className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-indigo-200 transform hover:-translate-y-2">
+                <div className="absolute -top-4 left-8">
+                  <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    3
+                  </div>
+                </div>
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-50 to-indigo-100 text-indigo-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Bed className="w-8 h-8" />
+                </div>
+                <h4 className="font-bold text-gray-800 mb-3 text-lg">Pilih Kamar</h4>
+                <p className="text-sm text-gray-700 leading-relaxed">Pemilihan tipe kamar rawat inap sesuai ketersediaan dan preferensi Anda.</p>
+              </div>
+              
+              <div className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-green-200 transform hover:-translate-y-2">
+                <div className="absolute -top-4 left-8">
+                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                    4
+                  </div>
+                </div>
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-50 to-green-100 text-green-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <CheckCircle className="w-8 h-8" />
+                </div>
+                <h4 className="font-bold text-gray-800 mb-3 text-lg">Masuk Perawatan</h4>
+                <p className="text-sm text-gray-700 leading-relaxed">Proses administrasi akhir dan pasien siap mendapatkan perawatan medis.</p>
+              </div>
+            </div>
+            
+            {/* Process Flow Arrow */}
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 pointer-events-none">
+              <div className="flex justify-between px-16">
+                <ArrowRight className="w-8 h-8 text-gray-300" />
+                <ArrowRight className="w-8 h-8 text-gray-300" />
+                <ArrowRight className="w-8 h-8 text-gray-300" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced FAQ Section */}
+      <section className="py-20 md:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="mt-20 md:mt-24">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-100 to-pink-100 px-6 py-3 rounded-full mb-6">
+                <MessageCircle className="w-5 h-5 text-purple-600" />
+                <span className="text-purple-700 font-bold text-sm tracking-wide">FAQ</span>
+              </div>
+              <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+                Pertanyaan yang
+                <span className="block text-purple-600">Sering Diajukan</span>
+              </h3>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                Temukan jawaban untuk pertanyaan umum seputar layanan rawat inap kami
+              </p>
+            </div>
+            
+            <div className="max-w-4xl mx-auto space-y-4">
               {faqs.map((item, i) => {
                 const open = openFaq === i;
                 return (
-                  <div key={item.q} className="border border-gray-200 rounded-xl overflow-hidden">
+                  <div key={item.q} className="group bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
                     <button
                       onClick={() => setOpenFaq(open ? null : i)}
-                      className="w-full flex items-center justify-between px-4 md:px-6 py-4 bg-white hover:bg-gray-50"
+                      className="w-full flex items-center justify-between px-6 md:px-8 py-6 bg-white hover:bg-gradient-to-r hover:from-gray-50 hover:to-white transition-all duration-300"
                       aria-expanded={open}
                     >
-                      <span className="text-left font-medium text-gray-800">{item.q}</span>
-                      <svg className={`w-5 h-5 text-gray-500 transition-transform ${open ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      <span className="text-left font-bold text-gray-900 text-lg group-hover:text-teal-700 transition-colors duration-300">
+                        {item.q}
+                      </span>
+                      <div className={`w-10 h-10 rounded-full bg-gradient-to-r from-teal-500 to-blue-600 flex items-center justify-center transition-all duration-300 ${open ? 'rotate-180 scale-110' : ''}`}>
+                        <ChevronDown className="w-5 h-5 text-white" />
+                      </div>
                     </button>
                     {open && (
-                      <div className="px-4 md:px-6 pb-5 text-sm text-gray-600 bg-gray-50">{item.a}</div>
+                      <div className="px-6 md:px-8 pb-6 bg-gradient-to-r from-gray-50 to-white">
+                        <div className="p-6 bg-white rounded-xl border border-gray-100 shadow-sm">
+                          <p className="text-gray-700 text-base leading-relaxed">
+                            {item.a}
+                          </p>
+                        </div>
+                      </div>
                     )}
                   </div>
                 );
               })}
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* CTA Section */}
-          <div id="kontak" className="mt-16 md:mt-20 bg-gradient-to-br from-teal-500 via-blue-600 to-indigo-600 rounded-3xl p-8 md:p-12 text-center text-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent"></div>
-            <div className="relative z-10">
-              <div className="flex justify-center mb-6">
-                <div className="p-4 bg-white/20 backdrop-blur-sm rounded-2xl">
-                  <Award className="w-12 h-12 text-white" />
-                </div>
+      {/* Enhanced CTA Section */}
+      <section className="py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4">
+          <div id="kontak" className="mt-20 md:mt-24 relative">
+            <div className="bg-gradient-to-br from-teal-500 via-blue-600 to-indigo-600 rounded-3xl p-10 md:p-16 text-center text-white relative overflow-hidden shadow-2xl">
+              {/* Animated Background Elements */}
+              <div className="absolute inset-0">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
               </div>
               
-              <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Butuh Informasi Lebih Lanjut?</h3>
-              <p className="text-base md:text-lg mb-6 md:mb-8 opacity-90 max-w-2xl mx-auto">
-                Tim customer service kami siap membantu 24/7 untuk pendaftaran, jadwal kunjungan, dan layanan rawat inap lainnya.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="tel:(0711)414" className="group px-8 py-4 bg-white text-teal-600 rounded-xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transform hover:scale-105">
-                  <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-                  <span>(0711) 414</span>
-                </a>
+              <div className="relative z-10">
+                <div className="flex justify-center mb-8">
+                  <div className="p-6 bg-white/20 backdrop-blur-sm rounded-3xl group hover:scale-110 transition-transform duration-300">
+                    <Award className="w-16 h-16 text-white group-hover:rotate-12 transition-transform duration-300" />
+                  </div>
+                </div>
                 
-                <a href="mailto:rs.bhayangkara.palembang@gmail.com" className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-xl font-bold text-lg hover:bg-white/20 transition-all duration-300 border border-white/20 flex items-center justify-center gap-3">
-                  <Mail className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-                  <span>Email Kami</span>
-                </a>
+                <h3 className="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
+                  Butuh Informasi
+                  <span className="block">Lebih Lanjut?</span>
+                </h3>
+                <p className="text-lg md:text-xl mb-10 opacity-95 max-w-3xl mx-auto leading-relaxed">
+                  Tim customer service profesional kami siap membantu 24/7 untuk pendaftaran, jadwal kunjungan, dan semua kebutuhan layanan rawat inap Anda.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                  <a href="tel:(0711)414" className="group px-10 py-5 bg-white text-teal-600 rounded-2xl font-black text-xl hover:bg-gray-50 transition-all duration-300 flex items-center justify-center gap-4 shadow-xl hover:shadow-2xl transform hover:scale-105">
+                    <div className="relative">
+                      <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-ping"></div>
+                    </div>
+                    <span>(0711) 414</span>
+                  </a>
+                  
+                  <a href="mailto:rs.bhayangkara.palembang@gmail.com" className="group px-10 py-5 bg-white/10 backdrop-blur-sm text-white rounded-2xl font-black text-xl hover:bg-white/20 transition-all duration-300 border-2 border-white/30 flex items-center justify-center gap-4 hover:border-white/50">
+                    <Mail className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+                    <span>Email Kami</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
