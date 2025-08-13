@@ -37,6 +37,7 @@ const TentangKamiPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
@@ -46,6 +47,8 @@ const TentangKamiPage = () => {
 
   // Header visibility control with throttling for performance
   useEffect(() => {
+    setIsMounted(true); // Set mounted state for client-side rendering
+    
     let timeoutId: NodeJS.Timeout;
     
     const controlNavbar = () => {
@@ -294,13 +297,13 @@ const TentangKamiPage = () => {
           
           {/* Floating Elements */}
           <div className="absolute inset-0 overflow-hidden">
-            {Array.from({ length: 20 }, (_, i) => (
+            {isMounted && Array.from({ length: 20 }, (_, i) => (
               <motion.div
                 key={`floating-element-${i}-stable`}
                 className="absolute w-2 h-2 bg-white/20 rounded-full"
                 initial={{
-                  x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
-                  y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 1000),
+                  x: Math.random() * 1000,
+                  y: Math.random() * 1000,
                 }}
                 animate={{
                   y: [0, -100, 0],
