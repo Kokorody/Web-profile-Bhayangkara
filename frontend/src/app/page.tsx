@@ -414,8 +414,106 @@ const HospitalWebsite = () => {
                 </div>
               </div>
 
+              {/* PELAYANAN with Dropdown */}
+              <div className="relative group">
+                <button
+                  className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50 flex items-center gap-2"
+                >
+                  PELAYANAN
+                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                {/* Dropdown Menu */}
+                <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                  <div className="p-3 space-y-1">
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🏢</span>
+                      <div>
+                        <div className="font-semibold">Fasilitas</div>
+                        <div className="text-xs text-gray-500">Fasilitas rumah sakit lengkap</div>
+                      </div>
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🩺</span>
+                      <div>
+                        <div className="font-semibold">Sarana Medis</div>
+                        <div className="text-xs text-gray-500">Peralatan medis modern</div>
+                      </div>
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🏥</span>
+                      <div>
+                        <div className="font-semibold">Pelayanan Poli</div>
+                        <div className="text-xs text-gray-500">Layanan poliklinik spesialis</div>
+                      </div>
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🛏️</span>
+                      <div>
+                        <div className="font-semibold">Rawat Inap</div>
+                        <div className="text-xs text-gray-500">Pelayanan rawat inap 24 jam</div>
+                      </div>
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🚶</span>
+                      <div>
+                        <div className="font-semibold">Rawat Jalan</div>
+                        <div className="text-xs text-gray-500">Konsultasi & pemeriksaan rawat jalan</div>
+                      </div>
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🩹</span>
+                      <div>
+                        <div className="font-semibold">Penunjang Medis</div>
+                        <div className="text-xs text-gray-500">Laboratorium & radiologi</div>
+                      </div>
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🦠</span>
+                      <div>
+                        <div className="font-semibold">Ruang Isolasi Covid</div>
+                        <div className="text-xs text-gray-500">Isolasi & perawatan Covid-19</div>
+                      </div>
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">👩‍⚕️</span>
+                      <div>
+                        <div className="font-semibold">Perawatan Umum</div>
+                        <div className="text-xs text-gray-500">Perawatan medis umum</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
               {/* Other Navigation Items */}
-              {['E-LIBRARY', 'PELAYANAN', 'SOP RS'].map((item) => (
+              {['E-LIBRARY', 'SOP RS'].map((item) => (
                 <button
                   key={item}
                   className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
@@ -533,8 +631,97 @@ const HospitalWebsite = () => {
                 </div>
               </div>
               
+              {/* PELAYANAN Section */}
+              <div className="bg-gray-50 rounded-xl p-3">
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
+                  PELAYANAN
+                </div>
+                <div className="space-y-1">
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">🏢</span>
+                    <div>
+                      <div className="font-semibold">Fasilitas</div>
+                      <div className="text-xs text-gray-500">Fasilitas rumah sakit lengkap</div>
+                    </div>
+                  </a>
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">🩺</span>
+                    <div>
+                      <div className="font-semibold">Sarana Medis</div>
+                      <div className="text-xs text-gray-500">Peralatan medis modern</div>
+                    </div>
+                  </a>
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">🏥</span>
+                    <div>
+                      <div className="font-semibold">Pelayanan Poli</div>
+                      <div className="text-xs text-gray-500">Layanan poliklinik spesialis</div>
+                    </div>
+                  </a>
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">🛏️</span>
+                    <div>
+                      <div className="font-semibold">Rawat Inap</div>
+                      <div className="text-xs text-gray-500">Pelayanan rawat inap 24 jam</div>
+                    </div>
+                  </a>
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">🚶</span>
+                    <div>
+                      <div className="font-semibold">Rawat Jalan</div>
+                      <div className="text-xs text-gray-500">Konsultasi & pemeriksaan rawat jalan</div>
+                    </div>
+                  </a>
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">🩹</span>
+                    <div>
+                      <div className="font-semibold">Penunjang Medis</div>
+                      <div className="text-xs text-gray-500">Laboratorium & radiologi</div>
+                    </div>
+                  </a>
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">🦠</span>
+                    <div>
+                      <div className="font-semibold">Ruang Isolasi Covid</div>
+                      <div className="text-xs text-gray-500">Isolasi & perawatan Covid-19</div>
+                    </div>
+                  </a>
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">👩‍⚕️</span>
+                    <div>
+                      <div className="font-semibold">Perawatan Umum</div>
+                      <div className="text-xs text-gray-500">Perawatan medis umum</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
               {/* Other Navigation Items */}
-              {['E-LIBRARY', 'PELAYANAN', 'SOP RS'].map((item) => (
+              {['E-LIBRARY', 'SOP RS'].map((item) => (
                 <button
                   key={item}
                   className="block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 text-gray-700 hover:bg-teal-50 hover:text-teal-600"
