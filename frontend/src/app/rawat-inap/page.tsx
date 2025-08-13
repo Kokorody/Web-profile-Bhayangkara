@@ -392,7 +392,7 @@ const RawatInapPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-40 pb-20 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <section className="relative pt-45 pb-20 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
           <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-teal-400/20 rounded-full blur-3xl animate-pulse"></div>
@@ -457,7 +457,7 @@ const RawatInapPage = () => {
               data-stats="true"
               ref={statsRef}
             >
-              <div className={`group bg-white/90 backdrop-blur-md rounded-3xl p-8 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 transform ${isStatsVisible ? 'animate-bounce' : ''}`} style={{ animationDelay: '0s' }}>
+              <div className={`group bg-white/90 backdrop-blur-md rounded-3xl p-8 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-105 transform ${isStatsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ animationDelay: '0s', transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0s' }}>
                 <div className="relative">
                   <div className="text-4xl font-black text-teal-600 mb-2 group-hover:scale-110 transition-transform duration-300">
                     {inpatientFacilities.length}
@@ -468,7 +468,7 @@ const RawatInapPage = () => {
                   </div>
                 </div>
               </div>
-              <div className={`group bg-white/90 backdrop-blur-md rounded-3xl p-8 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 transform ${isStatsVisible ? 'animate-bounce' : ''}`} style={{ animationDelay: '0.2s' }}>
+              <div className={`group bg-white/90 backdrop-blur-md rounded-3xl p-8 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-105 transform ${isStatsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ animationDelay: '0.2s', transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s' }}>
                 <div className="relative">
                   <div className="text-4xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform duration-300">
                     {totalBeds}
@@ -479,7 +479,7 @@ const RawatInapPage = () => {
                   </div>
                 </div>
               </div>
-              <div className={`group bg-white/90 backdrop-blur-md rounded-3xl p-8 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 transform ${isStatsVisible ? 'animate-bounce' : ''}`} style={{ animationDelay: '0.4s' }}>
+              <div className={`group bg-white/90 backdrop-blur-md rounded-3xl p-8 border border-white/50 shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-105 transform ${isStatsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ animationDelay: '0.4s', transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s' }}>
                 <div className="relative">
                   <div className="text-4xl font-black text-indigo-600 mb-2 group-hover:scale-110 transition-transform duration-300">
                     24/7
@@ -553,12 +553,12 @@ const RawatInapPage = () => {
                   id="sort"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-sm font-medium focus:border-teal-400 focus:ring-4 focus:ring-teal-100/60 outline-none transition-all duration-300"
+                  className="rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-800 focus:border-teal-400 focus:ring-4 focus:ring-teal-100/60 outline-none transition-all duration-300"
                 >
-                  <option value="relevance">Relevan</option>
-                  <option value="az">A-Z</option>
-                  <option value="beds_desc">Tempat Tidur Terbanyak</option>
-                  <option value="beds_asc">Tempat Tidur Tersedikit</option>
+                  <option value="relevance" className="text-gray-800">Relevan</option>
+                  <option value="az" className="text-gray-800">A-Z</option>
+                  <option value="beds_desc" className="text-gray-800">Tempat Tidur Terbanyak</option>
+                  <option value="beds_asc" className="text-gray-800">Tempat Tidur Tersedikit</option>
                 </select>
               </div>
             </div>
