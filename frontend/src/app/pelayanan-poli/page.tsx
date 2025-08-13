@@ -346,38 +346,8 @@ const RawatInapPage = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-2">
-              <Link
-                href="/"
-                className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
-              >
-                BERANDA
-              </Link>
-
-              <Link
-                href="/tentang-kami"
-                className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
-              >
-                TENTANG KAMI
-              </Link>
-
-              <Link
-                href="/dokter"
-                className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
-              >
-                DOKTER
-              </Link>
-
               {/* PELAYANAN with Dropdown */}
-              <div className="relative group">
-                <button
-                  className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-teal-600 bg-teal-50 flex items-center gap-2"
-                >
-                  PELAYANAN
-                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                
+              <div className="relative group">              
                 {/* Dropdown Menu */}
                 <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   <div className="p-3 space-y-1">
@@ -424,20 +394,6 @@ const RawatInapPage = () => {
                   </div>
                 </div>
               </div>
-
-              <Link
-                href="/jadwal-dokter"
-                className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
-              >
-                JADWAL DOKTER
-              </Link>
-
-              <Link
-                href="/berita"
-                className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
-              >
-                BERITA
-              </Link>
             </nav>
 
             {/* Breadcrumb - Hidden on smaller screens to make room for navigation */}
@@ -483,18 +439,6 @@ const RawatInapPage = () => {
               >
                 Beranda
               </Link>
-              <Link
-                href="/tentang-kami"
-                className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200 font-medium"
-              >
-                Tentang Kami
-              </Link>
-              <Link
-                href="/dokter"
-                className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200 font-medium"
-              >
-                Dokter
-              </Link>
               <div className="space-y-1">
                 <div className="px-4 py-2 text-sm font-semibold text-gray-500">Pelayanan</div>
                 <Link
@@ -522,18 +466,6 @@ const RawatInapPage = () => {
                   Perawatan Umum
                 </Link>
               </div>
-              <Link
-                href="/jadwal-dokter"
-                className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200 font-medium"
-              >
-                Jadwal Dokter
-              </Link>
-              <Link
-                href="/berita"
-                className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200 font-medium"
-              >
-                Berita
-              </Link>
             </div>
           </div>
         </div>
