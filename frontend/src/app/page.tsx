@@ -410,26 +410,6 @@ const HospitalWebsite = () => {
                         <div className="text-xs text-gray-500">Berita terkini dan informasi rumah sakit</div>
                       </div>
                     </Link>
-                    <a
-                      href="#"
-                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                    >
-                      <span className="text-lg">📋</span>
-                      <div>
-                        <div className="font-semibold">Pengumuman</div>
-                        <div className="text-xs text-gray-500">Pengumuman resmi rumah sakit</div>
-                      </div>
-                    </a>
-                    <a
-                      href="#"
-                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                    >
-                      <span className="text-lg">📅</span>
-                      <div>
-                        <div className="font-semibold">Agenda Kegiatan</div>
-                        <div className="text-xs text-gray-500">Jadwal kegiatan dan acara</div>
-                      </div>
-                    </a>
                   </div>
                 </div>
               </div>
