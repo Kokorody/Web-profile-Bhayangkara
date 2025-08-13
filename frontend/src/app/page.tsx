@@ -478,8 +478,8 @@ const HospitalWebsite = () => {
                         <div className="text-xs text-gray-500">Konsultasi & pemeriksaan rawat jalan</div>
                       </div>
                     </a>
-                    <a
-                      href="#"
+                    <Link
+                      href="/penunjang-medis"
                       className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
                     >
                       <span className="text-lg">🩹</span>
@@ -487,7 +487,7 @@ const HospitalWebsite = () => {
                         <div className="font-semibold">Penunjang Medis</div>
                         <div className="text-xs text-gray-500">Laboratorium & radiologi</div>
                       </div>
-                    </a>
+                    </Link>
                     <Link
                       href="/perawatan-umum"
                       className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
@@ -677,8 +677,8 @@ const HospitalWebsite = () => {
                       <div className="text-xs text-gray-500">Konsultasi & pemeriksaan rawat jalan</div>
                     </div>
                   </a>
-                  <a
-                    href="#"
+                  <Link
+                    href="/penunjang-medis"
                     className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
                   >
                     <span className="text-lg">🩹</span>
@@ -686,7 +686,7 @@ const HospitalWebsite = () => {
                       <div className="font-semibold">Penunjang Medis</div>
                       <div className="text-xs text-gray-500">Laboratorium & radiologi</div>
                     </div>
-                  </a>
+                  </Link>
                   <a
                     href="#"
                     className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
