@@ -3,11 +3,31 @@
     "source": ".",
     "ignore": [
       "firebase.json",
-  "**/.git/**",
-  "**/node_modules/**"
+      "**/.git/**",
+      "**/node_modules/**"
     ],
     "frameworksBackend": {
       "region": "asia-southeast2"
-    }
+    },
+    "headers": [
+      {
+        "source": "**/*.@(js|css)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|avif|ico)",
+        "headers": [
+          {
+            "key": "Cache-Control", 
+            "value": "public, max-age=31536000, immutable"
+          }
+        ]
+      }
+    ]
   }
 }
