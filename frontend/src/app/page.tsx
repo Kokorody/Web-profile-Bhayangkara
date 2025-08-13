@@ -18,6 +18,31 @@ const HospitalWebsite = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
+
+  // Get current day and time for doctor availability
+  const currentDay = new Date().toLocaleDateString('id-ID', { weekday: 'long' });
+  
+  // Get current time to check if doctor is currently available
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
+  // Check if doctor is currently available based on schedule
+  const isCurrentlyAvailable = (doctor: any) => {
+    const currentTime = getCurrentTime();
+    const todaySchedule = doctor.detailedSchedule?.[currentDay];
+    
+    if (!todaySchedule) return false;
+    
+    const timeRanges = todaySchedule.split(', ');
+    return timeRanges.some((range: string) => {
+      const [start, end] = range.split(' - ');
+      return currentTime >= start && currentTime <= end;
+    });
+  };
   const lastUpdate = useRef(0);
   const frameCount = useRef(0);
   const [particleStyles, setParticleStyles] = useState<Array<{
@@ -39,8 +64,8 @@ const HospitalWebsite = () => {
 
   const scrollThreshold = useMemo(() => 100, []);
 
-  // Lazy loading for doctors - start with 4, load more progressively
-  const [visibleDoctorCount, setVisibleDoctorCount] = useState(4);
+  // Lazy loading for doctors - start with 6, load more progressively
+  const [visibleDoctorCount, setVisibleDoctorCount] = useState(6);
   const [isLoadingMoreDoctors, setIsLoadingMoreDoctors] = useState(false);
 
   // Memoized filtered doctors with lazy loading
@@ -48,7 +73,7 @@ const HospitalWebsite = () => {
     if (showAllDoctors) {
       return doctors.slice(0, visibleDoctorCount);
     }
-    return doctors.slice(0, 4);
+    return doctors.slice(0, 6);
   }, [showAllDoctors, visibleDoctorCount]);
 
   // Function to load more doctors gradually
@@ -1130,129 +1155,135 @@ const HospitalWebsite = () => {
       </section>
 
       {/* Doctors Section */}
-      <section className="py-24 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
+      <section className="py-12 bg-gradient-to-br from-gray-50 via-white to-blue-50 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-teal-100/20 via-transparent to-transparent"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-transparent"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16 relative">
-            <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider bg-gradient-to-r from-teal-50 to-blue-50 px-4 py-2 rounded-full inline-block shadow-sm border border-teal-100 mb-4">Tim Medis Profesional</span>
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Dokter Kami</h2>
+          <div className="text-center mb-8 relative">
+            <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider bg-gradient-to-r from-teal-50 to-blue-50 px-4 py-2 rounded-full inline-block shadow-sm border border-teal-100 mb-3">Tim Medis Profesional</span>
+            <h2 className="text-3xl font-bold text-gray-800 mb-3">Dokter Kami</h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">Ditangani oleh dokter spesialis yang berpengalaman dan profesional</p>
             <div className="absolute -top-8 -right-4 w-24 h-24 bg-teal-100 rounded-full opacity-50 blur-xl"></div>
             <div className="absolute -bottom-8 -left-4 w-24 h-24 bg-blue-100 rounded-full opacity-50 blur-xl"></div>
           </div>
           
           {/* Doctors Grid with Animation */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 mb-12">
-            {displayedDoctors.map((doctor, index) => (
-              <div 
-                key={doctor.id}
-                data-animate="true"
-                data-delay={(index * 150).toString()}
-                className="opacity-0 translate-y-8 transition-all duration-700 ease-out group relative"
-                style={{
-                  animationDelay: showAllDoctors && index >= 4 ? `${(index - 4) * 150}ms` : undefined
-                }}
-              >
-                <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl blur opacity-20 group-hover:opacity-30 transition-all duration-300"></div>
-                <div className="relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden transform group-hover:-translate-y-2">
-                  {/* Doctor Image/Avatar */}
-                  <div className="aspect-[4/3] bg-gradient-to-br from-teal-400/80 to-blue-500/80 flex items-center justify-center relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="w-24 h-24 bg-white/90 backdrop-blur rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg relative">
-                      <Users className="w-12 h-12 text-teal-600 transform group-hover:rotate-12 transition-transform duration-300" />
-                      {/* Verification badge */}
-                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                    </div>
-                    {/* Online status indicator */}
-                    <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-xs font-medium text-gray-600">Available</span>
-                    </div>
-                  </div>
-                  
-                  {/* Doctor Info */}
-                  <div className="p-6 relative bg-gradient-to-b from-white to-gray-50/50">
-                    <div className="space-y-3">
-                      <div className="flex items-start justify-between">
-                        <h3 className="font-bold text-gray-800 text-lg leading-tight group-hover:text-teal-600 transition-colors line-clamp-2">
-                          {doctor.name}
-                        </h3>
-                        <div className="flex items-center gap-1 ml-2">
-                          <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                          <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                          <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            {displayedDoctors.map((doctor, index) => {
+              const isAvailable = isCurrentlyAvailable(doctor);
+              
+              return (
+                <div 
+                  key={doctor.id}
+                  data-animate="true"
+                  data-delay={(index * 150).toString()}
+                  className="opacity-0 translate-y-8 transition-all duration-700 ease-out group relative"
+                  style={{
+                    animationDelay: showAllDoctors && index >= 6 ? `${(index - 6) * 150}ms` : undefined
+                  }}
+                >
+                  <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl blur opacity-20 group-hover:opacity-30 transition-all duration-300"></div>
+                  <div className="relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden transform group-hover:-translate-y-1">
+                    {/* Doctor Image/Avatar */}
+                    <div className="aspect-[2/1] bg-gradient-to-br from-teal-400/80 to-blue-500/80 flex items-center justify-center relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="w-12 h-12 bg-white/90 backdrop-blur rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-md relative">
+                        <Users className="w-6 h-6 text-teal-600 transform group-hover:rotate-12 transition-transform duration-300" />
+                        {/* Verification badge */}
+                        <div className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
+                          <svg className="w-1.5 h-1.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                          </svg>
                         </div>
                       </div>
-                      
-                      <div className="bg-gradient-to-r from-teal-50 to-blue-50 rounded-lg p-3 border border-teal-100">
-                        <p className="text-teal-600 text-sm font-semibold mb-1">{doctor.specialization}</p>
-                        <p className="text-gray-600 text-xs">{doctor.role}</p>
-                      </div>
-                      
-                      {/* Additional Info */}
-                      <div className="grid grid-cols-2 gap-3 pt-3 border-t border-gray-100">
-                        <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
-                            <Clock className="w-3 h-3 text-blue-600" />
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-500">Pengalaman</p>
-                            <p className="text-xs font-semibold text-gray-700">{doctor.experience}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
-                            <Calendar className="w-3 h-3 text-green-600" />
-                          </div>
-                          <div>
-                            <p className="text-xs text-gray-500">Jadwal</p>
-                            <p className="text-xs font-semibold text-gray-700 line-clamp-1">{doctor.schedule}</p>
-                          </div>
-                        </div>
+                      {/* Dynamic Online status indicator */}
+                      <div className="absolute bottom-1 right-1 flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-full px-1.5 py-0.5">
+                        <div className={`w-1 h-1 rounded-full ${isAvailable ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`}></div>
+                        <span className="text-xs font-medium text-gray-600">
+                          {isAvailable ? 'Available' : 'Offline'}
+                        </span>
                       </div>
                     </div>
                     
-                    {/* Action Button */}
-                    <div className="mt-6">
-                      <Link
-                        href={`/dokter/profile/${doctor.id}`}
-                        className="group relative w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl overflow-hidden block text-center"
-                      >
-                        {/* Background shine effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-                        
-                        {/* Button content */}
-                        <div className="relative flex items-center justify-center gap-2">
-                          <Users className="w-4 h-4 transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
-                          <span className="font-medium tracking-wide">Lihat Profile</span>
-                          <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" />
+                    {/* Doctor Info */}
+                    <div className="p-3 relative bg-gradient-to-b from-white to-gray-50/50">
+                      <div className="space-y-1.5">
+                        <div className="flex items-start justify-between">
+                          <h3 className="font-bold text-gray-800 text-sm leading-tight group-hover:text-teal-600 transition-colors line-clamp-2">
+                            {doctor.name}
+                          </h3>
+                          <div className="flex items-center gap-0.5 ml-2">
+                            <div className="w-1 h-1 bg-yellow-400 rounded-full"></div>
+                            <div className="w-1 h-1 bg-yellow-400 rounded-full"></div>
+                            <div className="w-1 h-1 bg-yellow-400 rounded-full"></div>
+                          </div>
                         </div>
                         
-                        {/* Pulse effect on hover */}
-                        <div className="absolute inset-0 rounded-xl border-2 border-white/30 opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300"></div>
-                      </Link>
+                        <div className="bg-gradient-to-r from-teal-50 to-blue-50 rounded-md p-1.5 border border-teal-100">
+                          <p className="text-teal-600 text-xs font-semibold mb-0.5">{doctor.specialization}</p>
+                          <p className="text-gray-600 text-xs">{doctor.role}</p>
+                        </div>
+                        
+                        {/* Additional Info */}
+                        <div className="grid grid-cols-2 gap-1.5 pt-1.5 border-t border-gray-100">
+                          <div className="flex items-center gap-1">
+                            <div className="w-3 h-3 bg-blue-100 rounded-full flex items-center justify-center">
+                              <Clock className="w-1.5 h-1.5 text-blue-600" />
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500">Pengalaman</p>
+                              <p className="text-xs font-semibold text-gray-700">{doctor.experience}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <div className="w-3 h-3 bg-green-100 rounded-full flex items-center justify-center">
+                              <Calendar className="w-1.5 h-1.5 text-green-600" />
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500">Jadwal</p>
+                              <p className="text-xs font-semibold text-gray-700 line-clamp-1">{doctor.schedule}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Action Button */}
+                      <div className="mt-2">
+                        <Link
+                          href={`/dokter/profile/${doctor.id}`}
+                          className="group relative w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white py-1.5 px-2 rounded-md text-xs font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-md hover:shadow-lg overflow-hidden block text-center"
+                        >
+                          {/* Background shine effect */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
+                          
+                          {/* Button content */}
+                          <div className="relative flex items-center justify-center gap-1">
+                            <Users className="w-2.5 h-2.5 transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
+                            <span className="font-medium tracking-wide">Lihat Profile</span>
+                            <ChevronRight className="w-2.5 h-2.5 transform group-hover:translate-x-1 transition-transform duration-300" />
+                          </div>
+                          
+                          {/* Pulse effect on hover */}
+                          <div className="absolute inset-0 rounded-md border-2 border-white/30 opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-opacity duration-300"></div>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           
           {/* Show More/Less Button */}
-          {doctors.length > 4 && (
-            <div className="text-center space-y-4">
+          {doctors.length > 6 && (
+            <div className="text-center space-y-4 mt-12">
               {!showAllDoctors && (
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                   <button
                     onClick={() => {
                       setShowAllDoctors(true);
-                      setVisibleDoctorCount(8); // Start with 8 when showing all
+                      setVisibleDoctorCount(12); // Start with 12 when showing all
                     }}
                     className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
                   >
@@ -1325,7 +1356,7 @@ const HospitalWebsite = () => {
                   <button
                     onClick={() => {
                       setShowAllDoctors(false);
-                      setVisibleDoctorCount(4);
+                      setVisibleDoctorCount(6);
                     }}
                     className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
                   >
