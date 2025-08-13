@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { 
   Mail, 
@@ -20,13 +20,75 @@ import {
   Droplets,
   Shield,
   Activity,
-  Plus,
   ChevronDown,
   Star,
   Filter,
   Grid,
-  List
+  List,
+  Calendar,
+  Users,
+  Timer,
+  Sparkles,
+  MessageCircle
 } from 'lucide-react';
+
+// Add custom animations
+const customStyles = `
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  @keyframes blob {
+    0%, 100% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+  }
+  
+  @keyframes gradient-x {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
+  @keyframes fade-in-up {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-blob { animation: blob 7s infinite; }
+  .animate-gradient-x { 
+    background-size: 200% 200%; 
+    animation: gradient-x 3s ease infinite; 
+  }
+  .animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
+  
+  .animation-delay-0 { animation-delay: 0ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-600 { animation-delay: 600ms; }
+  .animation-delay-1000 { animation-delay: 1000ms; }
+  .animation-delay-2000 { animation-delay: 2000ms; }
+  .animation-delay-3000 { animation-delay: 3000ms; }
+  .animation-delay-4000 { animation-delay: 4000ms; }
+  
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+  }
+  
+  .animate-on-scroll.animate-fade-in-up {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+// Inject styles
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement("style");
+  styleSheet.innerText = customStyles;
+  document.head.appendChild(styleSheet);
+}
 
 interface PoliService {
   id: number;
@@ -37,6 +99,11 @@ interface PoliService {
   color: string;
   services: string[];
   availability: string;
+  doctorCount: number;
+  rating: number;
+  waitTime: string;
+  featured?: boolean;
+  popular?: boolean;
 }
 
 interface ServiceCardProps {
@@ -45,57 +112,135 @@ interface ServiceCardProps {
   expandedCard: number | null;
   setExpandedCard: (id: number | null) => void;
   viewMode: string;
+  hoveredCard: number | null;
+  setHoveredCard: (id: number | null) => void;
 }
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, expandedCard, setExpandedCard, viewMode }) => {
+const ServiceCard: React.FC<ServiceCardProps> = ({ 
+  service, 
+  index, 
+  expandedCard, 
+  setExpandedCard, 
+  viewMode,
+  hoveredCard,
+  setHoveredCard 
+}) => {
   const Icon = service.icon;
   const isExpanded = expandedCard === service.id;
+  const isHovered = hoveredCard === service.id;
 
   return (
     <div 
-      className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 ${
-        viewMode === 'list' ? 'flex items-center p-6' : 'p-6'
-      } ${isExpanded ? 'scale-105 z-10' : ''}`}
-      style={{ animationDelay: `${index * 100}ms` }}
+      className={`group relative bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-700 overflow-hidden border border-gray-100/50 ${
+        viewMode === 'list' ? 'flex items-center p-8' : 'p-8'
+      } ${isExpanded ? 'scale-105 z-10 ring-2 ring-teal-400/50' : ''} ${
+        service.featured ? 'ring-2 ring-gradient-to-r from-amber-400 to-orange-500' : ''
+      } transform hover:scale-[1.02] hover:-translate-y-2`}
+      style={{ 
+        animationDelay: `${index * 150}ms`,
+        background: isHovered ? 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,253,250,0.95) 100%)' : undefined
+      }}
+      onMouseEnter={() => setHoveredCard(service.id)}
+      onMouseLeave={() => setHoveredCard(null)}
     >
-      {/* Gradient Background */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
+      {/* Featured Badge */}
+      {service.featured && (
+        <div className="absolute top-4 left-4 z-20">
+          <div className="px-3 py-1 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
+            ⭐ UNGGULAN
+          </div>
+        </div>
+      )}
+
+      {/* Popular Badge */}
+      {service.popular && (
+        <div className="absolute top-4 right-4 z-20">
+          <div className="px-3 py-1 bg-gradient-to-r from-pink-400 to-rose-500 text-white text-xs font-bold rounded-full shadow-lg">
+            🔥 POPULER
+          </div>
+        </div>
+      )}
+
+      {/* Animated Background Gradient */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-all duration-700 rounded-3xl`}></div>
+      
+      {/* Floating Particles Effect */}
+      {isHovered && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-teal-400 rounded-full animate-ping opacity-75"></div>
+          <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-blue-400 rounded-full animate-ping opacity-75 animation-delay-300"></div>
+          <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-purple-400 rounded-full animate-ping opacity-75 animation-delay-600"></div>
+        </div>
+      )}
       
       {/* Content */}
-      <div className={`relative z-10 ${viewMode === 'list' ? 'flex items-center gap-6 flex-1' : ''}`}>
-        {/* Icon */}
-        <div className={`${viewMode === 'list' ? 'flex-shrink-0' : 'mb-4'}`}>
-          <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-            <Icon className="w-8 h-8 text-white" />
+      <div className={`relative z-10 ${viewMode === 'list' ? 'flex items-center gap-8 flex-1' : ''}`}>
+        {/* Icon Section */}
+        <div className={`${viewMode === 'list' ? 'flex-shrink-0' : 'mb-6'}`}>
+          <div className="relative">
+            <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 relative overflow-hidden`}>
+              <Icon className="w-10 h-10 text-white relative z-10" />
+              
+              {/* Icon Glow Effect */}
+              <div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              {/* Pulse Ring */}
+              {isHovered && (
+                <div className="absolute -inset-4 border-2 border-teal-400/30 rounded-3xl animate-ping"></div>
+              )}
+            </div>
+            
+            {/* Floating Rating */}
+            <div className="absolute -top-2 -right-2 bg-white shadow-lg rounded-full px-2 py-1 border border-gray-100">
+              <div className="flex items-center gap-1">
+                <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                <span className="text-xs font-bold text-gray-800">{service.rating}</span>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Text Content */}
         <div className={`${viewMode === 'list' ? 'flex-1' : ''}`}>
-          <div className="flex items-start justify-between mb-2">
-            <h3 className="text-xl font-bold text-gray-800 group-hover:text-teal-600 transition-colors duration-300">
+          {/* Header */}
+          <div className="mb-4">
+            <h3 className="text-2xl font-bold text-gray-800 group-hover:text-teal-600 transition-colors duration-300 mb-2">
               {service.name}
             </h3>
-            <div className="flex items-center gap-1 text-yellow-500">
-              <Star className="w-4 h-4 fill-current" />
-              <span className="text-sm font-medium">4.9</span>
+            
+            {/* Quick Info Bar */}
+            <div className="flex items-center gap-4 mb-3">
+              <div className="flex items-center gap-1 text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                <Users className="w-4 h-4 text-teal-500" />
+                <span className="font-medium">{service.doctorCount} Dokter</span>
+              </div>
+              
+              <div className="flex items-center gap-1 text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                <Timer className="w-4 h-4 text-blue-500" />
+                <span className="font-medium">{service.waitTime}</span>
+              </div>
+              
+              <div className="flex items-center gap-1 text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+                <Clock className="w-4 h-4 text-green-500" />
+                <span className="font-medium">{service.availability}</span>
+              </div>
             </div>
           </div>
           
-          <p className={`text-gray-600 mb-4 leading-relaxed ${viewMode === 'list' ? 'line-clamp-2' : ''}`}>
+          <p className={`text-gray-600 mb-6 leading-relaxed ${viewMode === 'list' ? 'line-clamp-2' : ''}`}>
             {service.description}
           </p>
 
           {/* Services List */}
           {(viewMode === 'grid' || isExpanded) && (
-            <div className="mb-4">
-              <h4 className="font-semibold text-gray-700 mb-2 flex items-center">
-                <Plus className="w-4 h-4 mr-1 text-teal-500" />
+            <div className="mb-6">
+              <h4 className="font-semibold text-gray-700 mb-3 flex items-center">
+                <Sparkles className="w-4 h-4 mr-2 text-teal-500" />
                 Layanan Tersedia:
               </h4>
               <div className="flex flex-wrap gap-2">
                 {service.services.map((srv: string, idx: number) => (
-                  <span key={idx} className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-sm font-medium border border-teal-100">
+                  <span key={idx} className="px-4 py-2 bg-gradient-to-r from-teal-50 to-blue-50 text-teal-700 rounded-full text-sm font-medium border border-teal-100 hover:shadow-md transition-shadow duration-200">
                     {srv}
                   </span>
                 ))}
@@ -103,169 +248,248 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index, expandedCard,
             </div>
           )}
 
-          {/* Availability */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center text-sm text-gray-500">
-              <Clock className="w-4 h-4 mr-1 text-teal-500" />
-              <span className="font-medium">{service.availability}</span>
+          {/* Action Buttons */}
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex gap-2">
+              <button className="px-6 py-3 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-teal-500/25 transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                Daftar
+              </button>
+              
+              <button className="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-xl transition-colors duration-200 flex items-center gap-2">
+                <MessageCircle className="w-4 h-4" />
+                Chat
+              </button>
             </div>
             
             <button 
               onClick={() => setExpandedCard(isExpanded ? null : service.id)}
-              className="flex items-center text-teal-600 hover:text-teal-700 transition-colors duration-200 font-medium"
+              className="flex items-center text-teal-600 hover:text-teal-700 transition-colors duration-200 font-medium group/btn"
             >
               {isExpanded ? 'Tutup' : 'Lihat Detail'}
-              <ChevronDown className={`w-4 h-4 ml-1 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-4 h-4 ml-1 transition-transform duration-300 group-hover/btn:scale-110 ${isExpanded ? 'rotate-180' : ''}`} />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Hover Effect */}
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-teal-400 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+      {/* Hover Effect Bar */}
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-teal-400 via-blue-500 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
     </div>
   );
 };
 
-const RawatInapPage = () => {
+const PoliPage = () => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [viewMode, setViewMode] = useState('grid');
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  // Intersection Observer for animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in-up');
+        }
+      });
+    }, observerOptions);
+
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    animatedElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
 
   const poliServices = [
     {
       id: 1,
       name: "Poli Penyakit Dalam",
-      description: "Konsultasi dokter spesialis penyakit dalam",
+      description: "Konsultasi dokter spesialis penyakit dalam dengan pelayanan komprehensif untuk berbagai keluhan medis internal",
       icon: Stethoscope,
       category: "internal",
       color: "from-red-500 to-pink-500",
-      services: ["Konsultasi Spesialis", "Pemeriksaan Komprehensif", "Follow-up Treatment"],
-      availability: "24/7"
+      services: ["Konsultasi Spesialis", "Pemeriksaan Komprehensif", "Follow-up Treatment", "Medical Check-up"],
+      availability: "24/7",
+      doctorCount: 5,
+      rating: 4.9,
+      waitTime: "15 menit",
+      featured: true
     },
     {
       id: 2,
       name: "Poli Syaraf",
-      description: "Konsultasi dokter spesialis syaraf, pemeriksaan cranium, pemeriksaan reflek patela, saraf kranial i, ii, iii, iv, v, vi, vii, ix, x, xi",
+      description: "Konsultasi dokter spesialis syaraf, pemeriksaan cranium, pemeriksaan reflek patela, saraf kranial lengkap",
       icon: Brain,
       category: "neurologi",
       color: "from-purple-500 to-indigo-500",
       services: ["Konsultasi Neurologi", "Pemeriksaan Cranium", "Tes Reflek Patela", "Evaluasi Saraf Kranial"],
-      availability: "Senin-Sabtu"
+      availability: "Senin-Sabtu",
+      doctorCount: 3,
+      rating: 4.8,
+      waitTime: "20 menit",
+      popular: true
     },
     {
       id: 3,
       name: "Poli Anak",
-      description: "Konsultasi dokter spesialis anak, imunisasi",
+      description: "Konsultasi dokter spesialis anak, program imunisasi lengkap, dan monitoring tumbuh kembang anak",
       icon: Baby,
       category: "pediatric",
       color: "from-green-500 to-emerald-500",
-      services: ["Konsultasi Pediatrik", "Program Imunisasi", "Tumbuh Kembang Anak"],
-      availability: "24/7"
+      services: ["Konsultasi Pediatrik", "Program Imunisasi", "Tumbuh Kembang Anak", "Konsultasi Gizi"],
+      availability: "24/7",
+      doctorCount: 4,
+      rating: 4.9,
+      waitTime: "10 menit",
+      featured: true
     },
     {
       id: 4,
       name: "Poli THT",
-      description: "Konsultasi dokter spesialis THT, pemeriksaan cerumen plug, pemeriksaan pengambilan corpus alienum di telinga dan hidung",
+      description: "Konsultasi dokter spesialis THT, pemeriksaan cerumen plug, pemeriksaan pengambilan corpus alienum telinga dan hidung",
       icon: Ear,
       category: "tht",
       color: "from-orange-500 to-red-500",
-      services: ["Konsultasi THT", "Pembersihan Cerumen", "Ekstraksi Benda Asing"],
-      availability: "Senin-Jumat"
+      services: ["Konsultasi THT", "Pembersihan Cerumen", "Ekstraksi Benda Asing", "Audiometri"],
+      availability: "Senin-Jumat",
+      doctorCount: 2,
+      rating: 4.7,
+      waitTime: "25 menit"
     },
     {
       id: 5,
       name: "Poli Mata",
-      description: "Konsultasi dokter spesialis mata, pemeriksaan visus, buta warna, auto ref dan slit lamp",
+      description: "Konsultasi dokter spesialis mata, pemeriksaan visus, buta warna, auto ref dan slit lamp dengan teknologi terkini",
       icon: Eye,
       category: "mata",
       color: "from-blue-500 to-cyan-500",
       services: ["Konsultasi Oftalmologi", "Tes Visus", "Tes Buta Warna", "Pemeriksaan Slit Lamp"],
-      availability: "Senin-Sabtu"
+      availability: "Senin-Sabtu",
+      doctorCount: 3,
+      rating: 4.8,
+      waitTime: "15 menit",
+      popular: true
     },
     {
       id: 6,
       name: "Poli Bedah",
-      description: "Konsultasi dokter spesialis bedah, perawatan luka, angkat jahitan, ganti verban dan balutan, ekstraksi kuku (cabut kuku)",
+      description: "Konsultasi dokter spesialis bedah, perawatan luka, angkat jahitan, ganti verban dan balutan, ekstraksi kuku",
       icon: Scissors,
       category: "bedah",
       color: "from-teal-500 to-green-500",
       services: ["Konsultasi Bedah", "Perawatan Luka", "Minor Surgery", "Post-op Care"],
-      availability: "24/7"
+      availability: "24/7",
+      doctorCount: 4,
+      rating: 4.9,
+      waitTime: "30 menit"
     },
     {
       id: 7,
       name: "Poli Kandungan",
-      description: "Konsultasi dokter kandungan, pemeriksaan kehamilan, pasang/lepas iud, usg 4 dimensi",
+      description: "Konsultasi dokter kandungan, pemeriksaan kehamilan, pasang/lepas iud, usg 4 dimensi dengan teknologi modern",
       icon: Heart,
       category: "kandungan",
       color: "from-pink-500 to-rose-500",
       services: ["Konsultasi ObGyn", "Pemeriksaan Kehamilan", "Kontrasepsi IUD", "USG 4D"],
-      availability: "24/7"
+      availability: "24/7",
+      doctorCount: 3,
+      rating: 4.8,
+      waitTime: "20 menit",
+      featured: true
     },
     {
       id: 8,
       name: "Poli Paru",
-      description: "Pemeriksaan Spirometri",
+      description: "Pemeriksaan Spirometri dan konsultasi lengkap untuk masalah pernapasan dan paru-paru",
       icon: Droplets,
       category: "paru",
       color: "from-indigo-500 to-purple-500",
-      services: ["Pemeriksaan Spirometri", "Konsultasi Pulmonologi"],
-      availability: "Senin-Jumat"
+      services: ["Pemeriksaan Spirometri", "Konsultasi Pulmonologi", "Tes Fungsi Paru"],
+      availability: "Senin-Jumat",
+      doctorCount: 2,
+      rating: 4.7,
+      waitTime: "25 menit"
     },
     {
       id: 9,
       name: "Poli Kulit dan Kelamin",
-      description: "Cauter, Skin Care",
+      description: "Cauter, Skin Care, dan berbagai perawatan dermatologi dengan teknologi terdepan",
       icon: Shield,
       category: "kulit",
       color: "from-yellow-500 to-orange-500",
-      services: ["Cauter Treatment", "Skin Care", "Dermatologi Konsultasi"],
-      availability: "Senin-Sabtu"
+      services: ["Cauter Treatment", "Skin Care", "Dermatologi Konsultasi", "Laser Treatment"],
+      availability: "Senin-Sabtu",
+      doctorCount: 2,
+      rating: 4.6,
+      waitTime: "20 menit"
     },
     {
       id: 10,
       name: "Poli Kejiwaan",
-      description: "MMPI",
+      description: "MMPI dan konsultasi psikiatri lengkap untuk kesehatan mental yang optimal",
       icon: Brain,
       category: "psikiatri",
       color: "from-violet-500 to-purple-500",
-      services: ["MMPI Testing", "Konsultasi Psikiatri"],
-      availability: "Senin-Jumat"
+      services: ["MMPI Testing", "Konsultasi Psikiatri", "Terapi Psikologi"],
+      availability: "Senin-Jumat",
+      doctorCount: 2,
+      rating: 4.8,
+      waitTime: "30 menit"
     },
     {
       id: 11,
       name: "Poli Jantung",
-      description: "Treadmill, Echo dan EKG",
+      description: "Treadmill, Echo dan EKG dengan peralatan canggih untuk pemeriksaan jantung yang akurat",
       icon: Activity,
       category: "jantung",
       color: "from-red-500 to-rose-500",
-      services: ["Treadmill Test", "Echocardiography", "EKG"],
-      availability: "Senin-Sabtu"
+      services: ["Treadmill Test", "Echocardiography", "EKG", "Holter Monitor"],
+      availability: "Senin-Sabtu",
+      doctorCount: 3,
+      rating: 4.9,
+      waitTime: "25 menit",
+      popular: true
     },
     {
       id: 12,
       name: "Poli MCU",
-      description: "Surat keterangan sehat, surat keterangan kesehatan rohani, surat keterangan bebas narkoba",
+      description: "Medical Check-up lengkap, surat keterangan sehat, surat keterangan kesehatan rohani, surat keterangan bebas narkoba",
       icon: UserCheck,
       category: "mcu",
       color: "from-emerald-500 to-teal-500",
-      services: ["Medical Check-Up", "Surat Keterangan Sehat", "Tes Bebas Narkoba"],
-      availability: "Senin-Sabtu"
+      services: ["Medical Check-Up", "Surat Keterangan Sehat", "Tes Bebas Narkoba", "Pemeriksaan Komprehensif"],
+      availability: "Senin-Sabtu",
+      doctorCount: 6,
+      rating: 4.8,
+      waitTime: "45 menit"
     }
   ];
 
   const categories = [
     { id: 'all', name: 'Semua Poli', count: poliServices.length },
     { id: 'internal', name: 'Penyakit Dalam', count: 1 },
-    { id: 'bedah', name: 'Bedah', count: 4 },
+    { id: 'bedah', name: 'Bedah', count: 1 },
     { id: 'pediatric', name: 'Anak', count: 1 },
     { id: 'kandungan', name: 'Kandungan', count: 1 },
-    { id: 'neurologi', name: 'Neurologi', count: 2 },
+    { id: 'neurologi', name: 'Neurologi', count: 1 },
     { id: 'jantung', name: 'Jantung', count: 1 },
+    { id: 'mata', name: 'Mata', count: 1 },
+    { id: 'tht', name: 'THT', count: 1 },
+    { id: 'kulit', name: 'Kulit', count: 1 },
+    { id: 'paru', name: 'Paru', count: 1 },
+    { id: 'psikiatri', name: 'Psikiatri', count: 1 },
     { id: 'mcu', name: 'MCU', count: 1 }
   ];
 
@@ -472,133 +696,255 @@ const RawatInapPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-blue-50 to-white"></div>
-        <div className="absolute top-20 right-10 w-72 h-72 bg-teal-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
-        <div className="absolute top-40 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
+      <section ref={heroRef} className="relative pt-32 pb-24 overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-blue-50 to-purple-50"></div>
+        
+        {/* Floating Medical Icons */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 left-10 w-16 h-16 bg-teal-200/30 rounded-full animate-float animation-delay-0">
+            <Stethoscope className="w-8 h-8 text-teal-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          </div>
+          <div className="absolute top-40 right-20 w-12 h-12 bg-blue-200/30 rounded-full animate-float animation-delay-1000">
+            <Heart className="w-6 h-6 text-blue-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          </div>
+          <div className="absolute bottom-40 left-1/4 w-14 h-14 bg-purple-200/30 rounded-full animate-float animation-delay-2000">
+            <Brain className="w-7 h-7 text-purple-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          </div>
+          <div className="absolute top-60 right-1/3 w-10 h-10 bg-green-200/30 rounded-full animate-float animation-delay-3000">
+            <Eye className="w-5 h-5 text-green-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          </div>
+        </div>
+
+        {/* Gradient Orbs */}
+        <div className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-r from-teal-400/20 to-blue-400/20 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
+        <div className="absolute top-40 left-10 w-96 h-96 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-20 left-1/2 w-96 h-96 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center px-4 py-2 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-6">
-              <Stethoscope className="w-4 h-4 mr-2" />
-              Pelayanan Poliklinik Spesialis
+          <div className="text-center max-w-5xl mx-auto">
+            {/* Badge */}
+            <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-sm text-teal-700 rounded-full text-sm font-medium mb-8 shadow-lg border border-teal-100 hover:shadow-xl transition-all duration-300 animate-on-scroll">
+              <Sparkles className="w-5 h-5 mr-2 text-teal-500" />
+              <span className="font-semibold">Pelayanan Poliklinik Spesialis Terdepan</span>
+              <div className="ml-2 w-2 h-2 bg-teal-500 rounded-full animate-pulse"></div>
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600">
-                Pelayanan Poli
+            {/* Main Heading */}
+            <h1 className="text-6xl md:text-7xl font-black text-gray-900 mb-8 leading-tight animate-on-scroll">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 via-blue-600 to-purple-600 animate-gradient-x">
+                Poliklinik
               </span>
               <br />
               <span className="text-gray-800">Spesialis</span>
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 animate-gradient-x">
+                Terlengkap
+              </span>
             </h1>
             
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
-              Layanan poliklinik spesialis terlengkap dengan dokter berpengalaman dan fasilitas medis modern 
-              untuk memenuhi kebutuhan kesehatan Anda dan keluarga dengan pelayanan berkualitas tinggi.
+            {/* Subtitle */}
+            <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed max-w-4xl mx-auto animate-on-scroll">
+              Nikmati layanan poliklinik spesialis dengan 
+              <span className="font-bold text-teal-600"> 12 poli unggulan</span>, 
+              <span className="font-bold text-blue-600"> 40+ dokter berpengalaman</span>, 
+              dan <span className="font-bold text-purple-600">teknologi medis terdepan</span> 
+              untuk kesehatan optimal Anda dan keluarga.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="group relative px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-on-scroll">
+              <button className="group relative px-10 py-5 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 text-white font-bold rounded-2xl shadow-2xl hover:shadow-teal-500/25 transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-blue-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <span className="relative flex items-center">
-                  <Phone className="w-5 h-5 mr-2" />
-                  Daftar Poli
+                  <Calendar className="w-6 h-6 mr-3" />
+                  Daftar Poli Sekarang
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-white/30"></div>
               </button>
               
-              <div className="text-center">
-                <div className="text-sm text-gray-500">Informasi & Pendaftaran</div>
-                <div className="font-bold text-teal-600">(0711) 414855</div>
+              <button className="group relative px-8 py-5 bg-white/90 backdrop-blur-sm text-gray-800 font-semibold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-gray-200 hover:border-teal-300">
+                <span className="relative flex items-center">
+                  <Phone className="w-6 h-6 mr-3 text-teal-600" />
+                  Hubungi (0711) 414855
+                </span>
+              </button>
+            </div>
+
+            {/* Quick Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto animate-on-scroll">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-teal-200 group">
+                <div className="text-3xl font-black text-teal-600 mb-2 group-hover:scale-110 transition-transform duration-300">12</div>
+                <div className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Poli Spesialis</div>
+              </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group">
+                <div className="text-3xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform duration-300">40+</div>
+                <div className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Dokter Ahli</div>
+              </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-purple-200 group">
+                <div className="text-3xl font-black text-purple-600 mb-2 group-hover:scale-110 transition-transform duration-300">24/7</div>
+                <div className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Layanan Siaga</div>
+              </div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-green-200 group">
+                <div className="text-3xl font-black text-green-600 mb-2 group-hover:scale-110 transition-transform duration-300">98%</div>
+                <div className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Kepuasan Pasien</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Search & Filter Section */}
-      <section className="py-8 bg-white/50 backdrop-blur-sm border-y border-gray-100">
+      {/* Enhanced Search & Filter Section */}
+      <section className="py-12 bg-white/60 backdrop-blur-sm border-y border-gray-100 sticky top-20 z-40">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
-            {/* Search */}
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Cari poli atau layanan..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none transition-colors duration-200 shadow-sm"
-              />
+          <div className="bg-white/90 backdrop-blur-md rounded-3xl shadow-xl border border-gray-200 p-8">
+            <div className="flex flex-col lg:flex-row gap-8 items-center justify-between">
+              {/* Advanced Search */}
+              <div className="relative flex-1 max-w-2xl">
+                <div className="absolute left-6 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                  <Search className="text-gray-400 w-6 h-6" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Cari poli, layanan, atau dokter spesialis..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-16 pr-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:border-teal-500 focus:outline-none focus:bg-white transition-all duration-300 shadow-inner text-lg font-medium placeholder-gray-500"
+                />
+                <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
+                  <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-blue-500 rounded-lg flex items-center justify-center">
+                    <Search className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Filters */}
+              <div className="flex items-center gap-6">
+                {/* Category Filter */}
+                <div className="flex items-center gap-3">
+                  <Filter className="w-6 h-6 text-gray-500" />
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="px-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:border-teal-500 focus:outline-none focus:bg-white transition-all duration-300 shadow-sm font-medium text-gray-700 min-w-[200px]"
+                  >
+                    {categories.map(cat => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name} ({cat.count})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* View Toggle */}
+                <div className="flex items-center bg-gray-100 rounded-2xl p-2 shadow-inner">
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    className={`p-3 rounded-xl transition-all duration-300 ${
+                      viewMode === 'grid' 
+                        ? 'bg-white text-teal-600 shadow-lg scale-105' 
+                        : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    <Grid className="w-6 h-6" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('list')}
+                    className={`p-3 rounded-xl transition-all duration-300 ${
+                      viewMode === 'list' 
+                        ? 'bg-white text-teal-600 shadow-lg scale-105' 
+                        : 'text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    <List className="w-6 h-6" />
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {/* Category Filter */}
-            <div className="flex items-center gap-4">
-              <Filter className="w-5 h-5 text-gray-500" />
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-4 py-3 bg-white border-2 border-gray-200 rounded-xl focus:border-teal-500 focus:outline-none transition-colors duration-200 shadow-sm"
-              >
-                {categories.map(cat => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.name} ({cat.count})
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* View Mode Toggle */}
-            <div className="flex items-center bg-gray-100 rounded-lg p-1">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-md transition-colors duration-200 ${
-                  viewMode === 'grid' ? 'bg-white text-teal-600 shadow-sm' : 'text-gray-500'
-                }`}
-              >
-                <Grid className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={`p-2 rounded-md transition-colors duration-200 ${
-                  viewMode === 'list' ? 'bg-white text-teal-600 shadow-sm' : 'text-gray-500'
-                }`}
-              >
-                <List className="w-5 h-5" />
-              </button>
+            {/* Quick Filters */}
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <div className="flex flex-wrap gap-3">
+                <div className="text-sm font-semibold text-gray-600 flex items-center mr-4">
+                  <Sparkles className="w-4 h-4 mr-2 text-teal-500" />
+                  Filter Cepat:
+                </div>
+                <button 
+                  onClick={() => setSelectedCategory('featured')}
+                  className="px-4 py-2 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 rounded-full text-sm font-medium hover:shadow-md transition-all duration-200 border border-amber-200"
+                >
+                  ⭐ Unggulan
+                </button>
+                <button 
+                  onClick={() => setSelectedCategory('popular')}
+                  className="px-4 py-2 bg-gradient-to-r from-pink-100 to-rose-100 text-pink-800 rounded-full text-sm font-medium hover:shadow-md transition-all duration-200 border border-pink-200"
+                >
+                  🔥 Populer
+                </button>
+                <button 
+                  onClick={() => setSelectedCategory('24/7')}
+                  className="px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 rounded-full text-sm font-medium hover:shadow-md transition-all duration-200 border border-green-200"
+                >
+                  🕐 24/7
+                </button>
+                <button 
+                  onClick={() => setSearchTerm('')}
+                  className="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors duration-200"
+                >
+                  Reset
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-20">
+      {/* Enhanced Services Section */}
+      <section className="py-24 bg-gradient-to-br from-gray-50 via-white to-teal-50">
         <div className="container mx-auto px-4">
           {/* Results Header */}
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800">
-                {filteredServices.length} Poli Ditemukan
+          <div className="flex items-center justify-between mb-12 animate-on-scroll">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-100">
+              <h2 className="text-3xl font-bold text-gray-800 mb-2">
+                {filteredServices.length} Poliklinik Tersedia
               </h2>
               {searchTerm && (
                 <p className="text-gray-600">
-                  Hasil pencarian untuk "{searchTerm}"
+                  Hasil pencarian untuk "<span className="font-semibold text-teal-600">{searchTerm}</span>"
                 </p>
               )}
+              <div className="flex items-center gap-4 mt-3">
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="font-medium">Layanan Aktif</span>
+                </div>
+                <div className="text-sm text-gray-500">
+                  Menampilkan {filteredServices.length} dari {poliServices.length} poli
+                </div>
+              </div>
             </div>
             
-            <div className="text-sm text-gray-500">
-              Menampilkan {filteredServices.length} dari {poliServices.length} poli
+            {/* Sort Options */}
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-gray-100">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold text-gray-600">Urutkan:</span>
+                <select className="px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 focus:outline-none focus:border-teal-500 transition-colors duration-200">
+                  <option>Rating Tertinggi</option>
+                  <option>Waktu Tunggu Tersingkat</option>
+                  <option>Paling Populer</option>
+                  <option>Alphabetical A-Z</option>
+                </select>
+              </div>
             </div>
           </div>
 
           {/* Services Grid/List */}
           <div className={`${
             viewMode === 'grid' 
-              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8' 
-              : 'space-y-6'
-          }`}>
+              ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8' 
+              : 'space-y-8'
+          } animate-on-scroll`}>
             {filteredServices.map((service, index) => (
               <ServiceCard 
                 key={service.id} 
@@ -606,28 +952,71 @@ const RawatInapPage = () => {
                 index={index} 
                 expandedCard={expandedCard} 
                 setExpandedCard={setExpandedCard} 
-                viewMode={viewMode} 
+                viewMode={viewMode}
+                hoveredCard={hoveredCard}
+                setHoveredCard={setHoveredCard}
               />
             ))}
           </div>
 
-          {/* No Results */}
+          {/* No Results State */}
           {filteredServices.length === 0 && (
-            <div className="text-center py-16">
-              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Search className="w-12 h-12 text-gray-400" />
+            <div className="text-center py-20 animate-on-scroll">
+              <div className="relative">
+                <div className="w-32 h-32 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
+                  <Search className="w-16 h-16 text-gray-400" />
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                    <span className="text-orange-600 text-xl">😔</span>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold text-gray-600 mb-2">Tidak ada hasil ditemukan</h3>
-              <p className="text-gray-500 mb-4">Coba gunakan kata kunci yang berbeda atau pilih kategori lain</p>
-              <button 
-                onClick={() => {
-                  setSearchTerm('');
-                  setSelectedCategory('all');
-                }}
-                className="px-6 py-3 bg-teal-500 text-white rounded-xl hover:bg-teal-600 transition-colors duration-200"
-              >
-                Reset Filter
-              </button>
+              
+              <h3 className="text-2xl font-bold text-gray-600 mb-4">Tidak ada poliklinik ditemukan</h3>
+              <p className="text-gray-500 mb-8 max-w-md mx-auto">
+                Coba gunakan kata kunci yang berbeda atau pilih kategori lain untuk menemukan layanan yang Anda butuhkan
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedCategory('all');
+                  }}
+                  className="px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-teal-500/25 transition-all duration-300 transform hover:scale-105"
+                >
+                  Reset Semua Filter
+                </button>
+                
+                <button className="px-8 py-4 bg-white text-gray-700 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-teal-300">
+                  Hubungi Customer Service
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Featured Services Banner */}
+          {filteredServices.length > 0 && (
+            <div className="mt-20 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 rounded-3xl p-8 text-white relative overflow-hidden animate-on-scroll">
+              <div className="absolute inset-0 opacity-30">
+                <div className="w-full h-full bg-white/10 rounded-3xl"></div>
+              </div>
+              
+              <div className="relative z-10 text-center">
+                <h3 className="text-3xl font-bold mb-4">Butuh Konsultasi Segera?</h3>
+                <p className="text-xl mb-8 opacity-90">Tim medis kami siap membantu Anda 24/7 untuk layanan darurat</p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button className="px-8 py-4 bg-white text-teal-600 font-bold rounded-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3">
+                    <Phone className="w-5 h-5" />
+                    Hubungi Emergency: (0711) 414855
+                  </button>
+                  
+                  <button className="px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 flex items-center justify-center gap-3">
+                    <MessageCircle className="w-5 h-5" />
+                    Chat Online
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -859,4 +1248,4 @@ const RawatInapPage = () => {
   );
 };
 
-export default RawatInapPage;
+export default PoliPage;
