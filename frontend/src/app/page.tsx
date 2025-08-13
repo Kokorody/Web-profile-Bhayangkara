@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { Phone, Mail, MapPin, Menu, X, Calendar, Clock, Users, Award, ChevronRight, Star } from 'lucide-react';
 import { doctors } from '@/data/doctors';
@@ -25,97 +25,133 @@ const HospitalWebsite = () => {
     top: string;
     animationDelay: string;
     animationDuration: string;
+    id: string;
   }>>([]);
 
-  const heroImages = [
+  // Memoized constants to prevent recalculation
+  const heroImages = useMemo(() => [
     '/images/1.png',
     '/images/2.png',
     '/images/3.jpg',
     '/images/4.jpg',
     '/images/5.jpg'
-  ];
+  ], []);
+
+  const scrollThreshold = useMemo(() => 100, []);
+
+  // Lazy loading for doctors - start with 4, load more progressively
+  const [visibleDoctorCount, setVisibleDoctorCount] = useState(4);
+  const [isLoadingMoreDoctors, setIsLoadingMoreDoctors] = useState(false);
+
+  // Memoized filtered doctors with lazy loading
+  const displayedDoctors = useMemo(() => {
+    if (showAllDoctors) {
+      return doctors.slice(0, visibleDoctorCount);
+    }
+    return doctors.slice(0, 4);
+  }, [showAllDoctors, visibleDoctorCount]);
+
+  // Function to load more doctors gradually
+  const loadMoreDoctors = useCallback(() => {
+    if (isLoadingMoreDoctors || visibleDoctorCount >= doctors.length) return;
+    
+    setIsLoadingMoreDoctors(true);
+    
+    // Simulate async loading for better UX
+    setTimeout(() => {
+      setVisibleDoctorCount(prev => Math.min(prev + 4, doctors.length));
+      setIsLoadingMoreDoctors(false);
+    }, 300);
+  }, [isLoadingMoreDoctors, visibleDoctorCount]);
+
+  // Memoized stats to prevent recalculation
+  const hospitalStats = useMemo(() => ({
+    totalDoctors: doctors.length,
+    emergencyService: '24/7',
+    accreditation: '100%'
+  }), []);
+
+  // Throttled scroll handler with useCallback
+  const handleScroll = useCallback(() => {
+    const now = performance.now();
+    
+    // Throttle updates to max 60fps (16.67ms)
+    if (now - lastUpdate.current < 16) {
+      return;
+    }
+    lastUpdate.current = now;
+
+    const currentScrollY = window.scrollY;
+    const scrollDifference = Math.abs(currentScrollY - lastScrollY.current);
+    
+    // Only update if scroll difference is significant (reduces unnecessary updates)
+    if (scrollDifference < 5) {
+      lastScrollY.current = currentScrollY;
+      return;
+    }
+    
+    // Simplified logic: Always show header at top, hide when scrolling down significantly, show when scrolling up
+    if (currentScrollY < scrollThreshold) {
+      // Always show header at the top
+      setIsHeaderVisible(true);
+    } else {
+      // Check scroll direction
+      const isScrollingDown = currentScrollY > lastScrollY.current;
+      
+      if (isScrollingDown) {
+        // Scrolling down - hide header
+        setIsHeaderVisible(false);
+        setIsMenuOpen(false);
+      } else {
+        // Scrolling up - show header
+        setIsHeaderVisible(true);
+      }
+    }
+    
+    lastScrollY.current = currentScrollY;
+  }, [scrollThreshold]);
+
+  // Optimized scroll progress calculation
+  const updateScrollProgress = useCallback(() => {
+    const currentScrollY = window.scrollY;
+    const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = documentHeight > 0 ? Math.min((currentScrollY / documentHeight) * 100, 100) : 0;
+    setScrollProgress(progress);
+  }, []);
+
+  // Throttled scroll progress with useCallback
+  const throttledScrollProgress = useCallback(() => {
+    if (!ticking.current) {
+      requestAnimationFrame(() => {
+        updateScrollProgress();
+        ticking.current = false;
+      });
+      ticking.current = true;
+    }
+  }, [updateScrollProgress]);
 
   useEffect(() => {
     setIsMounted(true);
     
     // Generate particle styles on client-side only
-    const styles = Array.from({ length: 20 }, () => ({
+    const styles = Array.from({ length: 12 }, (_, index) => ({
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
       animationDelay: `${Math.random() * 5}s`,
-      animationDuration: `${3 + Math.random() * 4}s`
+      animationDuration: `${3 + Math.random() * 4}s`,
+      id: `particle-${index}`
     }));
     setParticleStyles(styles);
     
     // Auto-slide effect
     const slideInterval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    }, 20000); // Change slide every 5 seconds
+    }, 30000);
 
-    // Optimized scroll event listener for header visibility
-    const handleScroll = () => {
-      const now = performance.now();
-      
-      // Throttle updates to max 60fps (16.67ms)
-      if (now - lastUpdate.current < 16) {
-        return;
-      }
-      lastUpdate.current = now;
-
-      const currentScrollY = window.scrollY;
-      const scrollThreshold = 100;
-      const scrollDifference = Math.abs(currentScrollY - lastScrollY.current);
-      
-      // Only update if scroll difference is significant (reduces unnecessary updates)
-      if (scrollDifference < 5) {
-        lastScrollY.current = currentScrollY;
-        return;
-      }
-      
-      // Simplified logic: Always show header at top, hide when scrolling down significantly, show when scrolling up
-      if (currentScrollY < scrollThreshold) {
-        // Always show header at the top
-        setIsHeaderVisible(true);
-      } else {
-        // Check scroll direction
-        const isScrollingDown = currentScrollY > lastScrollY.current;
-        
-        if (isScrollingDown) {
-          // Scrolling down - hide header
-          setIsHeaderVisible(false);
-          setIsMenuOpen(false);
-        } else {
-          // Scrolling up - show header
-          setIsHeaderVisible(true);
-        }
-      }
-      
-      lastScrollY.current = currentScrollY;
-    };
-
-    // Optimized scroll progress calculation (less frequent updates)
-    const updateScrollProgress = () => {
-      const currentScrollY = window.scrollY;
-      const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = documentHeight > 0 ? Math.min((currentScrollY / documentHeight) * 100, 100) : 0;
-      setScrollProgress(progress);
-    };
-
-    // Separate throttled function for scroll progress (updates less frequently)
-    const throttledScrollProgress = () => {
-      if (!ticking.current) {
-        requestAnimationFrame(() => {
-          updateScrollProgress();
-          ticking.current = false;
-        });
-        ticking.current = true;
-      }
-    };
-
-    // Use passive listeners and combine handlers efficiently
+    // Combined optimized scroll handler
     const combinedScrollHandler = () => {
       handleScroll();
-      // Update progress less frequently (every 10th call instead of random)
+      // Update progress less frequently (every 10th call)
       frameCount.current++;
       if (frameCount.current % 10 === 0) {
         throttledScrollProgress();
@@ -143,7 +179,7 @@ const HospitalWebsite = () => {
       }
     };
 
-    // Also add a simple scroll-to-top trigger
+    // Keyboard navigation
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'Home') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -163,7 +199,7 @@ const HospitalWebsite = () => {
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, []); // Remove lastScrollY from dependencies
+  }, [heroImages.length, handleScroll, throttledScrollProgress]);
 
   // Scroll reveal animation hook - only run on client side
   useLayoutEffect(() => {
@@ -324,7 +360,57 @@ const HospitalWebsite = () => {
                   </div>
                 </div>
               </div>
-              {['INFORMASI', 'E-LIBRARY', 'PELAYANAN', 'SOP RS'].map((item) => (
+
+              {/* INFORMASI with Dropdown */}
+              <div className="relative group">
+                <button
+                  className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50 flex items-center gap-2"
+                >
+                  INFORMASI
+                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                {/* Dropdown Menu */}
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                  <div className="p-3 space-y-1">
+                    <Link
+                      href="/berita"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">📰</span>
+                      <div>
+                        <div className="font-semibold">Berita & Informasi</div>
+                        <div className="text-xs text-gray-500">Berita terkini dan informasi rumah sakit</div>
+                      </div>
+                    </Link>
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">📋</span>
+                      <div>
+                        <div className="font-semibold">Pengumuman</div>
+                        <div className="text-xs text-gray-500">Pengumuman resmi rumah sakit</div>
+                      </div>
+                    </a>
+                    <a
+                      href="#"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">📅</span>
+                      <div>
+                        <div className="font-semibold">Agenda Kegiatan</div>
+                        <div className="text-xs text-gray-500">Jadwal kegiatan dan acara</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Other Navigation Items */}
+              {['E-LIBRARY', 'PELAYANAN', 'SOP RS'].map((item) => (
                 <button
                   key={item}
                   className="px-6 py-3 rounded-xl font-semibold text-sm transition-colors duration-200 text-gray-700 hover:text-teal-600 hover:bg-teal-50"
@@ -403,7 +489,47 @@ const HospitalWebsite = () => {
                 </div>
               </div>
               
-              {['INFORMASI', 'E-LIBRARY', 'PELAYANAN', 'SOP RS'].map((item) => (
+              {/* INFORMASI Section */}
+              <div className="bg-gray-50 rounded-xl p-3">
+                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
+                  INFORMASI
+                </div>
+                <div className="space-y-1">
+                  <Link
+                    href="/berita"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">📰</span>
+                    <div>
+                      <div className="font-semibold">Berita & Informasi</div>
+                      <div className="text-xs text-gray-500">Berita terkini dan informasi rumah sakit</div>
+                    </div>
+                  </Link>
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">📋</span>
+                    <div>
+                      <div className="font-semibold">Pengumuman</div>
+                      <div className="text-xs text-gray-500">Pengumuman resmi rumah sakit</div>
+                    </div>
+                  </a>
+                  <a
+                    href="#"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                  >
+                    <span className="text-lg">📅</span>
+                    <div>
+                      <div className="font-semibold">Agenda Kegiatan</div>
+                      <div className="text-xs text-gray-500">Jadwal kegiatan dan acara</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
+              {/* Other Navigation Items */}
+              {['E-LIBRARY', 'PELAYANAN', 'SOP RS'].map((item) => (
                 <button
                   key={item}
                   className="block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 text-gray-700 hover:bg-teal-50 hover:text-teal-600"
@@ -470,9 +596,9 @@ const HospitalWebsite = () => {
           
           {/* Floating particles animation */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {isMounted && particleStyles.map((style, i) => (
+            {isMounted && particleStyles.map((style) => (
               <div
-                key={i}
+                key={style.id}
                 className="absolute w-2 h-2 bg-white/20 rounded-full animate-float"
                 style={style}
               />
@@ -593,7 +719,7 @@ const HospitalWebsite = () => {
                   
                   {heroImages.map((img, index) => (
                     <div
-                      key={index}
+                      key={`slide-${index}`}
                       className={`transition-all duration-1000 ${
                         index === currentSlide ? 'opacity-100 relative z-20 scale-100' : 'opacity-0 absolute inset-0 z-10 scale-95'
                       }`}
@@ -616,7 +742,7 @@ const HospitalWebsite = () => {
                   <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
                     {heroImages.map((_, index) => (
                       <button
-                        key={index}
+                        key={`dot-${index}`}
                         onClick={() => setCurrentSlide(index)}
                         className={`h-3 rounded-full transition-all duration-300 hover:scale-125 ${
                           index === currentSlide
@@ -816,8 +942,8 @@ const HospitalWebsite = () => {
               Tentang Kami
             </span>
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mt-4">
-              Memberikan Pelayanan Kesehatan 
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600"> Terbaik </span> 
+              Memberikan Pelayanan Kesehatan{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600">Terbaik</span>{' '}
               Untuk Anda
             </h2>
             <p className="text-xl text-gray-600 leading-relaxed mt-4">
@@ -978,11 +1104,11 @@ const HospitalWebsite = () => {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => (
+            {services.map((service) => (
               <div 
-                key={index}
+                key={service.title}
                 data-animate="true"
-                data-delay={(index * 200).toString()}
+                data-delay={(services.indexOf(service) * 200).toString()}
                 className="opacity-0 translate-y-8 transition-all duration-700 ease-out bg-white/60 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group relative overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-blue-500/5 transform scale-95 group-hover:scale-100 transition-transform duration-300"></div>
@@ -1018,17 +1144,15 @@ const HospitalWebsite = () => {
           </div>
           
           {/* Doctors Grid with Animation */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {(showAllDoctors ? doctors : doctors.slice(0, 6)).map((doctor, index) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 mb-12">
+            {displayedDoctors.map((doctor, index) => (
               <div 
                 key={doctor.id}
                 data-animate="true"
                 data-delay={(index * 150).toString()}
-                className={`opacity-0 translate-y-8 transition-all duration-700 ease-out group relative ${
-                  !showAllDoctors && index >= 6 ? 'hidden' : ''
-                }`}
+                className="opacity-0 translate-y-8 transition-all duration-700 ease-out group relative"
                 style={{
-                  animationDelay: showAllDoctors && index >= 6 ? `${(index - 6) * 150}ms` : undefined
+                  animationDelay: showAllDoctors && index >= 4 ? `${(index - 4) * 150}ms` : undefined
                 }}
               >
                 <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl blur opacity-20 group-hover:opacity-30 transition-all duration-300"></div>
@@ -1121,18 +1245,21 @@ const HospitalWebsite = () => {
           </div>
           
           {/* Show More/Less Button */}
-          {doctors.length > 6 && (
+          {doctors.length > 4 && (
             <div className="text-center space-y-4">
               {!showAllDoctors && (
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                  <Link
-                    href="/dokter"
+                  <button
+                    onClick={() => {
+                      setShowAllDoctors(true);
+                      setVisibleDoctorCount(8); // Start with 8 when showing all
+                    }}
                     className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div className="relative flex items-center gap-3">
                       <span className="text-lg">
-                        Lihat Semua Dokter ({doctors.length})
+                        Lihat Lebih Banyak Dokter ({doctors.length})
                       </span>
                       <div className="transform transition-transform duration-300">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1141,7 +1268,7 @@ const HospitalWebsite = () => {
                       </div>
                     </div>
                     <div className="absolute right-0 w-12 h-full bg-white/10 skew-x-[20deg] -translate-x-20 group-hover:translate-x-32 transition-transform duration-500"></div>
-                  </Link>
+                  </button>
                   
                   <Link
                     href="/jadwal-dokter"
@@ -1162,23 +1289,60 @@ const HospitalWebsite = () => {
               )}
               
               {showAllDoctors && (
-                <button
-                  onClick={() => setShowAllDoctors(false)}
-                  className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-gray-600 to-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative flex items-center gap-3">
-                    <span className="text-lg">
-                      Tampilkan Lebih Sedikit
-                    </span>
-                    <div className="transform transition-transform duration-300 rotate-180">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  {/* Load More Button */}
+                  {visibleDoctorCount < doctors.length && (
+                    <button
+                      onClick={loadMoreDoctors}
+                      disabled={isLoadingMoreDoctors}
+                      className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="relative flex items-center gap-3">
+                        {isLoadingMoreDoctors ? (
+                          <>
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                            <span className="text-lg">Loading...</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-lg">
+                              Muat Lebih Banyak ({doctors.length - visibleDoctorCount} tersisa)
+                            </span>
+                            <div className="transform transition-transform duration-300">
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                              </svg>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <div className="absolute right-0 w-12 h-full bg-white/10 skew-x-[20deg] -translate-x-20 group-hover:translate-x-32 transition-transform duration-500"></div>
+                    </button>
+                  )}
+                  
+                  {/* Show Less Button */}
+                  <button
+                    onClick={() => {
+                      setShowAllDoctors(false);
+                      setVisibleDoctorCount(4);
+                    }}
+                    className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-gray-600 to-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative flex items-center gap-3">
+                      <span className="text-lg">
+                        Tampilkan Lebih Sedikit
+                      </span>
+                      <div className="transform transition-transform duration-300 rotate-180">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                  <div className="absolute right-0 w-12 h-full bg-white/10 skew-x-[20deg] -translate-x-20 group-hover:translate-x-32 transition-transform duration-500"></div>
-                </button>
+                    <div className="absolute right-0 w-12 h-full bg-white/10 skew-x-[20deg] -translate-x-20 group-hover:translate-x-32 transition-transform duration-500"></div>
+                  </button>
+                </div>
               )}
               
               {/* Statistics */}
@@ -1214,33 +1378,63 @@ const HospitalWebsite = () => {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {news.map((article) => (
+            {news.slice(0, 3).map((article) => (
               <div 
                 key={article.id}
                 className="group relative"
               >
                 <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl blur opacity-20 group-hover:opacity-30 transition-all duration-300"></div>
-                <div className="relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-br from-teal-400 to-blue-500 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-teal-600 font-medium">{article.date}</div>
-                  </div>
-                  <div className="p-6 relative bg-gradient-to-b from-white to-gray-50/50">
-                    <h3 className="font-bold text-gray-800 text-lg mb-3 group-hover:text-teal-600 transition-colors leading-snug">
-                      {article.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{article.excerpt}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">Palembang • admin</span>
-                      <button className="text-teal-600 text-sm font-medium flex items-center opacity-60 group-hover:opacity-100 transition-opacity">
-                        Baca Selengkapnya
-                        <ChevronRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
-                      </button>
+                <Link href={`/berita/${article.id}`} className="block">
+                  <div className="relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+                    <div className="aspect-video relative overflow-hidden">
+                      <img
+                        src={article.image}
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                      <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-teal-600 font-medium">{article.date}</div>
+                      <div className="absolute top-4 left-4">
+                        <span className={`px-2 py-1 rounded-full text-xs font-semibold border bg-white/90 backdrop-blur-sm text-gray-800 border-gray-200`}>
+                          {article.category}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="p-6 relative bg-gradient-to-b from-white to-gray-50/50">
+                      <h3 className="font-bold text-gray-800 text-lg mb-3 group-hover:text-teal-600 transition-colors leading-snug">
+                        {article.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">{article.excerpt}</p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3 text-xs text-gray-500">
+                          <span>{article.author}</span>
+                          <span>•</span>
+                          <span>{article.readTime} min baca</span>
+                        </div>
+                        <div className="text-teal-600 text-sm font-medium flex items-center opacity-60 group-hover:opacity-100 transition-opacity">
+                          Baca Selengkapnya
+                          <ChevronRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               </div>
             ))}
+          </div>
+          
+          {/* View All News Button */}
+          <div className="text-center mt-12">
+            <Link
+              href="/berita"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-teal-700 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl group"
+            >
+              Lihat Semua Berita
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
@@ -1258,9 +1452,9 @@ const HospitalWebsite = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
+            {testimonials.map((testimonial) => (
               <div 
-                key={index}
+                key={`testimonial-${testimonial.name}-${testimonial.role}`}
                 className="group relative"
               >
                 <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl blur opacity-20 group-hover:opacity-30 transition-all duration-300"></div>
@@ -1268,7 +1462,7 @@ const HospitalWebsite = () => {
                   <div className="mb-6">
                     <div className="flex items-center space-x-1">
                       {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                        <Star key={`star-${testimonial.name}-${i}`} className="w-5 h-5 text-yellow-400 fill-current" />
                       ))}
                     </div>
                   </div>
@@ -1475,25 +1669,25 @@ const HospitalWebsite = () => {
               <div className="group relative">
                 <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl opacity-25 blur-lg group-hover:opacity-75 transition-all duration-500"></div>
                 <div className="relative bg-white/80 backdrop-blur-sm p-4 rounded-xl hover:bg-white transition-all duration-300 transform hover:scale-105">
-                  <img src="/images/bpjs-kesehatan.png" alt="BPJS Kesehatan" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" />
+                  <img src="/images/bpjs-kesehatan.png" alt="BPJS Kesehatan" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" loading="lazy" />
                 </div>
               </div>
               <div className="group relative">
                 <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl opacity-25 blur-lg group-hover:opacity-75 transition-all duration-500"></div>
                 <div className="relative bg-white/80 backdrop-blur-sm p-4 rounded-xl hover:bg-white transition-all duration-300 transform hover:scale-105">
-                  <img src="/images/Kars-Bintang5.png" alt="KARS Bintang 5" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" />
+                  <img src="/images/Kars-Bintang5.png" alt="KARS Bintang 5" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" loading="lazy" />
                 </div>
               </div>
               <div className="group relative">
                 <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl opacity-25 blur-lg group-hover:opacity-75 transition-all duration-500"></div>
                 <div className="relative bg-white/80 backdrop-blur-sm p-4 rounded-xl hover:bg-white transition-all duration-300 transform hover:scale-105">
-                  <img src="/images/Kementrian-kesehatan.png" alt="Kementerian Kesehatan" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" />
+                  <img src="/images/Kementrian-kesehatan.png" alt="Kementerian Kesehatan" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" loading="lazy" />
                 </div>
               </div>
               <div className="group relative">
                 <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl opacity-25 blur-lg group-hover:opacity-75 transition-all duration-500"></div>
                 <div className="relative bg-white/80 backdrop-blur-sm p-4 rounded-xl hover:bg-white transition-all duration-300 transform hover:scale-105">
-                  <img src="/images/Logo-Blue-Promise.png" alt="Blue Promise" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" />
+                  <img src="/images/Logo-Blue-Promise.png" alt="Blue Promise" className="h-12 w-auto filter brightness-95 hover:brightness-100 transition-all" loading="lazy" />
                 </div>
               </div>
             </div>
@@ -1508,6 +1702,7 @@ const HospitalWebsite = () => {
                   src="/images/logo-rs-1.png" 
                   alt="RS Bhayangkara Logo" 
                   className="h-20 w-auto filter brightness-95 hover:brightness-100 transition-all"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
