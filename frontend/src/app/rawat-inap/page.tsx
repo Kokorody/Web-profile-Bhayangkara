@@ -652,14 +652,14 @@ const RawatInapPage = () => {
                   <div className={`absolute inset-0 bg-gradient-to-br ${facility.color} opacity-0 group-hover:opacity-10 transition-all duration-700`}></div>
                   
                   {/* Floating Badge */}
-                  <div className="absolute top-4 right-4 z-10">
+                  <div className="absolute top-4 left-4 z-10">
                     <div className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${facility.color} shadow-lg`}>
                       {facility.category}
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="relative p-8">
+                  <div className="relative p-8 pt-12">
                     {/* Header with Icon */}
                     <div className="flex items-start justify-between mb-6">
                       <div className={`relative p-4 rounded-2xl bg-gradient-to-br ${facility.color} text-white shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
