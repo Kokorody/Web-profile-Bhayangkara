@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { 
   Mail, 
@@ -345,7 +347,7 @@ const RawatInapPage = () => {
                 Pelayanan
               </span>
               <span className="text-gray-300">/</span>
-              <span className="text-teal-600 font-semibold">Rawat Inap</span>
+              <span className="text-teal-600 font-semibold">Pelayanan Poli</span>
             </nav>
 
             {/* Mobile Menu Button */}
@@ -381,7 +383,7 @@ const RawatInapPage = () => {
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center px-4 py-2 bg-teal-100 text-teal-700 rounded-full text-sm font-medium mb-6">
               <Stethoscope className="w-4 h-4 mr-2" />
-              Pelayanan Rawat Inap Terpadu
+              Pelayanan Poliklinik Spesialis
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
@@ -389,12 +391,12 @@ const RawatInapPage = () => {
                 Pelayanan Poli
               </span>
               <br />
-              <span className="text-gray-800">Rawat Inap</span>
+              <span className="text-gray-800">Spesialis</span>
             </h1>
             
             <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
-              Nikmati layanan kesehatan komprehensif dengan fasilitas rawat inap modern dan tim medis berpengalaman 
-              yang siap memberikan perawatan terbaik untuk Anda dan keluarga.
+              Layanan poliklinik spesialis terlengkap dengan dokter berpengalaman dan fasilitas medis modern 
+              untuk memenuhi kebutuhan kesehatan Anda dan keluarga dengan pelayanan berkualitas tinggi.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -402,12 +404,12 @@ const RawatInapPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-teal-500 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <span className="relative flex items-center">
                   <Phone className="w-5 h-5 mr-2" />
-                  Hubungi Sekarang
+                  Daftar Poli
                 </span>
               </button>
               
               <div className="text-center">
-                <div className="text-sm text-gray-500">Emergency 24/7</div>
+                <div className="text-sm text-gray-500">Informasi & Pendaftaran</div>
                 <div className="font-bold text-teal-600">(0711) 414855</div>
               </div>
             </div>
