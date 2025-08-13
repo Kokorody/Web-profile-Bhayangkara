@@ -38,7 +38,7 @@ export const news: NewsItem[] = [
     date: "14 Jun 2025",
     image: "/images/1.png",
     category: "Kegiatan",
-    author: "Tim Humas RS Bhayangkara",
+    author: "Tim iT Bhayangkara",
     tags: ["bakti kesehatan", "hari bhayangkara", "pelayanan masyarakat", "kesehatan gratis"],
     featured: true,
     readTime: 5
@@ -66,7 +66,7 @@ export const news: NewsItem[] = [
     date: "01 Jun 2025",
     image: "/images/2.png",
     category: "Acara",
-    author: "Tim Humas RS Bhayangkara",
+    author: "Tim iT Bhayangkara",
     tags: ["pancasila", "upacara", "nilai-nilai", "komitmen"],
     featured: false,
     readTime: 4
@@ -95,7 +95,7 @@ export const news: NewsItem[] = [
     date: "18 May 2025",
     image: "/images/3.jpg",
     category: "Kegiatan",
-    author: "Tim Humas RS Bhayangkara",
+    author: "Tim iT Bhayangkara",
     tags: ["YKB", "bazar", "olahraga", "senam", "kesehatan"],
     featured: false,
     readTime: 6
@@ -125,7 +125,7 @@ export const news: NewsItem[] = [
     date: "10 Aug 2025",
     image: "/images/4.jpg",
     category: "Teknologi",
-    author: "Dr. Sarah Medina, Sp.Rad",
+    author: "Tim iT Bhayangkara",
     tags: ["teknologi", "MRI", "CT Scan", "inovasi", "diagnosis"],
     featured: true,
     readTime: 7
@@ -156,7 +156,7 @@ export const news: NewsItem[] = [
     date: "05 Aug 2025",
     image: "/images/5.jpg",
     category: "Edukasi",
-    author: "Dr. Ahmad Fauzi, Sp.PD",
+    author: "Tim iT Bhayangkara",
     tags: ["edukasi", "kesehatan masyarakat", "pencegahan", "gaya hidup sehat"],
     featured: false,
     readTime: 5
@@ -189,7 +189,7 @@ export const news: NewsItem[] = [
     date: "01 Aug 2025",
     image: "/images/about.jpg",
     category: "Pencapaian",
-    author: "Manajemen RS Bhayangkara",
+    author: "Tim iT Bhayangkara",
     tags: ["akreditasi", "NABH", "internasional", "kualitas", "standar"],
     featured: true,
     readTime: 6
@@ -222,7 +222,7 @@ export const news: NewsItem[] = [
     date: "28 Jul 2025",
     image: "/images/doctor.png",
     category: "Kerjasama",
-    author: "Prof. Dr. Maria Silviana, Sp.PD",
+    author: "Tim iT Bhayangkara",
     tags: ["kerjasama", "universitas", "pendidikan", "penelitian", "magang"],
     featured: false,
     readTime: 8
@@ -257,7 +257,7 @@ export const news: NewsItem[] = [
     date: "20 Jul 2025",
     image: "/images/ninu.png",
     category: "Teknologi",
-    author: "Tim IT RS Bhayangkara",
+    author: "Tim iT Bhayangkara",
     tags: ["aplikasi mobile", "digital health", "telemedicine", "teknologi", "inovasi"],
     featured: true,
     readTime: 7
