@@ -16,6 +16,7 @@ const HospitalWebsite = () => {
   const [showAllDoctors, setShowAllDoctors] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isFasilitasOpen, setIsFasilitasOpen] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
@@ -428,16 +429,55 @@ const HospitalWebsite = () => {
                 {/* Dropdown Menu */}
                 <div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                   <div className="p-3 space-y-1">
-                    <a
-                      href="#"
-                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                    >
-                      <span className="text-lg">🏢</span>
-                      <div>
-                        <div className="font-semibold">Fasilitas</div>
-                        <div className="text-xs text-gray-500">Fasilitas rumah sakit lengkap</div>
+                    {/* Fasilitas with Submenu */}
+                    <div className="relative group/fasilitas">
+                      <div className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200 cursor-pointer">
+                        <span className="text-lg">🏢</span>
+                        <div className="flex-1">
+                          <div className="font-semibold">Fasilitas</div>
+                          <div className="text-xs text-gray-500">Fasilitas rumah sakit lengkap</div>
+                        </div>
+                        <svg className="w-4 h-4 transition-transform duration-200 group-hover/fasilitas:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
                       </div>
-                    </a>
+                      
+                      {/* Fasilitas Submenu */}
+                      <div className="absolute left-full top-0 ml-1 w-64 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover/fasilitas:opacity-100 group-hover/fasilitas:visible transition-all duration-300 z-50">
+                        <div className="p-3 space-y-1">
+                          <a
+                            href="#"
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                          >
+                            <span className="text-lg">🛏️</span>
+                            <div>
+                              <div className="font-semibold">Fasilitas Kamar</div>
+                              <div className="text-xs text-gray-500">Kamar rawat inap & ICU</div>
+                            </div>
+                          </a>
+                          <a
+                            href="#"
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                          >
+                            <span className="text-lg">🔬</span>
+                            <div>
+                              <div className="font-semibold">Fasilitas Peralatan Medis</div>
+                              <div className="text-xs text-gray-500">Peralatan medis modern</div>
+                            </div>
+                          </a>
+                          <a
+                            href="#"
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                          >
+                            <span className="text-lg">🏥</span>
+                            <div>
+                              <div className="font-semibold">Fasilitas Rumah Sakit</div>
+                              <div className="text-xs text-gray-500">Fasilitas umum & pendukung</div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                     <Link
                       href="/pelayanan-poli"
                       className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
@@ -607,16 +647,65 @@ const HospitalWebsite = () => {
                   PELAYANAN
                 </div>
                 <div className="space-y-1">
-                  <a
-                    href="#"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                  >
-                    <span className="text-lg">🏢</span>
-                    <div>
-                      <div className="font-semibold">Fasilitas</div>
-                      <div className="text-xs text-gray-500">Fasilitas rumah sakit lengkap</div>
+                  {/* Fasilitas with Expandable Submenu */}
+                  <div>
+                    <button
+                      onClick={() => setIsFasilitasOpen(!isFasilitasOpen)}
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🏢</span>
+                      <div className="flex-1 text-left">
+                        <div className="font-semibold">Fasilitas</div>
+                        <div className="text-xs text-gray-500">Fasilitas rumah sakit lengkap</div>
+                      </div>
+                      <svg 
+                        className={`w-4 h-4 transition-transform duration-200 ${isFasilitasOpen ? 'rotate-90' : ''}`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                    
+                    {/* Fasilitas Submenu */}
+                    <div className={`overflow-hidden transition-all duration-300 ${
+                      isFasilitasOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+                    }`}>
+                      <div className="ml-8 mt-1 space-y-1">
+                        <a
+                          href="#"
+                          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                        >
+                          <span className="text-base">🛏️</span>
+                          <div>
+                            <div className="font-medium text-sm">Fasilitas Kamar</div>
+                            <div className="text-xs text-gray-500">Kamar rawat inap & ICU</div>
+                          </div>
+                        </a>
+                        <a
+                          href="#"
+                          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                        >
+                          <span className="text-base">🔬</span>
+                          <div>
+                            <div className="font-medium text-sm">Fasilitas Peralatan Medis</div>
+                            <div className="text-xs text-gray-500">Peralatan medis modern</div>
+                          </div>
+                        </a>
+                        <a
+                          href="#"
+                          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                        >
+                          <span className="text-base">🏥</span>
+                          <div>
+                            <div className="font-medium text-sm">Fasilitas Rumah Sakit</div>
+                            <div className="text-xs text-gray-500">Fasilitas umum & pendukung</div>
+                          </div>
+                        </a>
+                      </div>
                     </div>
-                  </a>
+                  </div>
                   <a
                     href="#"
                     className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
