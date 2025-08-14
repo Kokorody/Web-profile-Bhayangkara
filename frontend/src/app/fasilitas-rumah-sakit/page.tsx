@@ -262,7 +262,6 @@ const FasilitasRumahSakitPage = () => {
 
   // Parallax effects
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
   // Header visibility control
   useEffect(() => {
@@ -802,9 +801,7 @@ const FasilitasRumahSakitPage = () => {
 
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-r from-teal-600 to-blue-600 relative overflow-hidden">
-        <motion.div style={{ y: y2 }} className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('/patterns/circuit.svg')] opacity-20" />
-        </motion.div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz4KICAgIDwvcGF0dGVybj4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIgLz4KPC9zdmc+')] opacity-20" />
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
