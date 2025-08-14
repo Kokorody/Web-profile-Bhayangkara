@@ -20,7 +20,6 @@ import {
   Calendar,
   Star,
   Activity,
-  Filter,
   ChevronDown,
   Heart,
   Leaf,
@@ -254,7 +253,6 @@ const FacilityCard = ({ facility, index, isExpanded, onToggle }: {
 const FasilitasRumahSakitPage = () => {
   const [isMounted, setIsMounted] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('Semua');
   const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
 
   const { scrollYProgress } = useScroll();
@@ -582,19 +580,8 @@ const FasilitasRumahSakitPage = () => {
     }
   ], []);
 
-  // Filter facilities based on category only
-  const filteredFacilities = useMemo(() => {
-    return hospitalFacilities.filter(facility => {
-      const matchesCategory = selectedCategory === 'Semua' || facility.category === selectedCategory;
-      return matchesCategory;
-    });
-  }, [hospitalFacilities, selectedCategory]);
-
-  // Get unique categories
-  const categories = useMemo(() => {
-    const cats = ['Semua', ...new Set(hospitalFacilities.map(facility => facility.category))];
-    return cats;
-  }, [hospitalFacilities]);
+  // Show all facilities
+  const filteredFacilities = hospitalFacilities;
 
   // Toggle card expansion
   const toggleCard = (cardId: number) => {
@@ -698,7 +685,7 @@ const FasilitasRumahSakitPage = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
               {[
                 { id: 'facilities', label: 'Total Fasilitas', value: hospitalFacilities.length, suffix: '+' },
-                { id: 'categories', label: 'Kategori', value: categories.length - 1, suffix: '' },
+                { id: 'categories', label: 'Kategori', value: 7, suffix: '' },
                 { id: 'uptime', label: 'Uptime', value: 99, suffix: '%' },
                 { id: 'years', label: 'Tahun Beroperasi', value: 25, suffix: '+' }
               ].map((stat, statIndex) => (
@@ -717,33 +704,6 @@ const FasilitasRumahSakitPage = () => {
               ))}
             </div>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Filter Section */}
-      <section className="py-8 bg-white border-b border-gray-100">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            {/* Category Filter */}
-            <div className="flex items-center gap-2">
-              <Filter className="w-5 h-5 text-gray-400" />
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all duration-200"
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {/* Results Count */}
-          <div className="mt-4 text-sm text-gray-600">
-            Menampilkan <span className="font-semibold text-teal-600">{filteredFacilities.length}</span> fasilitas
-            {selectedCategory !== 'Semua' && <span> dalam kategori <strong>{selectedCategory}</strong></span>}
-          </div>
         </div>
       </section>
 
@@ -788,10 +748,10 @@ const FasilitasRumahSakitPage = () => {
               className="text-center py-16"
             >
               <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Filter className="w-12 h-12 text-gray-400" />
+                <Building2 className="w-12 h-12 text-gray-400" />
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Tidak Ada Fasilitas</h3>
-              <p className="text-gray-600">Pilih kategori yang berbeda untuk melihat fasilitas lainnya.</p>
+              <p className="text-gray-600">Belum ada fasilitas yang tersedia saat ini.</p>
             </motion.div>
           )}
         </div>
