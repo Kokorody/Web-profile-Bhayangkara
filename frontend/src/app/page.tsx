@@ -465,8 +465,8 @@ const HospitalWebsite = () => {
                               <div className="text-xs text-gray-500">Peralatan medis modern</div>
                             </div>
                           </Link>
-                          <a
-                            href="#"
+                          <Link
+                            href="/fasilitas-rumah-sakit"
                             className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
                           >
                             <span className="text-lg">🏥</span>
@@ -474,7 +474,7 @@ const HospitalWebsite = () => {
                               <div className="font-semibold">Fasilitas Rumah Sakit</div>
                               <div className="text-xs text-gray-500">Fasilitas umum & pendukung</div>
                             </div>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -693,8 +693,8 @@ const HospitalWebsite = () => {
                             <div className="text-xs text-gray-500">Peralatan medis modern</div>
                           </div>
                         </Link>
-                        <a
-                          href="#"
+                        <Link
+                          href="/fasilitas-rumah-sakit"
                           className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
                         >
                           <span className="text-base">🏥</span>
@@ -702,7 +702,7 @@ const HospitalWebsite = () => {
                             <div className="font-medium text-sm">Fasilitas Rumah Sakit</div>
                             <div className="text-xs text-gray-500">Fasilitas umum & pendukung</div>
                           </div>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
