@@ -445,8 +445,8 @@ const HospitalWebsite = () => {
                       {/* Fasilitas Submenu */}
                       <div className="absolute left-full top-0 ml-1 w-64 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover/fasilitas:opacity-100 group-hover/fasilitas:visible transition-all duration-300 z-50">
                         <div className="p-3 space-y-1">
-                          <a
-                            href="#"
+                          <Link
+                            href="/fasilitas-kamar"
                             className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
                           >
                             <span className="text-lg">🛏️</span>
@@ -454,7 +454,7 @@ const HospitalWebsite = () => {
                               <div className="font-semibold">Fasilitas Kamar</div>
                               <div className="text-xs text-gray-500">Kamar rawat inap & ICU</div>
                             </div>
-                          </a>
+                          </Link>
                           <a
                             href="#"
                             className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
@@ -673,8 +673,8 @@ const HospitalWebsite = () => {
                       isFasilitasOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
                     }`}>
                       <div className="ml-8 mt-1 space-y-1">
-                        <a
-                          href="#"
+                        <Link
+                          href="/fasilitas-kamar"
                           className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
                         >
                           <span className="text-base">🛏️</span>
@@ -682,7 +682,7 @@ const HospitalWebsite = () => {
                             <div className="font-medium text-sm">Fasilitas Kamar</div>
                             <div className="text-xs text-gray-500">Kamar rawat inap & ICU</div>
                           </div>
-                        </a>
+                        </Link>
                         <a
                           href="#"
                           className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
