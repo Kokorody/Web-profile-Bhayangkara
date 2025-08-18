@@ -7,6 +7,7 @@ import { doctors } from '@/data/doctors';
 import { services } from '@/data/services';
 import { news } from '@/data/news';
 import { testimonials } from '@/data/testimonials';
+import PerformanceMonitor from '@/components/PerformanceMonitor';
 
 const HospitalWebsite = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,28 +55,23 @@ const HospitalWebsite = () => {
     id: string;
   }>>([]);
 
-  // Memoized constants to prevent recalculation
-  const heroImages = useMemo(() => [
+  // Simplified constants - removed unnecessary memoization
+  const heroImages = [
     '/images/1.png',
     '/images/2.png',
     '/images/3.jpg',
     '/images/4.jpg',
     '/images/5.jpg'
-  ], []);
+  ];
 
-  const scrollThreshold = useMemo(() => 100, []);
+  const scrollThreshold = 100;
 
   // Lazy loading for doctors - start with 6, load more progressively
   const [visibleDoctorCount, setVisibleDoctorCount] = useState(6);
   const [isLoadingMoreDoctors, setIsLoadingMoreDoctors] = useState(false);
 
-  // Memoized filtered doctors with lazy loading
-  const displayedDoctors = useMemo(() => {
-    if (showAllDoctors) {
-      return doctors.slice(0, visibleDoctorCount);
-    }
-    return doctors.slice(0, 6);
-  }, [showAllDoctors, visibleDoctorCount]);
+  // Simplified doctors display - removed complex memoization
+  const displayedDoctors = showAllDoctors ? doctors.slice(0, visibleDoctorCount) : doctors.slice(0, 6);
 
   // Function to load more doctors gradually
   const loadMoreDoctors = useCallback(() => {
@@ -90,19 +86,19 @@ const HospitalWebsite = () => {
     }, 300);
   }, [isLoadingMoreDoctors, visibleDoctorCount]);
 
-  // Memoized stats to prevent recalculation
-  const hospitalStats = useMemo(() => ({
+  // Simplified stats
+  const hospitalStats = {
     totalDoctors: doctors.length,
     emergencyService: '24/7',
     accreditation: '100%'
-  }), []);
+  };
 
-  // Throttled scroll handler with useCallback
+  // Optimized scroll handler with minimal re-renders
   const handleScroll = useCallback(() => {
     const now = performance.now();
     
-    // Throttle updates to max 60fps (16.67ms)
-    if (now - lastUpdate.current < 16) {
+    // Increase throttling to 60fps (16.67ms) to reduce load even more
+    if (now - lastUpdate.current < 50) { // Reduced from 33ms to 50ms
       return;
     }
     lastUpdate.current = now;
@@ -110,148 +106,111 @@ const HospitalWebsite = () => {
     const currentScrollY = window.scrollY;
     const scrollDifference = Math.abs(currentScrollY - lastScrollY.current);
     
-    // Only update if scroll difference is significant (reduces unnecessary updates)
-    if (scrollDifference < 5) {
+    // Increase threshold to reduce updates
+    if (scrollDifference < 20) { // Increased from 10px to 20px
       lastScrollY.current = currentScrollY;
       return;
     }
     
-    // Simplified logic: Always show header at top, hide when scrolling down significantly, show when scrolling up
-    if (currentScrollY < scrollThreshold) {
-      // Always show header at the top
-      setIsHeaderVisible(true);
-    } else {
-      // Check scroll direction
-      const isScrollingDown = currentScrollY > lastScrollY.current;
-      
-      if (isScrollingDown) {
-        // Scrolling down - hide header
-        setIsHeaderVisible(false);
+    // Minimize state updates - batch them with a single update
+    const newHeaderVisible = currentScrollY < scrollThreshold || currentScrollY < lastScrollY.current;
+    const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const newProgress = documentHeight > 0 ? Math.min((currentScrollY / documentHeight) * 100, 100) : 0;
+    
+    // Use a single state update instead of multiple
+    if (Math.abs(scrollProgress - newProgress) > 2) { // Only update if significant change
+      setScrollProgress(newProgress);
+    }
+    
+    if (isHeaderVisible !== newHeaderVisible) {
+      setIsHeaderVisible(newHeaderVisible);
+      if (!newHeaderVisible) {
         setIsMenuOpen(false);
-      } else {
-        // Scrolling up - show header
-        setIsHeaderVisible(true);
       }
     }
     
     lastScrollY.current = currentScrollY;
-  }, [scrollThreshold]);
-
-  // Optimized scroll progress calculation
-  const updateScrollProgress = useCallback(() => {
-    const currentScrollY = window.scrollY;
-    const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = documentHeight > 0 ? Math.min((currentScrollY / documentHeight) * 100, 100) : 0;
-    setScrollProgress(progress);
-  }, []);
-
-  // Throttled scroll progress with useCallback
-  const throttledScrollProgress = useCallback(() => {
-    if (!ticking.current) {
-      requestAnimationFrame(() => {
-        updateScrollProgress();
-        ticking.current = false;
-      });
-      ticking.current = true;
-    }
-  }, [updateScrollProgress]);
+  }, [scrollThreshold, scrollProgress, isHeaderVisible]);
 
   useEffect(() => {
     setIsMounted(true);
     
-    // Generate particle styles on client-side only
-    const styles = Array.from({ length: 12 }, (_, index) => ({
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      animationDelay: `${Math.random() * 5}s`,
-      animationDuration: `${3 + Math.random() * 4}s`,
-      id: `particle-${index}`
-    }));
-    setParticleStyles(styles);
+    // Disable particle animations for better performance
+    setParticleStyles([]); // Empty array to disable particles
     
-    // Auto-slide effect
+    // Much slower auto-slide effect to reduce CPU usage
     const slideInterval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-    }, 30000);
+    }, 60000); // Increased from 45s to 60s
 
-    // Combined optimized scroll handler
-    const combinedScrollHandler = () => {
-      handleScroll();
-      // Update progress less frequently (every 10th call)
-      frameCount.current++;
-      if (frameCount.current % 10 === 0) {
-        throttledScrollProgress();
-      }
+    // Heavily debounced scroll handler
+    let scrollTimeout: NodeJS.Timeout;
+    const debouncedScrollHandler = () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(handleScroll, 100); // Increased debounce from 10ms to 100ms
     };
 
-    window.addEventListener('scroll', combinedScrollHandler, { passive: true });
+    // Use passive listeners
+    window.addEventListener('scroll', debouncedScrollHandler, { passive: true });
 
-    // Optimized mobile touch handling
-    let touchStartY = 0;
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY;
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      const touchY = e.touches[0].clientY;
-      const touchDiff = touchStartY - touchY;
-      
-      // Only trigger on significant swipe and reduce frequency
-      if (Math.abs(touchDiff) > 50 && window.scrollY > 100) {
-        if (touchDiff < -50) {
-          // Swiping down (pull to show header)
-          setIsHeaderVisible(true);
-        }
-      }
-    };
-
-    // Keyboard navigation
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'Home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setIsHeaderVisible(true);
-      }
-    };
-
-    // Add touch listeners with reduced frequency
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
-    window.addEventListener('keydown', handleKeyPress, { passive: true });
+    // Remove touch handlers for now to reduce overhead
+    // const handleTouchStart = (e: TouchEvent) => {
+    //   touchStartY = e.touches[0].clientY;
+    // };
 
     return () => {
       clearInterval(slideInterval);
-      window.removeEventListener('scroll', combinedScrollHandler);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('keydown', handleKeyPress);
+      clearTimeout(scrollTimeout);
+      window.removeEventListener('scroll', debouncedScrollHandler);
     };
-  }, [heroImages.length, handleScroll, throttledScrollProgress]);
+  }, [heroImages.length, handleScroll]);
 
-  // Scroll reveal animation hook - only run on client side
+  // Simplified intersection observer for better performance
   useLayoutEffect(() => {
     if (!isMounted) return;
     
     const observerOptions = {
       root: null,
-      rootMargin: '0px',
-      threshold: 0.1
+      rootMargin: '100px', // Larger margin to trigger earlier
+      threshold: 0.01 // Very low threshold
     };
 
     const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const target = entry.target as HTMLElement;
-          const delay = target.dataset.delay || '0';
-          target.style.transitionDelay = `${delay}ms`;
-          target.style.opacity = '1';
-          target.style.transform = 'translate3d(0, 0, 0)';
+      // Process entries in batches to avoid blocking
+      const batchSize = 5;
+      let currentBatch = 0;
+      
+      const processBatch = () => {
+        const start = currentBatch * batchSize;
+        const end = Math.min(start + batchSize, entries.length);
+        
+        for (let i = start; i < end; i++) {
+          const entry = entries[i];
+          if (entry.isIntersecting) {
+            const target = entry.target as HTMLElement;
+            target.style.opacity = '1';
+            target.style.transform = 'translate3d(0, 0, 0)';
+            observer.unobserve(target);
+          }
         }
-      });
+        
+        currentBatch++;
+        if (currentBatch * batchSize < entries.length) {
+          requestAnimationFrame(processBatch);
+        }
+      };
+      
+      if (entries.length > 0) {
+        requestAnimationFrame(processBatch);
+      }
     };
 
     const observer = new IntersectionObserver(handleIntersect, observerOptions);
     const elements = document.querySelectorAll('[data-animate="true"]');
-    elements.forEach(el => observer.observe(el));
+    
+    // Only observe first 10 elements initially
+    const elementsToObserve = Array.from(elements).slice(0, 10);
+    elementsToObserve.forEach(el => observer.observe(el));
 
     return () => observer.disconnect();
   }, [isMounted]);
@@ -263,15 +222,15 @@ const HospitalWebsite = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <PerformanceMonitor />
       {/* Optimized Header with Dynamic Visibility - GPU Accelerated */}
-      <header className={`bg-white/95 backdrop-blur-md shadow-xl fixed top-0 left-0 right-0 z-50 border-b border-gray-100/50 will-change-transform transition-transform duration-300 ease-out ${
+      <header className={`bg-white/95 backdrop-blur-md shadow-xl fixed top-0 left-0 right-0 z-50 border-b border-gray-100/50 transition-transform duration-200 ease-out ${
         isHeaderVisible 
           ? 'translate-y-0' 
           : '-translate-y-full'
       }`} style={{ 
-        transform: `translateY(${isHeaderVisible ? '0' : '-100%'})`,
-        backfaceVisibility: 'hidden',
-        perspective: '1000px'
+        willChange: isHeaderVisible ? 'auto' : 'transform', // Only use willChange when needed
+        backfaceVisibility: 'hidden'
       }}>
         {/* Simplified Top Bar */}
         <div className="bg-gradient-to-r from-teal-600 to-blue-600 text-white py-3">
@@ -806,47 +765,37 @@ const HospitalWebsite = () => {
 
       {/* Enhanced Interactive Hero Section */}
       <section className="relative text-white min-h-screen overflow-hidden bg-black pt-32 md:pt-36">
-        {/* Temporary Debug Info - Remove after testing */}
-        {process.env.NODE_ENV === 'development' && (
-          <div className="fixed top-36 left-4 z-50 bg-black/80 text-white p-4 rounded-lg text-xs">
-            <div>Header Visible: {isHeaderVisible ? 'YES' : 'NO'}</div>
-            <div>Scroll Progress: {scrollProgress.toFixed(1)}%</div>
-            <div>Last Scroll Y: {lastScrollY.current}</div>
-            <div>Current Scroll: {typeof window !== 'undefined' ? window.scrollY : 0}</div>
-          </div>
-        )}
+        {/* Removed debug info to improve performance */}
         
-        {/* Optimized Scroll Progress Indicator */}
+        {/* Optimized Scroll Progress Indicator - Only render when needed */}
         {scrollProgress > 5 && (
           <div className="fixed top-0 left-0 w-full h-1 bg-gray-200/10 z-40">
             <div 
-              className="h-full bg-gradient-to-r from-teal-500 to-blue-500 transition-all duration-200 ease-out will-change-transform"
+              className="h-full bg-gradient-to-r from-teal-500 to-blue-500 transition-transform duration-100 ease-out"
               style={{ 
                 transform: `scaleX(${scrollProgress / 100})`,
-                transformOrigin: 'left center'
+                transformOrigin: 'left center',
+                willChange: 'transform'
               }}
             />
           </div>
         )}
-        {/* Animated Background with Parallax Effect */}
+        {/* Simplified Background - Removed heavy animations */}
         <div className="absolute inset-0 z-0">
           <div
-            className="fixed inset-0 w-full h-full"
+            className="absolute inset-0 w-full h-full bg-fixed"
             style={{
               backgroundImage: 'url(/images/herobg.png)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              backgroundAttachment: 'fixed',
-              zIndex: -1,
-              willChange: 'transform',
-              transform: 'translateZ(0)' // Force hardware acceleration
+              zIndex: -1
             }}
           />
-          {/* Static gradient overlay */}
+          {/* Simple gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-teal-900/80 via-blue-900/70 to-teal-800/80"></div>
           
-          {/* Floating particles animation */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Removed particle animations for better performance */}
+          {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {isMounted && particleStyles.map((style) => (
               <div
                 key={style.id}
@@ -854,11 +803,11 @@ const HospitalWebsite = () => {
                 style={style}
               />
             ))}
-          </div>
+          </div> */}
           
-          {/* Interactive morphing shapes */}
-          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-teal-400/10 to-blue-500/10 rounded-full blur-3xl animate-morph opacity-60"></div>
-          <div className="absolute bottom-20 left-20 w-48 h-48 bg-gradient-to-br from-blue-400/10 to-teal-500/10 rounded-full blur-2xl animate-morph-reverse opacity-60"></div>
+          {/* Simplified static shapes instead of animated ones */}
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-teal-400/10 to-blue-500/10 rounded-full blur-3xl opacity-60"></div>
+          <div className="absolute bottom-20 left-20 w-48 h-48 bg-gradient-to-br from-blue-400/10 to-teal-500/10 rounded-full blur-2xl opacity-60"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-20 flex items-center py-8 lg:py-12 min-h-[calc(100vh-8rem)]">
@@ -1385,7 +1334,7 @@ const HospitalWebsite = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-teal-100/20 via-transparent to-transparent"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-transparent"></div>
         
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-8 lg:px-16 relative z-10">
           <div className="text-center mb-8 relative">
             <span className="text-teal-600 font-semibold text-sm uppercase tracking-wider bg-gradient-to-r from-teal-50 to-blue-50 px-4 py-2 rounded-full inline-block shadow-sm border border-teal-100 mb-3">Tim Medis Profesional</span>
             <h2 className="text-3xl font-bold text-gray-800 mb-3">Dokter Kami</h2>
@@ -1394,9 +1343,9 @@ const HospitalWebsite = () => {
             <div className="absolute -bottom-8 -left-4 w-24 h-24 bg-blue-100 rounded-full opacity-50 blur-xl"></div>
           </div>
           
-          {/* Doctors Grid with Animation */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-            {displayedDoctors.map((doctor, index) => {
+          {/* Doctors Grid with Animation - 2x2 Layout */}
+          <div className="grid grid-cols-2 gap-6 max-w-4xl mx-auto mb-6">
+            {displayedDoctors.slice(0, 4).map((doctor, index) => {
               const isAvailable = isCurrentlyAvailable(doctor);
               
               return (
