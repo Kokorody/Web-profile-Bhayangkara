@@ -8,16 +8,19 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        'reveal': 'reveal 1s forwards',
-        'slide-in': 'slide-in 0.7s ease-out forwards',
-        'slide-out': 'slide-out 0.7s ease-out forwards',
-        'float': 'float 6s ease-in-out infinite',
-        'bounce-slow': 'bounce-slow 3s ease-in-out infinite',
-        'spin-slow': 'spin-slow 20s linear infinite',
-        'reverse-spin': 'reverse-spin 15s linear infinite',
-        'breathing': 'breathing 4s ease-in-out infinite',
-        'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
-        'orbit': 'orbit 20s linear infinite',
+        'reveal': 'reveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+        'slide-in': 'slide-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+        'slide-out': 'slide-out 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+        'float': 'float 8s ease-in-out infinite',
+        'bounce-slow': 'bounce-slow 4s ease-in-out infinite',
+        'spin-slow': 'spin-slow 30s linear infinite',
+        'reverse-spin': 'reverse-spin 25s linear infinite',
+        'breathing': 'breathing 5s ease-in-out infinite',
+        'fade-in-up': 'fade-in-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+        'orbit': 'orbit 30s linear infinite',
+        'morph': 'morph 10s ease-in-out infinite',
+        'morph-reverse': 'morph-reverse 12s ease-in-out infinite',
+        'gradient-x': 'gradient-x 3s ease infinite',
       },
       keyframes: {
         reveal: {
@@ -109,6 +112,36 @@ module.exports = {
           'to': {
             transform: 'rotate(360deg) translateX(120px) rotate(-360deg)',
           },
+        },
+        'morph': {
+          '0%, 100%': {
+            borderRadius: '50%',
+            transform: 'scale(1)',
+          },
+          '50%': {
+            borderRadius: '30%',
+            transform: 'scale(1.1)',
+          },
+        },
+        'morph-reverse': {
+          '0%, 100%': {
+            borderRadius: '30%',
+            transform: 'scale(1.1)',
+          },
+          '50%': {
+            borderRadius: '50%',
+            transform: 'scale(1)',
+          },
+        },
+        'gradient-x': {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center'
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center'
+          }
         },
       },
     },
