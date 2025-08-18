@@ -1,24 +1,34 @@
-/* Hospital Website Styles - Optimized */
+/* Hospital Website Styles - Performance Optimized */
 .min-h-screen {
   min-height: 100vh;
 }
 
-/* Simplified Animation Classes */
+/* GPU-Accelerated Animations */
 [data-animate="true"]:not(.opacity-100) {
   opacity: 0;
-  transform: translateY(1rem);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  transform: translate3d(0, 1rem, 0);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  will-change: opacity, transform;
 }
 
 [data-animate="true"].animate {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
+  will-change: auto; /* Remove will-change after animation */
 }
 
 /* Hero section specific - always visible */
 .hero-section [data-animate="true"] {
   opacity: 1 !important;
-  transform: translateY(0) !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* Optimized Header Animations */
+.header-transition {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 /* Simplified Gradient Backgrounds */
@@ -26,28 +36,55 @@
   background: linear-gradient(to right, rgba(13, 148, 136, 0.1), rgba(59, 130, 246, 0.1));
 }
 
-/* Optimized Shadows */
+/* Optimized Shadows - Use fewer layers */
 .custom-shadow {
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-/* Simplified Hover Effects */
+/* Performance-optimized hover effects */
 .hover-scale {
-  transition: transform 0.2s ease;
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: auto;
 }
 
 .hover-scale:hover {
   transform: scale(1.02);
+  will-change: transform;
 }
 
-/* Optimized Pulse Animation */
+.hover-scale:not(:hover) {
+  will-change: auto;
+}
+
+/* Optimized Pulse Animation - Reduced GPU usage */
 @keyframes pulse-light {
   0%, 100% {
     opacity: 1;
   }
   50% {
-    opacity: 0.8;
+    opacity: 0.7;
   }
+}
+
+/* Particle animations - DISABLED for better performance */
+@keyframes float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(5px, -5px, 0); /* Reduced movement */
+  }
+}
+
+.animate-float {
+  will-change: auto; /* Remove will-change */
+}
+
+/* Scroll progress bar optimization */
+.scroll-progress {
+  transform-origin: left center;
+  will-change: transform;
+  contain: layout style paint;
 }
 
 .animate-pulse {
