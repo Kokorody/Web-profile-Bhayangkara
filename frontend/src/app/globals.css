@@ -529,3 +529,80 @@ button, .group {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
 }
+
+/* Mobile-optimized hero slider */
+@media (max-width: 767px) {
+  .hero-slider {
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0 auto;
+  }
+  
+  .hero-slider img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 40vh !important;
+    object-fit: cover !important;
+  }
+  
+  /* Mobile viewport constraints */
+  .hero-slider-container {
+    padding: 0 1rem !important;
+    max-width: calc(100vw - 2rem) !important;
+    overflow: hidden;
+  }
+  
+  /* Prevent horizontal overflow */
+  body {
+    overflow-x: hidden;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .hero-slider {
+    max-width: 280px !important;
+  }
+  
+  .hero-slider-container {
+    padding: 0 0.75rem !important;
+    max-width: calc(100vw - 1.5rem) !important;
+  }
+}
+
+/* Desktop and larger screens - restore normal sizing */
+@media (min-width: 768px) {
+  .hero-slider {
+    width: auto !important;
+    max-width: none !important;
+  }
+  
+  .hero-slider img {
+    width: auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+  
+  .hero-slider-container {
+    padding: 0 !important;
+    max-width: none !important;
+    overflow: visible;
+  }
+}
+
+/* Ensure touch targets are accessible on all devices */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Improve button visibility on mobile */
+@media (max-width: 767px) {
+  .mobile-navigation-button {
+    opacity: 0.9 !important;
+    transform: scale(1.1);
+  }
+}

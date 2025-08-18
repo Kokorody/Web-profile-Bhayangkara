@@ -811,10 +811,10 @@ const HospitalWebsite = () => {
         </div>
 
         <div className="container mx-auto px-4 relative z-20 flex items-center py-8 lg:py-12 min-h-[calc(100vh-8rem)]">
-          <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-6 lg:gap-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-8 lg:gap-8">
 
             {/* Enhanced Interactive Text Section */}
-            <div data-animate="true" className="opacity-0 translate-y-8 transition-all duration-700 ease-out flex-1 lg:max-w-2xl space-y-4">
+            <div data-animate="true" className="opacity-0 translate-y-8 transition-all duration-700 ease-out flex-1 lg:max-w-2xl space-y-4 w-full lg:w-auto">
               {/* Interactive Trust Badge with hover effects */}
               <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-sm border border-white/40 rounded-full px-5 py-3 mb-4 shadow-lg hover:bg-white/30 hover:scale-105 transition-all duration-300 cursor-pointer group">
                 <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse group-hover:animate-bounce"></div>
@@ -911,9 +911,9 @@ const HospitalWebsite = () => {
             </div>
 
             {/* Enhanced Interactive Image Slider Section */}
-            <div data-animate="true" className="opacity-0 translate-x-8 transition-all duration-700 ease-out flex-1 flex justify-center lg:justify-end">
+            <div data-animate="true" className="hero-slider-container opacity-0 translate-x-8 transition-all duration-700 ease-out w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-none mx-auto lg:flex-1 flex justify-center lg:justify-end mt-8 lg:mt-0">
               {isMounted && (
-                <div className="relative rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500">
+                <div className="hero-slider relative rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500 w-full max-w-[320px] sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
                   {/* Glassmorphism container */}
                   <div className="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"></div>
                   
@@ -927,56 +927,56 @@ const HospitalWebsite = () => {
                       <img
                         src={img}
                         alt={`Hospital slide ${index + 1}`}
-                        className="w-auto h-auto max-w-full max-h-[60vh] object-contain rounded-2xl group-hover:scale-105 transition-transform duration-700"
+                        className="w-full h-auto max-h-[40vh] sm:max-h-[45vh] md:max-h-[55vh] lg:max-h-[65vh] xl:max-h-[70vh] object-cover md:object-contain rounded-2xl group-hover:scale-105 transition-transform duration-700"
                         loading={index === 0 ? "eager" : "lazy"}
                       />
 
                       {/* Enhanced Interactive Overlay */}
-                      <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg text-black text-sm font-bold z-30 hover:bg-white hover:scale-105 transition-all duration-300 cursor-pointer shadow-lg">
+                      <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-white/90 backdrop-blur-sm px-2 py-1 md:px-4 md:py-2 rounded-lg text-black text-xs md:text-sm font-bold z-30 hover:bg-white hover:scale-105 transition-all duration-300 cursor-pointer shadow-lg">
                         RS Bhayangkara
                       </div>
                     </div>
                   ))}
 
                   {/* Enhanced Navigation Dots with hover effects */}
-                  <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
+                  <div className="absolute bottom-3 md:bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 md:space-x-3 z-30">
                     {heroImages.map((_, index) => (
                       <button
                         key={`dot-${index}`}
                         onClick={() => setCurrentSlide(index)}
-                        className={`h-3 rounded-full transition-all duration-300 hover:scale-125 ${
+                        className={`h-2 md:h-3 rounded-full transition-all duration-300 hover:scale-125 touch-manipulation ${
                           index === currentSlide
-                            ? 'bg-white w-8 shadow-lg'
-                            : 'bg-white/60 w-3 hover:bg-white/80'
+                            ? 'bg-white w-6 md:w-8 shadow-lg'
+                            : 'bg-white/60 w-2 md:w-3 hover:bg-white/80'
                         }`}
                         aria-label={`Go to slide ${index + 1}`}
                       />
                     ))}
                   </div>
 
-                  {/* Enhanced Interactive Arrows */}
+                  {/* Enhanced Interactive Arrows - Always visible on mobile for better UX */}
                   <button
                     onClick={() => setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length)}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-black/60 hover:scale-110 transition-all duration-300 z-30 border border-white/20"
+                    className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/60 backdrop-blur-sm text-white flex items-center justify-center opacity-80 md:opacity-0 md:group-hover:opacity-100 hover:bg-black/80 hover:scale-110 transition-all duration-300 z-30 border border-white/20 touch-manipulation"
                     aria-label="Previous slide"
                   >
-                    <svg className="w-6 h-6 hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 md:w-6 md:h-6 hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                   </button>
                   <button
                     onClick={() => setCurrentSlide((prev) => (prev + 1) % heroImages.length)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-black/60 hover:scale-110 transition-all duration-300 z-30 border border-white/20"
+                    className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/60 backdrop-blur-sm text-white flex items-center justify-center opacity-80 md:opacity-0 md:group-hover:opacity-100 hover:bg-black/80 hover:scale-110 transition-all duration-300 z-30 border border-white/20 touch-manipulation"
                     aria-label="Next slide"
                   >
-                    <svg className="w-6 h-6 hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 md:w-6 md:h-6 hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </button>
                   
                   {/* Progress indicator */}
-                  <div className="absolute top-4 right-4 z-30">
-                    <div className="w-12 h-12 rounded-full border-2 border-white/30 flex items-center justify-center backdrop-blur-sm bg-black/20 hover:bg-black/40 transition-all duration-300">
+                  <div className="absolute top-2 right-2 md:top-4 md:right-4 z-30">
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white/30 flex items-center justify-center backdrop-blur-sm bg-black/20 hover:bg-black/40 transition-all duration-300">
                       <div className="text-white text-xs font-bold">{currentSlide + 1}/{heroImages.length}</div>
                     </div>
                   </div>
@@ -1017,24 +1017,24 @@ const HospitalWebsite = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,_rgba(20,184,166,0.05)_0%,_transparent_50%)]"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 lg:gap-8">
             {/* News Card */}
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl blur opacity-25 group-hover:opacity-75 transition-all duration-500"></div>
-              <div className="relative bg-gradient-to-br from-teal-600 to-teal-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] min-h-[280px] flex flex-col">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="relative bg-gradient-to-br from-teal-600 to-teal-700 text-white p-3 md:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] min-h-[200px] md:min-h-[280px] flex flex-col">
+                <div className="flex items-center mb-2 md:mb-4">
+                  <div className="w-6 h-6 md:w-10 md:h-10 bg-white/20 rounded-lg flex items-center justify-center mr-2 md:mr-3">
+                    <svg className="w-3 h-3 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold">Berita Klinik</h3>
+                  <h3 className="text-sm md:text-xl font-bold">Berita Klinik</h3>
                 </div>
-                <p className="text-sm opacity-90 mb-6 flex-grow leading-relaxed">
+                <p className="text-xs md:text-sm opacity-90 mb-3 md:mb-6 flex-grow leading-relaxed">
                   Kunjungan Kerja Dinkes Kota Palembang dan dinkes Provinsi ke Rumah Sakit Bhayangkara
                 </p>
-                <div className="text-xs opacity-75 mb-4">28 Maret 2021 | 15:56:29</div>
-                <button className="bg-white text-teal-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors duration-300 self-start">
+                <div className="text-xs opacity-75 mb-2 md:mb-4">28 Maret 2021</div>
+                <button className="bg-white text-teal-600 px-2 py-1 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-semibold hover:bg-gray-50 transition-colors duration-300 self-start">
                   Baca Selengkapnya
                 </button>
               </div>
@@ -1241,32 +1241,32 @@ const HospitalWebsite = () => {
           </div>
 
           {/* Vision & Mission Cards - Centered */}
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto mt-20">
             {/* Vision Card */}
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white rounded-xl p-4 md:p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+              <div className="flex items-center gap-3 mb-3 md:mb-4">
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg flex items-center justify-center">
+                  <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Visi</h3>
+                <h3 className="text-lg md:text-xl font-bold text-gray-900">Visi</h3>
               </div>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 leading-relaxed text-sm md:text-base">
                 Terwujudnya Pelayanan Kesehatan Paripurna yang Prima dan Unggul di Bidang Kedokteran Kepolisian.
               </p>
             </div>
 
             {/* Mission Card */}
-            <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white rounded-xl p-4 md:p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+              <div className="flex items-center gap-3 mb-3 md:mb-4">
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                  <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Misi</h3>
+                <h3 className="text-lg md:text-xl font-bold text-gray-900">Misi</h3>
               </div>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-start gap-2">
@@ -1303,21 +1303,21 @@ const HospitalWebsite = () => {
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">Kami mencakup berbagai layanan medis dengan standar profesional tertinggi</p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {services.map((service) => (
               <div 
                 key={service.title}
                 data-animate="true"
                 data-delay={(services.indexOf(service) * 200).toString()}
-                className="opacity-0 translate-y-8 transition-all duration-700 ease-out bg-white/60 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group relative overflow-hidden"
+                className="opacity-0 translate-y-8 transition-all duration-700 ease-out bg-white/60 backdrop-blur-sm p-4 md:p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group relative overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-blue-500/5 transform scale-95 group-hover:scale-100 transition-transform duration-300"></div>
                 <div className="relative z-10">
-                  <div className="bg-gradient-to-br from-teal-50 to-blue-50 w-16 h-16 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-4xl shadow-md">
+                  <div className="bg-gradient-to-br from-teal-50 to-blue-50 w-12 h-12 md:w-16 md:h-16 rounded-lg flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform text-2xl md:text-4xl shadow-md">
                     {service.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-teal-600 transition-colors">{service.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{service.description}</p>
+                  <h3 className="text-sm md:text-xl font-bold text-gray-800 mb-2 md:mb-3 group-hover:text-teal-600 transition-colors">{service.title}</h3>
+                  <p className="text-gray-600 leading-relaxed text-xs md:text-base">{service.description}</p>
                   <div className="mt-6 flex items-center text-teal-600 font-medium">
                     <span className="text-sm group-hover:mr-2 transition-all">Pelajari Lebih Lanjut</span>
                     <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" />
@@ -1521,7 +1521,7 @@ const HospitalWebsite = () => {
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">Temukan informasi terbaru seputar layanan dan kegiatan RS Bhayangkara</p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {news.slice(0, 3).map((article) => (
               <div 
                 key={article.id}
@@ -1538,27 +1538,28 @@ const HospitalWebsite = () => {
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                      <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-teal-600 font-medium">{article.date}</div>
-                      <div className="absolute top-4 left-4">
+                      <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 bg-white/90 backdrop-blur-sm px-2 py-1 md:px-3 md:py-1 rounded-full text-xs text-teal-600 font-medium">{article.date}</div>
+                      <div className="absolute top-2 md:top-4 left-2 md:left-4">
                         <span className={`px-2 py-1 rounded-full text-xs font-semibold border bg-white/90 backdrop-blur-sm text-gray-800 border-gray-200`}>
                           {article.category}
                         </span>
                       </div>
                     </div>
-                    <div className="p-6 relative bg-gradient-to-b from-white to-gray-50/50">
-                      <h3 className="font-bold text-gray-800 text-lg mb-3 group-hover:text-teal-600 transition-colors leading-snug">
+                    <div className="p-3 md:p-6 relative bg-gradient-to-b from-white to-gray-50/50">
+                      <h3 className="font-bold text-gray-800 text-sm md:text-lg mb-2 md:mb-3 group-hover:text-teal-600 transition-colors leading-snug">
                         {article.title}
                       </h3>
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">{article.excerpt}</p>
+                      <p className="text-gray-600 text-xs md:text-sm mb-3 md:mb-4 line-clamp-2">{article.excerpt}</p>
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3 text-xs text-gray-500">
-                          <span>{article.author}</span>
-                          <span>•</span>
-                          <span>{article.readTime} min baca</span>
+                        <div className="flex items-center gap-2 md:gap-3 text-xs text-gray-500">
+                          <span className="hidden md:inline">{article.author}</span>
+                          <span className="hidden md:inline">•</span>
+                          <span>{article.readTime} min</span>
                         </div>
-                        <div className="text-teal-600 text-sm font-medium flex items-center opacity-60 group-hover:opacity-100 transition-opacity">
-                          Baca Selengkapnya
-                          <ChevronRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
+                        <div className="text-teal-600 text-xs md:text-sm font-medium flex items-center opacity-60 group-hover:opacity-100 transition-opacity">
+                          <span className="hidden md:inline">Baca Selengkapnya</span>
+                          <span className="md:hidden">Baca</span>
+                          <ChevronRight className="w-3 h-3 md:w-4 md:h-4 ml-1 transform group-hover:translate-x-1 transition-transform" />
                         </div>
                       </div>
                     </div>
