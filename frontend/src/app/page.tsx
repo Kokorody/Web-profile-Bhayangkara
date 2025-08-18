@@ -165,6 +165,32 @@ const HospitalWebsite = () => {
     };
   }, [heroImages.length, handleScroll]);
 
+  // Handle mobile menu body scroll lock
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
+  // Handle escape key to close mobile menu
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isMenuOpen]);
+
   // Simplified intersection observer for better performance
   useLayoutEffect(() => {
     if (!isMounted) return;
@@ -520,246 +546,248 @@ const HospitalWebsite = () => {
           </div>
         </div>
 
-        {/* Simplified Mobile Menu */}
-        <div className={`md:hidden transition-all duration-300 ${
-          isMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
-        } overflow-hidden`}>
-          <div className="bg-white border-t border-gray-100">
-            <nav className="container mx-auto px-4 py-6 space-y-2">
-              <button
-                className="block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 bg-gradient-to-r from-teal-600 to-blue-600 text-white shadow-lg"
-              >
-                HOME
-              </button>
-              
-              {/* DOKTER Section */}
-              <div className="bg-gray-50 rounded-xl p-3">
-                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
-                  DOKTER
-                </div>
-                <div className="space-y-1">
+        {/* Mobile Menu */}
+        <div className={`md:hidden fixed inset-x-0 top-24 z-50 transition-all duration-300 ${
+          isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}>
+          <div className="bg-white shadow-xl border border-gray-100 mx-4 rounded-2xl overflow-hidden">
+            <nav className="max-h-[70vh] overflow-y-auto">
+              <div className="p-4 space-y-2">
+                {/* HOME */}
+                <div className="bg-gray-50 rounded-xl p-3">
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
+                    HOME
+                  </div>
                   <Link
-                    href="/dokter"
+                    href="/tentang-kami"
+                    onClick={() => setIsMenuOpen(false)}
                     className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
                   >
-                    <span className="text-lg">👨‍⚕️</span>
+                    <span className="text-lg">🏥</span>
                     <div>
-                      <div className="font-semibold">Daftar Dokter</div>
-                      <div className="text-xs text-gray-500">Lihat semua dokter & spesialisasi</div>
-                    </div>
-                  </Link>
-                  <Link
-                    href="/jadwal-dokter"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                  >
-                    <span className="text-lg">📅</span>
-                    <div>
-                      <div className="font-semibold">Jadwal Dokter</div>
-                      <div className="text-xs text-gray-500">Cek jadwal praktik dokter</div>
+                      <div className="font-semibold">Tentang Kami</div>
+                      <div className="text-xs text-gray-500">Profile & Sejarah Rumah Sakit</div>
                     </div>
                   </Link>
                 </div>
-              </div>
-              
-              {/* INFORMASI Section */}
-              <div className="bg-gray-50 rounded-xl p-3">
-                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
-                  INFORMASI
+                
+                {/* DOKTER */}
+                <div className="bg-gray-50 rounded-xl p-3">
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
+                    DOKTER
+                  </div>
+                  <div className="space-y-1">
+                    <Link
+                      href="/dokter"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">�‍⚕️</span>
+                      <div>
+                        <div className="font-semibold">Daftar Dokter</div>
+                        <div className="text-xs text-gray-500">Lihat semua dokter & spesialisasi</div>
+                      </div>
+                    </Link>
+                    <Link
+                      href="/jadwal-dokter"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">�</span>
+                      <div>
+                        <div className="font-semibold">Jadwal Dokter</div>
+                        <div className="text-xs text-gray-500">Cek jadwal praktik dokter</div>
+                      </div>
+                    </Link>
+                  </div>
                 </div>
-                <div className="space-y-1">
+                
+                {/* INFORMASI */}
+                <div className="bg-gray-50 rounded-xl p-3">
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
+                    INFORMASI
+                  </div>
                   <Link
                     href="/berita"
+                    onClick={() => setIsMenuOpen(false)}
                     className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
                   >
-                    <span className="text-lg">📰</span>
+                    <span className="text-lg">�</span>
                     <div>
                       <div className="font-semibold">Berita & Informasi</div>
                       <div className="text-xs text-gray-500">Berita terkini dan informasi rumah sakit</div>
                     </div>
                   </Link>
-                  <a
-                    href="#"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                  >
-                    <span className="text-lg">📋</span>
-                    <div>
-                      <div className="font-semibold">Pengumuman</div>
-                      <div className="text-xs text-gray-500">Pengumuman resmi rumah sakit</div>
-                    </div>
-                  </a>
-                  <a
-                    href="#"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                  >
-                    <span className="text-lg">📅</span>
-                    <div>
-                      <div className="font-semibold">Agenda Kegiatan</div>
-                      <div className="text-xs text-gray-500">Jadwal kegiatan dan acara</div>
-                    </div>
-                  </a>
                 </div>
-              </div>
-              
-              {/* PELAYANAN Section */}
-              <div className="bg-gray-50 rounded-xl p-3">
-                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
-                  PELAYANAN
-                </div>
-                <div className="space-y-1">
-                  {/* Fasilitas with Expandable Submenu */}
-                  <div>
-                    <button
-                      onClick={() => setIsFasilitasOpen(!isFasilitasOpen)}
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                    >
-                      <span className="text-lg">🏢</span>
-                      <div className="flex-1 text-left">
-                        <div className="font-semibold">Fasilitas</div>
-                        <div className="text-xs text-gray-500">Fasilitas rumah sakit lengkap</div>
-                      </div>
-                      <svg 
-                        className={`w-4 h-4 transition-transform duration-200 ${isFasilitasOpen ? 'rotate-90' : ''}`} 
-                        fill="none" 
-                        stroke="currentColor" 
-                        viewBox="0 0 24 24"
+                
+                {/* PELAYANAN */}
+                <div className="bg-gray-50 rounded-xl p-3">
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
+                    PELAYANAN
+                  </div>
+                  <div className="space-y-1">
+                    {/* Fasilitas with Expandable Submenu */}
+                    <div>
+                      <button
+                        onClick={() => setIsFasilitasOpen(!isFasilitasOpen)}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                    
-                    {/* Fasilitas Submenu */}
-                    <div className={`overflow-hidden transition-all duration-300 ${
-                      isFasilitasOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
-                    }`}>
-                      <div className="ml-8 mt-1 space-y-1">
-                        <Link
-                          href="/fasilitas-kamar"
-                          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                        <span className="text-lg">🏢</span>
+                        <div className="flex-1 text-left">
+                          <div className="font-semibold">Fasilitas</div>
+                          <div className="text-xs text-gray-500">Fasilitas rumah sakit lengkap</div>
+                        </div>
+                        <svg 
+                          className={`w-4 h-4 transition-transform duration-200 ${isFasilitasOpen ? 'rotate-90' : ''}`} 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
                         >
-                          <span className="text-base">🛏️</span>
-                          <div>
-                            <div className="font-medium text-sm">Fasilitas Kamar</div>
-                            <div className="text-xs text-gray-500">Kamar rawat inap & ICU</div>
-                          </div>
-                        </Link>
-                        <Link
-                          href="/fasilitas-peralatan-medis"
-                          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                        >
-                          <span className="text-base">🔬</span>
-                          <div>
-                            <div className="font-medium text-sm">Fasilitas Peralatan Medis</div>
-                            <div className="text-xs text-gray-500">Peralatan medis modern</div>
-                          </div>
-                        </Link>
-                        <Link
-                          href="/fasilitas-rumah-sakit"
-                          className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                        >
-                          <span className="text-base">🏥</span>
-                          <div>
-                            <div className="font-medium text-sm">Fasilitas Rumah Sakit</div>
-                            <div className="text-xs text-gray-500">Fasilitas umum & pendukung</div>
-                          </div>
-                        </Link>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                      
+                      {/* Fasilitas Submenu */}
+                      <div className={`overflow-hidden transition-all duration-300 ${
+                        isFasilitasOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+                      }`}>
+                        <div className="ml-8 mt-1 space-y-1">
+                          <Link
+                            href="/fasilitas-kamar"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                          >
+                            <span className="text-base">🛏️</span>
+                            <div>
+                              <div className="font-medium text-sm">Fasilitas Kamar</div>
+                              <div className="text-xs text-gray-500">Kamar rawat inap & ICU</div>
+                            </div>
+                          </Link>
+                          <Link
+                            href="/fasilitas-peralatan-medis"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                          >
+                            <span className="text-base">🔬</span>
+                            <div>
+                              <div className="font-medium text-sm">Fasilitas Peralatan Medis</div>
+                              <div className="text-xs text-gray-500">Peralatan medis modern</div>
+                            </div>
+                          </Link>
+                          <Link
+                            href="/fasilitas-rumah-sakit"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                          >
+                            <span className="text-base">🏥</span>
+                            <div>
+                              <div className="font-medium text-sm">Fasilitas Rumah Sakit</div>
+                              <div className="text-xs text-gray-500">Fasilitas umum & pendukung</div>
+                            </div>
+                          </Link>
+                        </div>
                       </div>
                     </div>
+                    
+                    <Link
+                      href="/pelayanan-poli"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🏥</span>
+                      <div>
+                        <div className="font-semibold">Pelayanan Poli</div>
+                        <div className="text-xs text-gray-500">Layanan poliklinik spesialis</div>
+                      </div>
+                    </Link>
+                    
+                    <Link
+                      href="/rawat-inap"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🛏️</span>
+                      <div>
+                        <div className="font-semibold">Rawat Inap</div>
+                        <div className="text-xs text-gray-500">Pelayanan rawat inap 24 jam</div>
+                      </div>
+                    </Link>
+                    
+                    <Link
+                      href="/penunjang-medis"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">🩹</span>
+                      <div>
+                        <div className="font-semibold">Penunjang Medis</div>
+                        <div className="text-xs text-gray-500">Laboratorium & radiologi</div>
+                      </div>
+                    </Link>
+                    
+                    <Link
+                      href="/perawatan-umum"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
+                    >
+                      <span className="text-lg">�‍⚕️</span>
+                      <div>
+                        <div className="font-semibold">Perawatan Umum</div>
+                        <div className="text-xs text-gray-500">Perawatan medis umum</div>
+                      </div>
+                    </Link>
                   </div>
-                  <a
-                    href="#"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                  >
-                    <span className="text-lg">🩺</span>
-                    <div>
-                      <div className="font-semibold">Sarana Medis</div>
-                      <div className="text-xs text-gray-500">Peralatan medis modern</div>
-                    </div>
-                  </a>
-                  <Link
-                    href="/pelayanan-poli"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                  >
-                    <span className="text-lg">🏥</span>
-                    <div>
-                      <div className="font-semibold">Pelayanan Poli</div>
-                      <div className="text-xs text-gray-500">Layanan poliklinik spesialis</div>
-                    </div>
-                  </Link>
-                  <Link
-                    href="/rawat-inap"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                  >
-                    <span className="text-lg">🛏️</span>
-                    <div>
-                      <div className="font-semibold">Rawat Inap</div>
-                      <div className="text-xs text-gray-500">Pelayanan rawat inap 24 jam</div>
-                    </div>
-                  </Link>
-                  <a
-                    href="#"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                  >
-                    <span className="text-lg">🚶</span>
-                    <div>
-                      <div className="font-semibold">Rawat Jalan</div>
-                      <div className="text-xs text-gray-500">Konsultasi & pemeriksaan rawat jalan</div>
-                    </div>
-                  </a>
-                  <Link
-                    href="/penunjang-medis"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                  >
-                    <span className="text-lg">🩹</span>
-                    <div>
-                      <div className="font-semibold">Penunjang Medis</div>
-                      <div className="text-xs text-gray-500">Laboratorium & radiologi</div>
-                    </div>
-                  </Link>
-                  <a
-                    href="#"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                  >
-                    <span className="text-lg">🦠</span>
-                    <div>
-                      <div className="font-semibold">Ruang Isolasi Covid</div>
-                      <div className="text-xs text-gray-500">Isolasi & perawatan Covid-19</div>
-                    </div>
-                  </a>
-                  <Link
-                    href="/perawatan-umum"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200"
-                  >
-                    <span className="text-lg">👩‍⚕️</span>
-                    <div>
-                      <div className="font-semibold">Perawatan Umum</div>
-                      <div className="text-xs text-gray-500">Perawatan medis umum</div>
-                    </div>
-                  </Link>
                 </div>
-              </div>
-              
-              {/* Other Navigation Items */}
-              {['E-LIBRARY', 'SOP RS'].map((item) => (
-                <button
-                  key={item}
-                  className="block w-full text-left px-6 py-4 rounded-xl font-semibold transition-colors duration-200 text-gray-700 hover:bg-teal-50 hover:text-teal-600"
-                >
-                  {item}
-                </button>
-              ))}
-              
-              {/* Mobile Emergency Button */}
-              <div className="pt-4 border-t border-gray-200 mt-4">
-                <button className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-4 rounded-xl font-bold hover:from-red-600 hover:to-orange-600 transition-colors duration-200 shadow-lg">
-                  <div className="flex items-center justify-center gap-3">
-                    <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
-                    <span>LAYANAN DARURAT 24/7</span>
-                    <Phone className="w-5 h-5" />
+                
+                {/* E-LIBRARY & SOP RS */}
+                <div className="bg-gray-50 rounded-xl p-3">
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 px-3">
+                    DOKUMEN
                   </div>
-                </button>
+                  <div className="space-y-1">
+                    <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200">
+                      <span className="text-lg">📚</span>
+                      <div>
+                        <div className="font-semibold">E-LIBRARY</div>
+                        <div className="text-xs text-gray-500">Perpustakaan digital</div>
+                      </div>
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors duration-200">
+                      <span className="text-lg">�</span>
+                      <div>
+                        <div className="font-semibold">SOP RS</div>
+                        <div className="text-xs text-gray-500">Standar Operasional Prosedur</div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Emergency Button */}
+                <div className="pt-2">
+                  <button className="w-full bg-gradient-to-r from-red-500 to-orange-500 text-white px-6 py-4 rounded-xl font-bold hover:from-red-600 hover:to-orange-600 transition-colors duration-200 shadow-lg">
+                    <div className="flex items-center justify-center gap-3">
+                      <div className="w-3 h-3 bg-white rounded-full animate-pulse"></div>
+                      <span>LAYANAN DARURAT 24/7</span>
+                      <Phone className="w-5 h-5" />
+                    </div>
+                  </button>
+                </div>
               </div>
             </nav>
           </div>
+          
+          {/* Backdrop */}
+          <button 
+            className="fixed inset-0 bg-black/20 -z-10 cursor-default"
+            onClick={() => setIsMenuOpen(false)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                setIsMenuOpen(false);
+              }
+            }}
+            aria-label="Close mobile menu"
+            tabIndex={0}
+          />
         </div>
       </header>
 
