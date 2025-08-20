@@ -36,7 +36,7 @@ export const news: NewsItem[] = [
       <p>Kegiatan bakti kesehatan ini diharapkan dapat meningkatkan awareness masyarakat tentang pentingnya menjaga kesehatan dan melakukan pemeriksaan kesehatan secara rutin.</p>
     `,
     date: "14 Jun 2025",
-    image: "/images/1.png",
+    image: "/images/1.jpg",
     category: "Kegiatan",
     author: "Tim iT Bhayangkara",
     tags: ["bakti kesehatan", "hari bhayangkara", "pelayanan masyarakat", "kesehatan gratis"],
@@ -64,7 +64,7 @@ export const news: NewsItem[] = [
       <p>Peringatan Hari Lahir Pancasila ini diharapkan dapat memperkuat komitmen seluruh pegawai dalam mengamalkan nilai-nilai luhur bangsa dalam setiap aspek pelayanan kesehatan.</p>
     `,
     date: "01 Jun 2025",
-    image: "/images/2.png",
+    image: "/images/2.jpg",
     category: "Acara",
     author: "Tim iT Bhayangkara",
     tags: ["pancasila", "upacara", "nilai-nilai", "komitmen"],
