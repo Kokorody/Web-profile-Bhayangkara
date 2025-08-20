@@ -57,8 +57,8 @@ const HospitalWebsite = () => {
 
   // Simplified constants - removed unnecessary memoization
   const heroImages = [
-    '/images/1.png',
-    '/images/2.png',
+    '/images/1.jpg',
+    '/images/2.jpg',
     '/images/3.jpg',
     '/images/4.jpg',
     '/images/5.jpg'
