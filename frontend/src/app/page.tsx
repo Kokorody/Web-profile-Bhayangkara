@@ -298,10 +298,11 @@ const HospitalWebsite = () => {
                 <Image
                   src="/images/header.png"
                   alt="RS Bhayangkara Logo"
-                  width={64}
-                  height={64}
+                  width={200}
+                  height={80}
                   className="h-16 w-auto"
                   priority
+                  quality={100}
                 />
               </div>
             </div>
