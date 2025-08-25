@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useLayoutEffect, useRef, useMemo, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Phone, Mail, MapPin, Menu, X, Calendar, Clock, Users, Award, ChevronRight, Star } from 'lucide-react';
 import { doctors } from '@/data/doctors';
 import { services } from '@/data/services';
@@ -294,11 +295,13 @@ const HospitalWebsite = () => {
             {/* Simplified Logo Section */}
             <div className="group flex items-center cursor-pointer">
               <div className="bg-white p-2 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-                <img
+                <Image
                   src="/images/header.png"
                   alt="RS Bhayangkara Logo"
+                  width={64}
+                  height={64}
                   className="h-16 w-auto"
-                  loading="eager"
+                  priority
                 />
               </div>
             </div>
@@ -952,11 +955,13 @@ const HospitalWebsite = () => {
                         index === currentSlide ? 'opacity-100 relative z-20 scale-100' : 'opacity-0 absolute inset-0 z-10 scale-95'
                       }`}
                     >
-                      <img
+                      <Image
                         src={img}
                         alt={`Hospital slide ${index + 1}`}
+                        width={800}
+                        height={600}
                         className="w-full h-auto max-h-[40vh] sm:max-h-[45vh] md:max-h-[55vh] lg:max-h-[65vh] xl:max-h-[70vh] object-cover md:object-contain rounded-2xl group-hover:scale-105 transition-transform duration-700"
-                        loading={index === 0 ? "eager" : "lazy"}
+                        priority={index === 0}
                       />
 
                       {/* Enhanced Interactive Overlay */}
@@ -1226,11 +1231,12 @@ const HospitalWebsite = () => {
               <div className="relative">
                 {/* Main image */}
                 <div className="bg-white rounded-2xl p-4 shadow-xl">
-                  <img
+                  <Image
                     src="/images/about.jpg"
                     alt="Hospital Facility"
+                    width={600}
+                    height={400}
                     className="w-full h-80 object-cover rounded-xl"
-                    loading="lazy"
                   />
                 </div>
                 
