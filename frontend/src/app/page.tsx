@@ -19,6 +19,7 @@ const HospitalWebsite = () => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isFasilitasOpen, setIsFasilitasOpen] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
@@ -183,14 +184,19 @@ const HospitalWebsite = () => {
   // Handle escape key to close mobile menu
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isMenuOpen) {
-        setIsMenuOpen(false);
+      if (e.key === 'Escape') {
+        if (isMenuOpen) {
+          setIsMenuOpen(false);
+        }
+        if (isChatbotOpen) {
+          setIsChatbotOpen(false);
+        }
       }
     };
 
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [isMenuOpen]);
+  }, [isMenuOpen, isChatbotOpen]);
 
   // Simplified intersection observer for better performance
   useLayoutEffect(() => {
@@ -817,7 +823,7 @@ const HospitalWebsite = () => {
           <div
             className="absolute inset-0 w-full h-full bg-fixed"
             style={{
-              backgroundImage: 'url(/images/herobg.png)',
+              backgroundImage: 'url(/images/ribbon.jpg)',
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               zIndex: -1
@@ -1030,9 +1036,26 @@ const HospitalWebsite = () => {
         
         {/* Floating action buttons */}
         <div className="fixed right-6 top-1/2 -translate-y-1/2 z-30 space-y-4">
-          <button className="w-14 h-14 bg-gradient-to-br from-teal-500 to-blue-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group">
+          <button 
+            onClick={() => setIsChatbotOpen(true)}
+            className="w-14 h-14 bg-gradient-to-br from-teal-500 to-blue-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group relative"
+            title="Chat dengan Asisten Kesehatan"
+          >
             <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.126-.9L3 20l1.9-4.874A9.863 9.863 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
+            </svg>
+            {/* Notification dot for new features */}
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+              <span className="text-xs font-bold text-white">!</span>
+            </div>
+          </button>
+          <button 
+            onClick={() => window.open('https://tmed.dika.live/chat/name', '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes')}
+            className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group"
+            title="Buka Chat di Tab Baru"
+          >
+            <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </button>
           <button className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group animate-pulse">
@@ -1930,6 +1953,76 @@ const HospitalWebsite = () => {
         >
           {isHeaderVisible ? 'Hide' : 'Show'} Header
         </button>
+      )}
+
+      {/* Chatbot Modal Popup */}
+      {isChatbotOpen && (
+        <div className="fixed inset-0 z-50 overflow-hidden">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
+            onClick={() => setIsChatbotOpen(false)}
+          />
+          
+          {/* Modal Container */}
+          <div className="flex items-center justify-center min-h-screen p-2 md:p-4">
+            <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-7xl h-[90vh] overflow-hidden transform transition-all duration-300 scale-100">
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-3 bg-gradient-to-r from-teal-600 to-blue-600 text-white">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.126-.9L3 20l1.9-4.874A9.863 9.863 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold">Asisten Kesehatan RS Bhayangkara</h3>
+                    <p className="text-xs opacity-90">Konsultasi kesehatan 24/7</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setIsChatbotOpen(false)}
+                  className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/20 transition-colors duration-200"
+                  aria-label="Tutup chat"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* Chatbot iframe */}
+              <div className="h-[calc(100%-60px)] relative">
+                <iframe
+                  src="https://tmed.dika.live/chat/name"
+                  className="w-full h-full border-0"
+                  title="Healthcare Chatbot"
+                  allow="microphone; camera; geolocation"
+                  sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation allow-navigation allow-top-navigation-by-user-activation"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                
+                {/* Fallback notice */}
+                <div className="absolute bottom-2 left-2 right-2 bg-yellow-50 border border-yellow-200 rounded-lg p-2 text-xs text-yellow-800 opacity-90">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-yellow-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Jika form tidak bekerja dengan baik, gunakan tombol hijau di sidebar untuk membuka di tab baru</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Loading indicator overlay */}
+              <div className="absolute inset-0 bg-white flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-300" id="chatbot-loading">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-12 h-12 border-4 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
+                  <p className="text-gray-600">Memuat asisten kesehatan...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
