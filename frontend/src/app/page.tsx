@@ -1036,28 +1036,36 @@ const HospitalWebsite = () => {
         
         {/* Floating action buttons */}
         <div className="fixed right-6 top-1/2 -translate-y-1/2 z-30 space-y-4">
+          {/* Primary: Direct to new tab - Most reliable */}
           <button 
-            onClick={() => setIsChatbotOpen(true)}
-            className="w-14 h-14 bg-gradient-to-br from-teal-500 to-blue-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group relative"
-            title="Chat dengan Asisten Kesehatan"
+            onClick={() => window.open('https://tmed.dika.live/', '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes')}
+            className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group relative"
+            title="Chat dengan Asisten Kesehatan (Rekomendasi)"
           >
             <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.126-.9L3 20l1.9-4.874A9.863 9.863 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
             </svg>
-            {/* Notification dot for new features */}
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+            {/* Recommended badge */}
+            <div className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center">
+              <span className="text-xs font-bold text-yellow-900">★</span>
+            </div>
+          </button>
+          
+          {/* Secondary: Modal popup */}
+          <button 
+            onClick={() => setIsChatbotOpen(true)}
+            className="w-14 h-14 bg-gradient-to-br from-teal-500 to-blue-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group relative opacity-80 hover:opacity-100"
+            title="Chat dalam Modal (Mungkin terbatas)"
+          >
+            <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-orange-500 rounded-full flex items-center justify-center">
               <span className="text-xs font-bold text-white">!</span>
             </div>
           </button>
-          <button 
-            onClick={() => window.open('https://tmed.dika.live/chat/name', '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes')}
-            className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group"
-            title="Buka Chat di Tab Baru"
-          >
-            <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </button>
+          
+          {/* Emergency contact */}
           <button className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group animate-pulse">
             <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -1994,21 +2002,35 @@ const HospitalWebsite = () => {
               {/* Chatbot iframe */}
               <div className="h-[calc(100%-60px)] relative">
                 <iframe
-                  src="https://tmed.dika.live/chat/name"
+                  src="https://tmed.dika.live/"
                   className="w-full h-full border-0"
                   title="Healthcare Chatbot"
                   allow="microphone; camera; geolocation"
-                  sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation allow-navigation allow-top-navigation-by-user-activation"
+                  sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-presentation allow-navigation allow-top-navigation allow-top-navigation-by-user-activation"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
                 
-                {/* Fallback notice */}
-                <div className="absolute bottom-2 left-2 right-2 bg-yellow-50 border border-yellow-200 rounded-lg p-2 text-xs text-yellow-800 opacity-90">
-                  <div className="flex items-center gap-2">
-                    <svg className="w-4 h-4 text-yellow-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>Jika form tidak bekerja dengan baik, gunakan tombol hijau di sidebar untuk membuka di tab baru</span>
+                {/* Enhanced notice with action button */}
+                <div className="absolute bottom-2 left-2 right-2 bg-gradient-to-r from-blue-50 to-teal-50 border border-blue-200 rounded-lg p-3 shadow-lg">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 flex-1">
+                      <svg className="w-5 h-5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-sm text-blue-800 font-medium">Form tidak dapat melanjutkan?</span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setIsChatbotOpen(false);
+                        window.open('https://tmed.dika.live/', '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+                      }}
+                      className="bg-gradient-to-r from-blue-500 to-teal-500 hover:from-blue-600 hover:to-teal-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-1 shadow-md hover:shadow-lg"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                      Buka di Tab Baru
+                    </button>
                   </div>
                 </div>
               </div>
