@@ -853,14 +853,32 @@ const PoliPage = () => {
 
               {/* Results Summary */}
               <div className="flex items-center justify-between text-xs md:text-sm text-gray-600 mt-2 md:mt-3">
-                <span>
-                  Menampilkan {filteredServices.length} dari {poliServices.length} poli
-                </span>
-                {searchTerm && (
-                  <span className="text-teal-600 font-medium">
-                    Hasil untuk: "{searchTerm}"
+                <div className="flex items-center gap-4">
+                  <span>
+                    Menampilkan {filteredServices.length} dari {poliServices.length} poli
                   </span>
-                )}
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="font-medium">Layanan Aktif</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  {searchTerm && (
+                    <span className="text-teal-600 font-medium">
+                      Hasil untuk: "{searchTerm}"
+                    </span>
+                  )}
+                  {/* Sort Options */}
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-gray-600">Urutkan:</span>
+                    <select className="px-2 md:px-3 py-1 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium text-gray-700 focus:outline-none focus:border-teal-500 transition-colors duration-200">
+                      <option>Rating Tertinggi</option>
+                      <option>Waktu Tunggu Tersingkat</option>
+                      <option>Paling Populer</option>
+                      <option>Alphabetical A-Z</option>
+                    </select>
+                  </div>
+                </div>
               </div>
 
               {/* Quick Filters */}
@@ -925,42 +943,6 @@ const PoliPage = () => {
       {/* Enhanced Services Section */}
       <section className="py-24 bg-gradient-to-br from-gray-50 via-white to-teal-50" data-services-section="true">
         <div className="container mx-auto px-4">
-          {/* Results Header */}
-          <div className="flex items-center justify-between mb-12 animate-on-scroll">
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-100">
-              <h2 className="text-3xl font-bold text-gray-800 mb-2">
-                {filteredServices.length} Poliklinik Tersedia
-              </h2>
-              {searchTerm && (
-                <p className="text-gray-600">
-                  Hasil pencarian untuk "<span className="font-semibold text-teal-600">{searchTerm}</span>"
-                </p>
-              )}
-              <div className="flex items-center gap-4 mt-3">
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="font-medium">Layanan Aktif</span>
-                </div>
-                <div className="text-sm text-gray-500">
-                  Menampilkan {filteredServices.length} dari {poliServices.length} poli
-                </div>
-              </div>
-            </div>
-            
-            {/* Sort Options */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-gray-100">
-              <div className="flex items-center gap-3">
-                <span className="text-sm font-semibold text-gray-600">Urutkan:</span>
-                <select className="px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium text-gray-700 focus:outline-none focus:border-teal-500 transition-colors duration-200">
-                  <option>Rating Tertinggi</option>
-                  <option>Waktu Tunggu Tersingkat</option>
-                  <option>Paling Populer</option>
-                  <option>Alphabetical A-Z</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
           {/* Services Grid/List */}
           <div className={`${
             viewMode === 'grid' 
