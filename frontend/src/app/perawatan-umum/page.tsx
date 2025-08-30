@@ -373,7 +373,7 @@ const PerawatanUmumPage = () => {
 
         {/* Main Header */}
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-center space-y-4">
             <Link href="/" className="group flex items-center cursor-pointer">
               <div className="bg-white p-2 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
                 <img
@@ -385,8 +385,8 @@ const PerawatanUmumPage = () => {
               </div>
             </Link>
 
-            {/* Breadcrumb */}
-            <nav className="hidden md:flex items-center space-x-2 text-sm">
+            {/* Navigation - Show on both mobile and desktop */}
+            <nav className="flex items-center space-x-2 text-sm">
               <Link href="/" className="text-gray-500 hover:text-teal-600 transition-colors">
                 Beranda
               </Link>
@@ -397,24 +397,6 @@ const PerawatanUmumPage = () => {
               <span className="text-gray-300">/</span>
               <span className="text-teal-600 font-semibold">Perawatan Umum</span>
             </nav>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden p-3 rounded-xl bg-gray-50 hover:bg-teal-50 transition-colors duration-200 border border-gray-200"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <div className="w-6 h-6 relative">
-                <div className={`absolute top-1 left-0 w-6 h-0.5 bg-gray-600 transition-transform duration-200 ${
-                  isMenuOpen ? 'rotate-45 translate-y-2' : ''
-                }`}></div>
-                <div className={`absolute top-3 left-0 w-6 h-0.5 bg-gray-600 transition-opacity duration-200 ${
-                  isMenuOpen ? 'opacity-0' : ''
-                }`}></div>
-                <div className={`absolute top-5 left-0 w-6 h-0.5 bg-gray-600 transition-transform duration-200 ${
-                  isMenuOpen ? '-rotate-45 -translate-y-2' : ''
-                }`}></div>
-              </div>
-            </button>
           </div>
         </div>
       </header>
