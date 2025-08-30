@@ -528,7 +528,7 @@ const RawatInapPage = () => {
       {/* Sticky Search and Filter Section */}
       {isStickySearchVisible && (
         <section className={`py-4 md:py-8 bg-white sticky z-30 shadow-lg border-b border-gray-100 transition-all duration-300 ${
-          isHeaderVisible ? 'top-20' : 'top-0'
+          isHeaderVisible ? 'top-36 md:top-20' : 'top-0'
         }`}>
         <div className="container mx-auto px-4">
           {/* Main Search Bar */}
