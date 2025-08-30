@@ -949,7 +949,7 @@ const HospitalWebsite = () => {
             </div>
 
             {/* Enhanced Interactive Image Slider Section */}
-            <div data-animate="true" className="hero-slider-container opacity-0 translate-x-8 transition-all duration-700 ease-out w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-none mx-auto lg:flex-1 flex justify-center lg:justify-end mt-8 lg:mt-0">
+            <div data-animate="true" className="hero-slider-container opacity-0 translate-x-8 transition-all duration-700 ease-out w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-none mx-auto lg:flex-1 justify-center lg:justify-end mt-8 lg:mt-0 hidden md:flex">
               {isMounted && (
                 <div className="hero-slider relative rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-500 w-full max-w-[320px] sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
                   {/* Glassmorphism container */}
