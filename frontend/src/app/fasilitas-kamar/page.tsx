@@ -464,7 +464,7 @@ const FasilitasKamarPage = () => {
 
         {/* Main Header */}
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-center space-y-4">
             <Link href="/" className="group flex items-center cursor-pointer">
               <div className="bg-white p-2 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
                 <img
