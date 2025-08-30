@@ -675,7 +675,7 @@ const FasilitasRumahSakitPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-45 pb-16 bg-gradient-to-br from-teal-50 via-blue-50 to-purple-50 overflow-hidden">
+      <section className="relative pt-55 pb-16 bg-gradient-to-br from-teal-50 via-blue-50 to-purple-50 overflow-hidden">
         <motion.div style={{ y: y1 }} className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-32 h-32 bg-teal-300 rounded-full blur-3xl" />
           <div className="absolute top-40 right-20 w-48 h-48 bg-blue-300 rounded-full blur-3xl" />

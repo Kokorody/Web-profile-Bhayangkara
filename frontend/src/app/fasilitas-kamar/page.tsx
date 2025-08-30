@@ -493,7 +493,7 @@ const FasilitasKamarPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-teal-50 via-blue-50 to-indigo-100">
+      <section className="relative min-h-screen flex pt-30 items-center justify-center overflow-hidden bg-gradient-to-br from-teal-50 via-blue-50 to-indigo-100">
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
           <motion.div
