@@ -82,7 +82,7 @@ const ServiceCardIcon = ({ Icon, color, isHovered }: {
   isHovered: boolean;
 }) => (
   <motion.div
-    className={`w-24 h-24 rounded-3xl bg-gradient-to-br ${color} flex items-center justify-center mb-6 shadow-2xl relative overflow-hidden`}
+    className={`w-16 h-16 md:w-24 md:h-24 rounded-2xl md:rounded-3xl bg-gradient-to-br ${color} flex items-center justify-center mb-4 md:mb-6 shadow-2xl relative overflow-hidden`}
     whileHover={{ scale: 1.15, rotate: 8 }}
     transition={{ duration: 0.4 }}
   >
@@ -91,7 +91,7 @@ const ServiceCardIcon = ({ Icon, color, isHovered }: {
       animate={{ scale: isHovered ? [1, 1.5, 1] : 1 }}
       transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
     />
-    <Icon className="w-12 h-12 text-white relative z-10" />
+    <Icon className="w-8 h-8 md:w-12 md:h-12 text-white relative z-10" />
   </motion.div>
 );
 
@@ -148,7 +148,7 @@ const ServiceCard = ({ icon: Icon, title, description, features, color, delay, s
       initial={{ opacity: 0, y: 60, scale: 0.9 }}
       animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.9 }}
       transition={{ duration: 0.8, delay }}
-      className="group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 cursor-pointer"
+      className="group relative bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => setIsExpanded(!isExpanded)}
@@ -189,18 +189,18 @@ const ServiceCard = ({ icon: Icon, title, description, features, color, delay, s
 
         {/* Title with Animation */}
         <motion.h3 
-          className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-teal-600 transition-colors duration-300"
+          className="text-lg md:text-2xl font-bold text-gray-800 mb-3 md:mb-4 group-hover:text-teal-600 transition-colors duration-300 text-center md:text-left"
           animate={{ scale: isHovered ? 1.05 : 1 }}
           transition={{ duration: 0.3 }}
         >
           {title}
         </motion.h3>
 
-        <p className="text-gray-600 mb-6 leading-relaxed font-medium">
+        <p className="text-sm md:text-base text-gray-600 mb-4 md:mb-6 leading-relaxed font-medium hidden md:block">
           {description}
         </p>
 
-        {/* Features List */}
+        {/* Features List - Show first 3 on mobile, all on desktop */}
         <div className="space-y-3">
           {features.map((feature, index) => (
             <motion.div
@@ -208,10 +208,12 @@ const ServiceCard = ({ icon: Icon, title, description, features, color, delay, s
               initial={{ opacity: 0, x: -20 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
               transition={{ duration: 0.5, delay: delay + (index * 0.1) }}
-              className="flex items-center gap-3"
+              className={`flex items-center gap-3 ${
+                index >= 3 ? 'hidden md:flex' : ''
+              }`}
             >
-              <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0" />
-              <span className="text-gray-700 font-medium">{feature}</span>
+              <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-emerald-500 flex-shrink-0" />
+              <span className="text-xs md:text-sm text-gray-700 font-medium">{feature}</span>
             </motion.div>
           ))}
         </div>
@@ -250,7 +252,6 @@ const ServiceCard = ({ icon: Icon, title, description, features, color, delay, s
 };
 
 const PenunjangMedisPage = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
 
@@ -263,7 +264,6 @@ const PenunjangMedisPage = () => {
         setIsHeaderVisible(true);
       } else {
         setIsHeaderVisible(false);
-        setIsMenuOpen(false);
       }
       
       lastScrollY.current = currentScrollY;
@@ -652,7 +652,7 @@ const PenunjangMedisPage = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {medicalServices.map((service, index) => (
               <ServiceCard
                 key={service.title}
