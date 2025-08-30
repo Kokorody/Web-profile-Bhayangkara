@@ -783,7 +783,7 @@ const PoliPage = () => {
       {/* Sticky Search Bar */}
       {isStickySearchVisible && (
         <section className={`py-3 md:py-4 bg-white/95 backdrop-blur-md sticky z-30 shadow-lg border-b border-gray-100 transition-all duration-300 ${
-          isHeaderVisible ? 'top-36 md:top-20' : 'top-0'
+          isHeaderVisible ? 'top-44 md:top-32' : 'top-0'
         }`}>
           <div className="container mx-auto px-4">
             <div className="bg-white/90 backdrop-blur-md rounded-xl md:rounded-2xl shadow-lg border border-gray-200 p-3 md:p-4">
