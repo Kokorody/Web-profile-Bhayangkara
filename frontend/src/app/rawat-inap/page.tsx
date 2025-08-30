@@ -756,46 +756,46 @@ const RawatInapPage = () => {
           )}
 
           {/* Enhanced Statistics Section */}
-          <div className="mt-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden" data-hide-search="true">
+          <div className="mt-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl md:rounded-3xl p-6 md:p-12 text-white relative overflow-hidden" data-hide-search="true">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-teal-500/20 via-blue-500/10 to-transparent"></div>
             <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-teal-400/10 to-blue-400/10 rounded-full blur-3xl"></div>
             
             <div className="relative z-10">
-              <div className="text-center mb-12">
-                <h3 className="text-3xl md:text-4xl font-bold mb-4">Mengapa Memilih Kami?</h3>
-                <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+              <div className="text-center mb-8 md:mb-12">
+                <h3 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4">Mengapa Memilih Kami?</h3>
+                <p className="text-gray-300 text-sm md:text-lg max-w-2xl mx-auto">
                   Komitmen kami adalah memberikan pelayanan kesehatan terbaik dengan fasilitas modern dan tim profesional
                 </p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                 <div className="text-center group">
-                  <div className="w-16 h-16 bg-gradient-to-r from-teal-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Award className="w-8 h-8 text-white" />
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-teal-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Award className="w-6 h-6 md:w-8 md:h-8 text-white" />
                   </div>
-                  <div className="text-2xl font-bold text-teal-400 mb-2">Terakreditasi</div>
-                  <div className="text-sm text-gray-300">Standar Internasional</div>
+                  <div className="text-lg md:text-2xl font-bold text-teal-400 mb-1 md:mb-2">Terakreditasi</div>
+                  <div className="text-xs md:text-sm text-gray-300">Standar Internasional</div>
                 </div>
                 <div className="text-center group">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Users className="w-8 h-8 text-white" />
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Users className="w-6 h-6 md:w-8 md:h-8 text-white" />
                   </div>
-                  <div className="text-2xl font-bold text-blue-400 mb-2">50+ Dokter</div>
-                  <div className="text-sm text-gray-300">Tim Medis Berpengalaman</div>
+                  <div className="text-lg md:text-2xl font-bold text-blue-400 mb-1 md:mb-2">50+ Dokter</div>
+                  <div className="text-xs md:text-sm text-gray-300">Tim Medis Berpengalaman</div>
                 </div>
                 <div className="text-center group">
-                  <div className="w-16 h-16 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Shield className="w-8 h-8 text-white" />
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Shield className="w-6 h-6 md:w-8 md:h-8 text-white" />
                   </div>
-                  <div className="text-2xl font-bold text-indigo-400 mb-2">24/7</div>
-                  <div className="text-sm text-gray-300">Layanan Darurat</div>
+                  <div className="text-lg md:text-2xl font-bold text-indigo-400 mb-1 md:mb-2">24/7</div>
+                  <div className="text-xs md:text-sm text-gray-300">Layanan Darurat</div>
                 </div>
                 <div className="text-center group">
-                  <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Heart className="w-8 h-8 text-white" />
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Heart className="w-6 h-6 md:w-8 md:h-8 text-white" />
                   </div>
-                  <div className="text-2xl font-bold text-purple-400 mb-2">1000+</div>
-                  <div className="text-sm text-gray-300">Pasien Puas per Bulan</div>
+                  <div className="text-lg md:text-2xl font-bold text-purple-400 mb-1 md:mb-2">1000+</div>
+                  <div className="text-xs md:text-sm text-gray-300">Pasien Puas per Bulan</div>
                 </div>
               </div>
             </div>
