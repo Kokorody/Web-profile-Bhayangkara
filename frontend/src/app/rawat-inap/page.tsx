@@ -30,7 +30,6 @@ import {
 
 const RawatInapPage = () => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const [isStatsVisible, setIsStatsVisible] = useState(false);
@@ -356,7 +355,7 @@ const RawatInapPage = () => {
 
         {/* Main Header */}
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-center space-y-4">
             <button 
               onClick={() => window.location.href = '/'}
               className="group flex items-center cursor-pointer"
@@ -371,8 +370,8 @@ const RawatInapPage = () => {
               </div>
             </button>
 
-            {/* Breadcrumb */}
-            <nav className="hidden md:flex items-center space-x-2 text-sm">
+            {/* Navigation - Show on both mobile and desktop */}
+            <nav className="flex items-center space-x-2 text-sm">
               <button 
                 onClick={() => window.location.href = '/'}
                 className="text-gray-500 hover:text-teal-600 transition-colors cursor-pointer"
@@ -389,76 +388,10 @@ const RawatInapPage = () => {
               <span className="text-gray-300">/</span>
               <span className="text-teal-600 font-semibold">Rawat Inap</span>
             </nav>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden p-3 rounded-xl bg-gray-50 hover:bg-teal-50 transition-colors duration-200 border border-gray-200"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <div className="w-6 h-6 relative">
-                <div className={`absolute top-1 left-0 w-6 h-0.5 bg-gray-600 transition-transform duration-200 ${
-                  isMenuOpen ? 'rotate-45 translate-y-2' : ''
-                }`}></div>
-                <div className={`absolute top-3 left-0 w-6 h-0.5 bg-gray-600 transition-opacity duration-200 ${
-                  isMenuOpen ? 'opacity-0' : ''
-                }`}></div>
-                <div className={`absolute top-5 left-0 w-6 h-0.5 bg-gray-600 transition-transform duration-200 ${
-                  isMenuOpen ? '-rotate-45 -translate-y-2' : ''
-                }`}></div>
-              </div>
-            </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
-            <div className="container mx-auto px-4 py-4">
-              <nav className="space-y-3">
-                <button
-                  onClick={() => {
-                    window.location.href = '/';
-                    setIsMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
-                >
-                  Beranda
-                </button>
-                <button
-                  onClick={() => {
-                    window.location.href = '/pelayanan';
-                    setIsMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors"
-                >
-                  Pelayanan
-                </button>
-                <div className="px-4 py-3 text-teal-600 font-semibold bg-teal-50 rounded-lg">
-                  Rawat Inap
-                </div>
-                <hr className="my-2" />
-                <a
-                  href="tel:(0711)414"
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors flex items-center gap-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <Phone className="w-4 h-4" />
-                  Hubungi Kami
-                </a>
-                <a
-                  href="https://maps.app.goo.gl/KAVjdZuMNDDQW7Su9"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-left px-4 py-3 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors flex items-center gap-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <MapPin className="w-4 h-4" />
-                  Lokasi
-                </a>
-              </nav>
-            </div>
-          </div>
-        )}
       </header>
 
       {/* Hero Section */}
@@ -712,12 +645,12 @@ const RawatInapPage = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10">
+            <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-8 md:gap-10">
               {filteredFacilities.map((facility, index) => (
                 <article
                   key={facility.id}
                   data-card-index={index}
-                  className={`group relative bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-700 border border-gray-100 overflow-hidden transform hover:-translate-y-2 ${
+                  className={`group relative bg-white rounded-2xl md:rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-700 border border-gray-100 overflow-hidden transform hover:-translate-y-2 ${
                     visibleCards.includes(index) ? 'animate-fadeInUp' : 'opacity-0'
                   }`}
                   style={{ 
@@ -731,55 +664,57 @@ const RawatInapPage = () => {
                   <div className={`absolute inset-0 bg-gradient-to-br ${facility.color} opacity-0 group-hover:opacity-10 transition-all duration-700`}></div>
                   
                   {/* Floating Badge */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <div className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${facility.color} shadow-lg`}>
+                  <div className="absolute top-3 md:top-4 left-3 md:left-4 z-10">
+                    <div className={`px-2 md:px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${facility.color} shadow-lg`}>
                       {facility.category}
                     </div>
                   </div>
 
                   {/* Content */}
-                  <div className="relative p-8 pt-12">
+                  <div className="relative p-4 md:p-8 pt-8 md:pt-12">
                     {/* Header with Icon */}
-                    <div className="flex items-start justify-between mb-6">
-                      <div className={`relative p-4 rounded-2xl bg-gradient-to-br ${facility.color} text-white shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                    <div className="flex items-start justify-between mb-4 md:mb-6">
+                      <div className={`relative p-3 md:p-4 rounded-2xl bg-gradient-to-br ${facility.color} text-white shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
                         {facility.icon}
                         {hoveredCard === facility.id && (
                           <div className="absolute -inset-2 bg-white/20 rounded-2xl animate-ping"></div>
                         )}
                       </div>
                       <div className="text-right ml-4">
-                        <div className="text-3xl font-black text-gray-800 group-hover:text-teal-600 transition-colors duration-300">
+                        <div className="text-2xl md:text-3xl font-black text-gray-800 group-hover:text-teal-600 transition-colors duration-300">
                           {facility.beds}
                         </div>
-                        <div className="text-sm text-gray-500 font-semibold uppercase tracking-wider">
+                        <div className="text-xs md:text-sm text-gray-500 font-semibold uppercase tracking-wider">
                           Tempat Tidur
                         </div>
                       </div>
                     </div>
 
                     {/* Title and Description */}
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-teal-700 transition-colors duration-300 leading-tight">
+                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3 group-hover:text-teal-700 transition-colors duration-300 leading-tight">
                       {facility.name}
                     </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed mb-6">
+                    <p className="text-gray-600 text-sm leading-relaxed mb-4 md:mb-6 hidden md:block">
                       {facility.description}
                     </p>
 
                     {/* Features with Enhanced Design */}
-                    <div className="space-y-3 mb-8">
+                    <div className="space-y-3 mb-6 md:mb-8">
                       {facility.features.map((feature, idx) => (
                         <div 
                           key={feature} 
-                          className="flex items-center gap-3 group/feature"
+                          className={`flex items-center gap-3 group/feature ${
+                            idx >= 2 ? 'hidden md:flex' : ''
+                          }`}
                           style={{ animationDelay: `${idx * 100}ms` }}
                         >
                           <div className="relative">
-                            <CheckCircle className="w-5 h-5 text-teal-500 group-hover/feature:scale-110 transition-transform duration-300" />
+                            <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-teal-500 group-hover/feature:scale-110 transition-transform duration-300" />
                             {hoveredCard === facility.id && (
                               <div className="absolute inset-0 bg-teal-500/30 rounded-full animate-ping"></div>
                             )}
                           </div>
-                          <span className="text-sm text-gray-700 font-medium group-hover/feature:text-gray-900 transition-colors duration-300">
+                          <span className="text-xs md:text-sm text-gray-700 font-medium group-hover/feature:text-gray-900 transition-colors duration-300">
                             {feature}
                           </span>
                         </div>
@@ -790,18 +725,18 @@ const RawatInapPage = () => {
                     <div className="space-y-3">
                       <a 
                         href="#kontak" 
-                        className={`group/btn relative w-full px-6 py-4 bg-gradient-to-r ${facility.color} text-white rounded-2xl font-bold text-sm overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 flex items-center justify-center gap-3`}
+                        className={`group/btn relative w-full px-4 md:px-6 py-3 md:py-4 bg-gradient-to-r ${facility.color} text-white rounded-2xl font-bold text-sm overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 flex items-center justify-center gap-2 md:gap-3`}
                       >
                         <div className="absolute inset-0 bg-white/20 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
-                        <Phone className="w-5 h-5 group-hover/btn:rotate-12 transition-transform duration-300 relative z-10" />
+                        <Phone className="w-4 h-4 md:w-5 md:h-5 group-hover/btn:rotate-12 transition-transform duration-300 relative z-10" />
                         <span className="relative z-10">Hubungi Sekarang</span>
                         <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-300 relative z-10" />
                         <div className="absolute bottom-0 left-0 h-1 bg-white/40 w-0 group-hover/btn:w-full transition-all duration-500"></div>
                       </a>
                       
-                      {/* View Details Button */}
+                      {/* View Details Button - Hidden on mobile for space */}
                       <button 
-                        className="w-full px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 group/detail"
+                        className="hidden md:flex w-full px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-semibold text-sm transition-all duration-300 items-center justify-center gap-2 group/detail"
                         onClick={() => {
                           // You can add a modal or expand functionality here
                           alert(`Detail lengkap untuk ${facility.name} akan segera tersedia`);
