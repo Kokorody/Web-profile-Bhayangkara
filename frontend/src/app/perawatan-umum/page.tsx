@@ -637,7 +637,7 @@ const PerawatanUmumPage = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
             {[
               { icon: "🏥", title: "Kasus Bedah", description: "Perawatan pre dan post operasi bedah umum" },
               { icon: "🧠", title: "Kasus Syaraf", description: "Perawatan gangguan sistem saraf dan neurologis" },
@@ -656,11 +656,11 @@ const PerawatanUmumPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: kasus.title.length * 0.01 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 border border-gray-100"
+                className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl md:rounded-2xl p-3 md:p-6 hover:shadow-lg transition-all duration-300 border border-gray-100 text-center"
               >
-                <div className="text-4xl mb-4">{kasus.icon}</div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3">{kasus.title}</h3>
-                <p className="text-gray-600">{kasus.description}</p>
+                <div className="text-2xl md:text-4xl mb-2 md:mb-4">{kasus.icon}</div>
+                <h3 className="text-sm md:text-xl font-bold text-gray-800 mb-1 md:mb-3">{kasus.title}</h3>
+                <p className="text-xs md:text-base text-gray-600 hidden md:block">{kasus.description}</p>
               </motion.div>
             ))}
           </div>
