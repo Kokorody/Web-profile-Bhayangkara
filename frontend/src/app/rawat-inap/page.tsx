@@ -527,21 +527,21 @@ const RawatInapPage = () => {
 
       {/* Sticky Search and Filter Section */}
       {isStickySearchVisible && (
-        <section className={`py-8 bg-white sticky z-30 shadow-lg border-b border-gray-100 transition-all duration-300 ${
+        <section className={`py-4 md:py-8 bg-white sticky z-30 shadow-lg border-b border-gray-100 transition-all duration-300 ${
           isHeaderVisible ? 'top-20' : 'top-0'
         }`}>
         <div className="container mx-auto px-4">
           {/* Main Search Bar */}
-          <div className="flex flex-col lg:flex-row gap-4 items-center mb-4">
+          <div className="flex flex-col lg:flex-row gap-3 md:gap-4 items-center mb-3 md:mb-4">
             {/* Search Input */}
             <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 md:w-5 md:h-5" />
               <input
                 type="text"
                 placeholder="Cari unit rawat inap..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all duration-200"
+                className="w-full pl-9 md:pl-10 pr-4 py-2 md:py-3 border border-gray-300 rounded-lg md:rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all duration-200 text-sm md:text-base"
               />
               {query && (
                 <button
@@ -555,11 +555,11 @@ const RawatInapPage = () => {
 
             {/* Sort and Category Filters */}
             <div className="flex flex-wrap gap-2 items-center">
-              <div className="flex bg-gray-100 rounded-xl p-1">
+              <div className="flex bg-gray-100 rounded-lg md:rounded-xl p-1">
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="px-3 py-1 rounded-lg text-sm font-medium bg-white text-gray-900 border-0 focus:ring-2 focus:ring-teal-500 outline-none"
+                  className="px-2 md:px-3 py-1 rounded-md md:rounded-lg text-xs md:text-sm font-medium bg-white text-gray-900 border-0 focus:ring-2 focus:ring-teal-500 outline-none"
                 >
                   <option value="relevance">Relevan</option>
                   <option value="az">A-Z</option>
@@ -577,7 +577,7 @@ const RawatInapPage = () => {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
+                  className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
                     activeCategory === cat
                       ? 'bg-teal-600 text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -590,7 +590,7 @@ const RawatInapPage = () => {
           </div>
 
           {/* Results Summary */}
-          <div className="flex items-center justify-between text-sm text-gray-600 mt-4">
+          <div className="flex items-center justify-between text-xs md:text-sm text-gray-600 mt-3 md:mt-4">
             <span>
               Menampilkan {filteredFacilities.length} dari {inpatientFacilities.length} unit
             </span>
