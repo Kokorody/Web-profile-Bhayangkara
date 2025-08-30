@@ -619,7 +619,7 @@ const PoliPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative pt-32 pb-12 md:pb-16 overflow-hidden">
+      <section ref={heroRef} className="relative pt-40 pb-12 md:pb-16 overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-blue-50 to-purple-50"></div>
         
@@ -720,7 +720,7 @@ const PoliPage = () => {
       {/* Sticky Search Bar */}
       {isStickySearchVisible && (
         <section className={`py-3 md:py-4 bg-white/95 backdrop-blur-md sticky z-30 shadow-lg border-b border-gray-100 transition-all duration-300 ${
-          isHeaderVisible ? 'top-44 md:top-32' : 'top-0'
+          isHeaderVisible ? 'top-[180px] md:top-[160px]' : 'top-0'
         }`}>
           <div className="container mx-auto px-4">
             <div className="bg-white/90 backdrop-blur-md rounded-xl md:rounded-2xl shadow-lg border border-gray-200 p-3 md:p-4">
