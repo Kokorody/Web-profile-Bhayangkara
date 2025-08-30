@@ -483,7 +483,7 @@ const JadwalDokterPage = () => {
           {filteredDoctors.length > 0 ? (
             <div className={`${
               viewMode === 'grid' 
-                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+                ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6'
                 : 'space-y-4'
             }`}>
               {filteredDoctors.map((doctor, index) => {
@@ -494,7 +494,7 @@ const JadwalDokterPage = () => {
                   <div
                     key={doctor.id}
                     className={`group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border border-gray-100 ${
-                      viewMode === 'list' ? 'flex items-center p-6' : 'p-6'
+                      viewMode === 'list' ? 'flex items-center p-4 md:p-6' : 'p-3 md:p-6'
                     }`}
                     style={{
                       animationDelay: `${index * 100}ms`
@@ -508,52 +508,63 @@ const JadwalDokterPage = () => {
                     {viewMode === 'grid' ? (
                       <>
                         {/* Doctor Image/Avatar */}
-                        <div className="flex items-center mb-4">
-                          <div className="w-16 h-16 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full flex items-center justify-center mr-4">
-                            <User className="w-8 h-8 text-white" />
+                        <div className="flex items-center mb-3 md:mb-4">
+                          <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full flex items-center justify-center mr-3 md:mr-4">
+                            <User className="w-6 h-6 md:w-8 md:h-8 text-white" />
                           </div>
-                          <div className="flex-1">
-                            <h3 className="font-bold text-lg text-gray-800 group-hover:text-teal-600 transition-colors duration-300 line-clamp-2">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-bold text-sm md:text-lg text-gray-800 group-hover:text-teal-600 transition-colors duration-300 line-clamp-2 leading-tight">
                               {doctor.name}
                             </h3>
                             {specialist && (
-                              <div className="flex items-center text-teal-600 text-sm">
+                              <div className="flex items-center text-teal-600 text-xs md:text-sm mt-1">
                                 <span className="mr-1">{specialist.icon}</span>
-                                <span>{specialist.name}</span>
+                                <span className="truncate">{specialist.name}</span>
                               </div>
                             )}
                           </div>
                         </div>
 
                         {/* Status Badge */}
-                        <div className="mb-4">
-                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
+                        <div className="mb-3 md:mb-4">
+                          <span className={`inline-flex items-center px-2 md:px-3 py-1 rounded-full text-xs font-medium ${
                             isAvailable
                               ? 'bg-green-100 text-green-800'
                               : 'bg-gray-100 text-gray-600'
                           }`}>
-                            <div className={`w-2 h-2 rounded-full mr-2 ${
+                            <div className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full mr-1 md:mr-2 ${
                               isAvailable ? 'bg-green-500' : 'bg-gray-400'
                             }`}></div>
-                            {isAvailable ? 'Tersedia Sekarang' : 'Tidak Tersedia'}
+                            <span className="hidden sm:inline">
+                              {isAvailable ? 'Tersedia Sekarang' : 'Tidak Tersedia'}
+                            </span>
+                            <span className="sm:hidden">
+                              {isAvailable ? 'Tersedia' : 'Offline'}
+                            </span>
                           </span>
                         </div>
 
-                        {/* Schedule */}
-                        <div className="mb-4">
-                          <h4 className="font-semibold text-gray-700 mb-2 flex items-center">
-                            <Calendar className="w-4 h-4 mr-2" />
-                            Jadwal Praktik
+                        {/* Schedule - More compact on mobile */}
+                        <div className="mb-3 md:mb-4">
+                          <h4 className="font-semibold text-gray-700 mb-2 flex items-center text-xs md:text-sm">
+                            <Calendar className="w-3 h-3 md:w-4 md:h-4 mr-2" />
+                            <span className="hidden md:inline">Jadwal Praktik</span>
+                            <span className="md:hidden">Jadwal</span>
                           </h4>
-                          <div className="space-y-1 max-h-32 overflow-y-auto">
-                            {Object.entries(doctor.detailedSchedule).map(([day, time]) => (
-                              <div key={day} className={`flex justify-between text-sm p-2 rounded ${
+                          <div className="space-y-1 max-h-24 md:max-h-32 overflow-y-auto">
+                            {Object.entries(doctor.detailedSchedule).slice(0, 3).map(([day, time]) => (
+                              <div key={day} className={`flex justify-between text-xs md:text-sm p-1.5 md:p-2 rounded ${
                                 day === currentDay ? 'bg-teal-50 border border-teal-200' : 'bg-gray-50'
                               }`}>
-                                <span className="text-black font-medium">{day}</span>
-                                <span className="text-black">{time}</span>
+                                <span className="text-black font-medium truncate">{day.slice(0, 3)}</span>
+                                <span className="text-black text-xs">{time}</span>
                               </div>
                             ))}
+                            {Object.keys(doctor.detailedSchedule).length > 3 && (
+                              <div className="text-xs text-gray-500 text-center py-1">
+                                +{Object.keys(doctor.detailedSchedule).length - 3} hari lagi
+                              </div>
+                            )}
                           </div>
                         </div>
 
@@ -561,12 +572,13 @@ const JadwalDokterPage = () => {
                         <div className="flex gap-2">
                           <Link
                             href={`/dokter/profile/${doctor.id}`}
-                            className="flex-1 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white text-center py-2 rounded-lg font-medium transition-all duration-200 text-sm"
+                            className="flex-1 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white text-center py-2 rounded-lg font-medium transition-all duration-200 text-xs md:text-sm"
                           >
-                            Lihat Profil
+                            <span className="hidden sm:inline">Lihat Profil</span>
+                            <span className="sm:hidden">Profil</span>
                           </Link>
-                          <button className="px-3 py-2 border border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white rounded-lg transition-all duration-200">
-                            <Phone className="w-4 h-4" />
+                          <button className="px-2 md:px-3 py-2 border border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white rounded-lg transition-all duration-200">
+                            <Phone className="w-3 h-3 md:w-4 md:h-4" />
                           </button>
                         </div>
                       </>
