@@ -92,7 +92,7 @@ const ServiceCard = ({ icon: Icon, title, description, features, color, delay }:
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.6, delay }}
-      className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100"
+      className="group relative bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -110,43 +110,45 @@ const ServiceCard = ({ icon: Icon, title, description, features, color, delay }:
         transition={{ duration: 0.5 }}
       />
 
-      <div className="relative z-10">
+      <div className="relative z-10 text-center md:text-left">
         {/* Icon */}
         <motion.div
-          className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-6 shadow-lg`}
+          className={`w-12 h-12 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-3 md:mb-6 shadow-lg mx-auto md:mx-0`}
           whileHover={{ scale: 1.1, rotate: 5 }}
           transition={{ duration: 0.3 }}
         >
-          <Icon className="w-10 h-10 text-white" />
+          <Icon className="w-6 h-6 md:w-10 md:h-10 text-white" />
         </motion.div>
 
         {/* Content */}
-        <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-teal-600 transition-colors duration-300">
+        <h3 className="text-sm md:text-2xl font-bold text-gray-800 mb-2 md:mb-4 group-hover:text-teal-600 transition-colors duration-300">
           {title}
         </h3>
-        <p className="text-gray-600 mb-6 leading-relaxed">
+        <p className="text-xs md:text-base text-gray-600 mb-3 md:mb-6 leading-relaxed hidden md:block">
           {description}
         </p>
 
-        {/* Features */}
-        <ul className="space-y-3">
-          {features.map((feature) => (
+        {/* Features - Show first 2 on mobile, all on desktop */}
+        <ul className="space-y-1 md:space-y-3">
+          {features.map((feature, index) => (
             <motion.li
               key={feature}
               initial={{ opacity: 0, x: -20 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
               transition={{ duration: 0.4, delay: delay + (feature.length * 0.01) }}
-              className="flex items-center gap-3"
+              className={`flex items-center gap-2 md:gap-3 justify-center md:justify-start ${
+                index >= 2 ? 'hidden md:flex' : ''
+              }`}
             >
-              <CheckCircle className="w-5 h-5 text-teal-500 flex-shrink-0" />
-              <span className="text-gray-700 font-medium">{feature}</span>
+              <CheckCircle className="w-3 h-3 md:w-5 md:h-5 text-teal-500 flex-shrink-0" />
+              <span className="text-xs md:text-sm text-gray-700 font-medium">{feature}</span>
             </motion.li>
           ))}
         </ul>
 
-        {/* Action Button */}
+        {/* Action Button - Hidden on mobile, shown on desktop */}
         <motion.button
-          className="mt-8 w-full bg-gradient-to-r from-teal-500 to-blue-600 text-white py-4 rounded-2xl font-semibold hover:from-teal-600 hover:to-blue-700 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+          className="hidden md:flex mt-8 w-full bg-gradient-to-r from-teal-500 to-blue-600 text-white py-4 rounded-2xl font-semibold hover:from-teal-600 hover:to-blue-700 transition-all duration-300 items-center justify-center gap-2 group/btn"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
@@ -725,7 +727,7 @@ const PerawatanUmumPage = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {services.map((service) => (
               <ServiceCard key={service.title} {...service} />
             ))}
