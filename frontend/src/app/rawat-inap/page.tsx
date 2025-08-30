@@ -395,7 +395,7 @@ const RawatInapPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-45 pb-20 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      <section className="relative pt-55 pb-20 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
           <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-teal-400/20 rounded-full blur-3xl animate-pulse"></div>
