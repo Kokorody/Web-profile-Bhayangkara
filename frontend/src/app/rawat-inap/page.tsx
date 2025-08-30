@@ -34,6 +34,7 @@ const RawatInapPage = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const [isStatsVisible, setIsStatsVisible] = useState(false);
+  const [isStickySearchVisible, setIsStickySearchVisible] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
 
   // Filters and UI state
@@ -55,13 +56,34 @@ const RawatInapPage = () => {
       }
       
       lastScrollY = scrollY > 0 ? scrollY : 0;
+
+      // Check if we should hide search bar based on scroll position
+      const facilitiesSection = document.querySelector('[data-facilities-section]');
+      const hideSearchSection = document.querySelector('[data-hide-search]');
+      
+      if (facilitiesSection && hideSearchSection) {
+        const facilitiesRect = facilitiesSection.getBoundingClientRect();
+        const hideSearchRect = hideSearchSection.getBoundingClientRect();
+        
+        // Show search when facilities section is visible
+        const facilitiesVisible = facilitiesRect.top < window.innerHeight && facilitiesRect.bottom > 0;
+        
+        // Hide search when we reach the "Mengapa Memilih Kami" section
+        const shouldHideSearch = hideSearchRect.top <= window.innerHeight * 0.3;
+        
+        if (shouldHideSearch) {
+          setIsStickySearchVisible(false);
+        } else if (facilitiesVisible) {
+          setIsStickySearchVisible(true);
+        }
+      }
     };
 
     window.addEventListener("scroll", updateScrollDirection);
     return () => window.removeEventListener("scroll", updateScrollDirection);
   }, [isHeaderVisible]);
 
-  // Intersection Observer for animations
+  // Intersection Observer for animations and sticky search visibility
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -74,20 +96,68 @@ const RawatInapPage = () => {
             if (entry.target.getAttribute('data-stats') === 'true') {
               setIsStatsVisible(true);
             }
+            // Hide sticky search when "Mengapa Memilih Kami" section is visible
+            if (entry.target.getAttribute('data-hide-search') === 'true') {
+              setIsStickySearchVisible(false);
+            }
           }
         });
       },
       { threshold: 0.1 }
     );
 
+    // Separate observer for facilities section to control search visibility
+    const facilitiesObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target.getAttribute('data-facilities-section') === 'true') {
+            // Only show search when facilities section is visible AND we haven't reached the hide-search section
+            const hideSearchElement = document.querySelector('[data-hide-search]');
+            const hideSearchRect = hideSearchElement?.getBoundingClientRect();
+            const shouldHide = hideSearchRect && hideSearchRect.top < window.innerHeight;
+            
+            if (entry.isIntersecting && !shouldHide) {
+              setIsStickySearchVisible(true);
+            } else {
+              setIsStickySearchVisible(false);
+            }
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '-50px 0px' }
+    );
+
+    // Observer specifically for the hide-search section to ensure it stays hidden
+    const hideSearchObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target.getAttribute('data-hide-search') === 'true') {
+            if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
+              // Hide search when the hide-search section is visible or has been scrolled past
+              setIsStickySearchVisible(false);
+            }
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px 50% 0px' }
+    );
+
     const cardElements = document.querySelectorAll('[data-card-index]');
     const statsElement = document.querySelector('[data-stats]');
+    const hideSearchElement = document.querySelector('[data-hide-search]');
+    const facilitiesSection = document.querySelector('[data-facilities-section]');
     
     cardElements.forEach(el => observer.observe(el));
     if (statsElement) observer.observe(statsElement);
+    if (hideSearchElement) hideSearchObserver.observe(hideSearchElement);
+    if (facilitiesSection) facilitiesObserver.observe(facilitiesSection);
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      facilitiesObserver.disconnect();
+      hideSearchObserver.disconnect();
+    };
+  }, []); // Empty dependency since we're querying DOM elements
 
   // Debounce search query for performance
   useEffect(() => {
@@ -523,9 +593,10 @@ const RawatInapPage = () => {
       </section>
 
       {/* Sticky Search and Filter Section */}
-      <section className={`py-8 bg-white sticky z-30 shadow-lg border-b border-gray-100 transition-all duration-300 ${
-        isHeaderVisible ? 'top-20' : 'top-0'
-      }`}>
+      {isStickySearchVisible && (
+        <section className={`py-8 bg-white sticky z-30 shadow-lg border-b border-gray-100 transition-all duration-300 ${
+          isHeaderVisible ? 'top-20' : 'top-0'
+        }`}>
         <div className="container mx-auto px-4">
           {/* Main Search Bar */}
           <div className="flex flex-col lg:flex-row gap-4 items-center mb-4">
@@ -593,9 +664,10 @@ const RawatInapPage = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* Main Content */}
-      <section id="fasilitas" className="py-20 md:py-24 bg-gradient-to-b from-white to-gray-50">
+      <section id="fasilitas" className="py-20 md:py-24 bg-gradient-to-b from-white to-gray-50" data-facilities-section="true">
         <div className="container mx-auto px-4">
           <div className="flex items-end justify-between mb-12 md:mb-16">
             <div className="max-w-2xl">
@@ -749,7 +821,7 @@ const RawatInapPage = () => {
           )}
 
           {/* Enhanced Statistics Section */}
-          <div className="mt-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden">
+          <div className="mt-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden" data-hide-search="true">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-teal-500/20 via-blue-500/10 to-transparent"></div>
             <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-teal-400/10 to-blue-400/10 rounded-full blur-3xl"></div>
             
