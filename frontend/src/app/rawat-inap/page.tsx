@@ -519,70 +519,75 @@ const RawatInapPage = () => {
               </button>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Enhanced Filters Section */}
-          <div className="bg-white/95 backdrop-blur-md rounded-3xl border border-white/60 shadow-2xl p-6 md:p-8 hover:shadow-3xl transition-all duration-300">
-            <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-6">
-              <div className="relative flex-1">
-                <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
-                  <Search className="w-6 h-6" />
-                </div>
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Cari unit rawat inap (misal: ICU, Anak, VIP, Jantung, dll)"
-                  aria-label="Pencarian unit rawat inap"
-                  className="w-full rounded-2xl border-2 border-gray-200 bg-gray-50 focus:bg-white focus:border-teal-400 focus:ring-4 focus:ring-teal-100/60 outline-none pl-14 pr-6 py-4 text-base font-medium transition-all duration-300"
-                />
-                {query && (
-                  <button
-                    onClick={() => setQuery('')}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                  >
-                    ×
-                  </button>
-                )}
-              </div>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-3">
-                  <Filter className="w-5 h-5 text-gray-600" />
-                  <label htmlFor="sort" className="text-sm font-semibold text-gray-700">Urutkan:</label>
-                </div>
+      {/* Sticky Search and Filter Section */}
+      <section className="py-8 bg-white sticky top-0 z-40 shadow-lg border-b border-gray-100">
+        <div className="container mx-auto px-4">
+          {/* Main Search Bar */}
+          <div className="flex flex-col lg:flex-row gap-4 items-center mb-4">
+            {/* Search Input */}
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Cari unit rawat inap..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all duration-200"
+              />
+              {query && (
+                <button
+                  onClick={() => setQuery('')}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  ×
+                </button>
+              )}
+            </div>
+
+            {/* Sort and Category Filters */}
+            <div className="flex flex-wrap gap-2 items-center">
+              <div className="flex bg-gray-100 rounded-xl p-1">
                 <select
-                  id="sort"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-800 focus:border-teal-400 focus:ring-4 focus:ring-teal-100/60 outline-none transition-all duration-300"
+                  className="px-3 py-1 rounded-lg text-sm font-medium bg-white text-gray-900 border-0 focus:ring-2 focus:ring-teal-500 outline-none"
                 >
-                  <option value="relevance" className="text-gray-800">Relevan</option>
-                  <option value="az" className="text-gray-800">A-Z</option>
-                  <option value="beds_desc" className="text-gray-800">Tempat Tidur Terbanyak</option>
-                  <option value="beds_asc" className="text-gray-800">Tempat Tidur Tersedikit</option>
+                  <option value="relevance">Relevan</option>
+                  <option value="az">A-Z</option>
+                  <option value="beds_desc">Tempat Tidur Terbanyak</option>
+                  <option value="beds_asc">Tempat Tidur Tersedikit</option>
                 </select>
               </div>
             </div>
-            <div className="mt-6 overflow-x-auto">
-              <div className="flex gap-3 min-w-max pb-2">
-                {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    className={`px-6 py-3 rounded-full border-2 text-sm font-semibold transition-all duration-300 hover:scale-105 ${
-                      activeCategory === cat
-                        ? 'bg-gradient-to-r from-teal-500 to-blue-600 text-white border-transparent shadow-lg'
-                        : 'bg-white text-gray-700 border-gray-200 hover:border-teal-300 hover:text-teal-700 hover:bg-teal-50'
-                    }`}
-                    aria-pressed={activeCategory === cat}
-                  >
-                    {cat}
-                    {activeCategory === cat && (
-                      <div className="inline-block ml-2 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                    )}
-                  </button>
-                ))}
-              </div>
+          </div>
+
+          {/* Category Pills */}
+          <div className="overflow-x-auto">
+            <div className="flex gap-2 min-w-max pb-2">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
+                    activeCategory === cat
+                      ? 'bg-teal-600 text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
+          </div>
+
+          {/* Results Summary */}
+          <div className="flex items-center justify-between text-sm text-gray-600 mt-4">
+            <span>
+              Menampilkan {filteredFacilities.length} dari {inpatientFacilities.length} unit
+            </span>
           </div>
         </div>
       </section>
