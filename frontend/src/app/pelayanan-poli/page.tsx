@@ -282,6 +282,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 const PoliPage = () => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isStickySearchVisible, setIsStickySearchVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [viewMode, setViewMode] = useState('grid');
@@ -512,6 +513,27 @@ const PoliPage = () => {
       }
       
       lastScrollY = scrollY > 0 ? scrollY : 0;
+
+      // Check if we should show/hide sticky search bar based on scroll position
+      const servicesSection = document.querySelector('[data-services-section]');
+      const footerSection = document.querySelector('footer');
+      
+      if (servicesSection && footerSection) {
+        const servicesRect = servicesSection.getBoundingClientRect();
+        const footerRect = footerSection.getBoundingClientRect();
+        
+        // Show search when services section is visible
+        const servicesVisible = servicesRect.top < window.innerHeight && servicesRect.bottom > 0;
+        
+        // Hide search when we reach the footer section
+        const shouldHideSearch = footerRect.top <= window.innerHeight * 0.3;
+        
+        if (shouldHideSearch) {
+          setIsStickySearchVisible(false);
+        } else if (servicesVisible) {
+          setIsStickySearchVisible(true);
+        }
+      }
     };
 
     window.addEventListener("scroll", updateScrollDirection);
@@ -758,113 +780,150 @@ const PoliPage = () => {
         </div>
       </section>
 
-      {/* Enhanced Search & Filter Section */}
-      <section className="py-12 bg-white/60 backdrop-blur-sm border-y border-gray-100">
-        <div className="container mx-auto px-4">
-          <div className="bg-white/90 backdrop-blur-md rounded-3xl shadow-xl border border-gray-200 p-8">
-            <div className="flex flex-col lg:flex-row gap-8 items-center justify-between">
-              {/* Advanced Search */}
-              <div className="relative flex-1 max-w-2xl">
-                <div className="absolute left-6 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                  <Search className="text-gray-400 w-6 h-6" />
+      {/* Sticky Search Bar */}
+      {isStickySearchVisible && (
+        <section className={`py-4 md:py-8 bg-white/95 backdrop-blur-md sticky z-30 shadow-lg border-b border-gray-100 transition-all duration-300 ${
+          isHeaderVisible ? 'top-36 md:top-20' : 'top-0'
+        }`}>
+          <div className="container mx-auto px-4">
+            <div className="bg-white/90 backdrop-blur-md rounded-2xl md:rounded-3xl shadow-xl border border-gray-200 p-4 md:p-8">
+              <div className="flex flex-col lg:flex-row gap-4 md:gap-8 items-center justify-between">
+                {/* Compact Search */}
+                <div className="relative flex-1 max-w-md md:max-w-2xl">
+                  <div className="absolute left-4 md:left-6 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <Search className="text-gray-400 w-5 h-5 md:w-6 md:h-6" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Cari poli atau layanan..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-12 md:pl-16 pr-4 md:pr-6 py-3 md:py-4 bg-gray-50 border-2 border-gray-200 rounded-xl md:rounded-2xl focus:border-teal-500 focus:outline-none focus:bg-white transition-all duration-300 shadow-inner text-base md:text-lg font-medium placeholder-gray-500"
+                  />
+                  <div className="absolute right-4 md:right-6 top-1/2 transform -translate-y-1/2">
+                    <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-r from-teal-500 to-blue-500 rounded-lg flex items-center justify-center">
+                      <Search className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                    </div>
+                  </div>
                 </div>
-                <input
-                  type="text"
-                  placeholder="Cari poli, layanan, atau dokter spesialis..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-16 pr-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:border-teal-500 focus:outline-none focus:bg-white transition-all duration-300 shadow-inner text-lg font-medium placeholder-gray-500"
-                />
-                <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-blue-500 rounded-lg flex items-center justify-center">
-                    <Search className="w-4 h-4 text-white" />
+
+                {/* Compact Filters */}
+                <div className="flex items-center gap-3 md:gap-6">
+                  {/* Category Filter */}
+                  <div className="flex items-center gap-2 md:gap-3">
+                    <Filter className="w-5 h-5 md:w-6 md:h-6 text-gray-500" />
+                    <select
+                      value={selectedCategory}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      className="px-3 md:px-6 py-2 md:py-4 bg-gray-50 border-2 border-gray-200 rounded-xl md:rounded-2xl focus:border-teal-500 focus:outline-none focus:bg-white transition-all duration-300 shadow-sm font-medium text-gray-700 text-sm md:text-base min-w-[150px] md:min-w-[200px]"
+                    >
+                      {categories.map(cat => (
+                        <option key={cat.id} value={cat.id}>
+                          {cat.name} ({cat.count})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* View Toggle */}
+                  <div className="flex items-center bg-gray-100 rounded-xl md:rounded-2xl p-1 md:p-2 shadow-inner">
+                    <button
+                      onClick={() => setViewMode('grid')}
+                      className={`p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-300 ${
+                        viewMode === 'grid' 
+                          ? 'bg-white text-teal-600 shadow-lg scale-105' 
+                          : 'text-gray-500 hover:text-gray-700'
+                      }`}
+                    >
+                      <Grid className="w-5 h-5 md:w-6 md:h-6" />
+                    </button>
+                    <button
+                      onClick={() => setViewMode('list')}
+                      className={`p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-300 ${
+                        viewMode === 'list' 
+                          ? 'bg-white text-teal-600 shadow-lg scale-105' 
+                          : 'text-gray-500 hover:text-gray-700'
+                      }`}
+                    >
+                      <List className="w-5 h-5 md:w-6 md:h-6" />
+                    </button>
                   </div>
                 </div>
               </div>
 
-              {/* Filters */}
-              <div className="flex items-center gap-6">
-                {/* Category Filter */}
-                <div className="flex items-center gap-3">
-                  <Filter className="w-6 h-6 text-gray-500" />
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="px-6 py-4 bg-gray-50 border-2 border-gray-200 rounded-2xl focus:border-teal-500 focus:outline-none focus:bg-white transition-all duration-300 shadow-sm font-medium text-gray-700 min-w-[200px]"
-                  >
-                    {categories.map(cat => (
-                      <option key={cat.id} value={cat.id}>
-                        {cat.name} ({cat.count})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* View Toggle */}
-                <div className="flex items-center bg-gray-100 rounded-2xl p-2 shadow-inner">
-                  <button
-                    onClick={() => setViewMode('grid')}
-                    className={`p-3 rounded-xl transition-all duration-300 ${
-                      viewMode === 'grid' 
-                        ? 'bg-white text-teal-600 shadow-lg scale-105' 
-                        : 'text-gray-500 hover:text-gray-700'
-                    }`}
-                  >
-                    <Grid className="w-6 h-6" />
-                  </button>
-                  <button
-                    onClick={() => setViewMode('list')}
-                    className={`p-3 rounded-xl transition-all duration-300 ${
-                      viewMode === 'list' 
-                        ? 'bg-white text-teal-600 shadow-lg scale-105' 
-                        : 'text-gray-500 hover:text-gray-700'
-                    }`}
-                  >
-                    <List className="w-6 h-6" />
-                  </button>
-                </div>
+              {/* Results Summary */}
+              <div className="flex items-center justify-between text-xs md:text-sm text-gray-600 mt-3 md:mt-4">
+                <span>
+                  Menampilkan {filteredServices.length} dari {poliServices.length} poli
+                </span>
+                {searchTerm && (
+                  <span className="text-teal-600 font-medium">
+                    Hasil untuk: "{searchTerm}"
+                  </span>
+                )}
               </div>
-            </div>
 
-            {/* Quick Filters */}
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <div className="flex flex-wrap gap-3">
-                <div className="text-sm font-semibold text-gray-600 flex items-center mr-4">
-                  <Sparkles className="w-4 h-4 mr-2 text-teal-500" />
-                  Filter Cepat:
+              {/* Quick Filters */}
+              <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-200">
+                <div className="flex flex-wrap gap-2 md:gap-3">
+                  <div className="text-xs md:text-sm font-semibold text-gray-600 flex items-center mr-2 md:mr-4">
+                    <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2 text-teal-500" />
+                    Filter Cepat:
+                  </div>
+                  <button 
+                    onClick={() => {
+                      const featuredServices = poliServices.filter(s => s.featured);
+                      if (featuredServices.length > 0) {
+                        setSelectedCategory('all');
+                        setSearchTerm('unggulan');
+                      }
+                    }}
+                    className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 rounded-full text-xs md:text-sm font-medium hover:shadow-md transition-all duration-200 border border-amber-200"
+                  >
+                    ⭐ Unggulan
+                  </button>
+                  <button 
+                    onClick={() => {
+                      const popularServices = poliServices.filter(s => s.popular);
+                      if (popularServices.length > 0) {
+                        setSelectedCategory('all');
+                        setSearchTerm('populer');
+                      }
+                    }}
+                    className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-pink-100 to-rose-100 text-pink-800 rounded-full text-xs md:text-sm font-medium hover:shadow-md transition-all duration-200 border border-pink-200"
+                  >
+                    🔥 Populer
+                  </button>
+                  <button 
+                    onClick={() => {
+                      const twentyFourSevenServices = poliServices.filter(s => s.availability === '24/7');
+                      if (twentyFourSevenServices.length > 0) {
+                        setSelectedCategory('all');
+                        setSearchTerm('24/7');
+                      }
+                    }}
+                    className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 rounded-full text-xs md:text-sm font-medium hover:shadow-md transition-all duration-200 border border-green-200"
+                  >
+                    🕐 24/7
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setSearchTerm('');
+                      setSelectedCategory('all');
+                    }}
+                    className="px-3 md:px-4 py-1.5 md:py-2 bg-gray-100 text-gray-600 rounded-full text-xs md:text-sm font-medium hover:bg-gray-200 transition-colors duration-200"
+                  >
+                    Reset
+                  </button>
                 </div>
-                <button 
-                  onClick={() => setSelectedCategory('featured')}
-                  className="px-4 py-2 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 rounded-full text-sm font-medium hover:shadow-md transition-all duration-200 border border-amber-200"
-                >
-                  ⭐ Unggulan
-                </button>
-                <button 
-                  onClick={() => setSelectedCategory('popular')}
-                  className="px-4 py-2 bg-gradient-to-r from-pink-100 to-rose-100 text-pink-800 rounded-full text-sm font-medium hover:shadow-md transition-all duration-200 border border-pink-200"
-                >
-                  🔥 Populer
-                </button>
-                <button 
-                  onClick={() => setSelectedCategory('24/7')}
-                  className="px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 rounded-full text-sm font-medium hover:shadow-md transition-all duration-200 border border-green-200"
-                >
-                  🕐 24/7
-                </button>
-                <button 
-                  onClick={() => setSearchTerm('')}
-                  className="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors duration-200"
-                >
-                  Reset
-                </button>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Enhanced Services Section */}
-      <section className="py-24 bg-gradient-to-br from-gray-50 via-white to-teal-50">
+      <section className="py-24 bg-gradient-to-br from-gray-50 via-white to-teal-50" data-services-section="true">
         <div className="container mx-auto px-4">
           {/* Results Header */}
           <div className="flex items-center justify-between mb-12 animate-on-scroll">
