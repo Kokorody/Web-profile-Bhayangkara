@@ -132,7 +132,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   return (
     <div 
       className={`group relative bg-white/80 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-700 overflow-hidden border border-gray-100/50 ${
-        viewMode === 'list' ? 'flex items-center p-6 md:p-8' : 'p-6 md:p-8'
+        viewMode === 'list' ? 'flex items-center p-4 md:p-8' : 'p-4 md:p-8'
       } ${isExpanded ? 'scale-105 z-10 ring-2 ring-teal-400/50' : ''} ${
         service.featured ? 'ring-2 ring-gradient-to-r from-amber-400 to-orange-500' : ''
       } transform hover:scale-[1.02] hover:-translate-y-2`}
@@ -145,7 +145,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
     >
       {/* Featured Badge */}
       {service.featured && (
-        <div className="absolute top-3 md:top-4 left-3 md:left-4 z-20">
+        <div className="absolute top-2 md:top-4 left-2 md:left-4 z-20">
           <div className="px-2 md:px-3 py-1 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
             ⭐ UNGGULAN
           </div>
@@ -154,7 +154,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
       {/* Popular Badge */}
       {service.popular && (
-        <div className="absolute top-3 md:top-4 right-3 md:right-4 z-20">
+        <div className="absolute top-2 md:top-4 right-2 md:right-4 z-20">
           <div className="px-2 md:px-3 py-1 bg-gradient-to-r from-pink-400 to-rose-500 text-white text-xs font-bold rounded-full shadow-lg">
             🔥 POPULER
           </div>
@@ -174,7 +174,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
       )}
       
       {/* Content */}
-      <div className={`relative z-10 ${viewMode === 'list' ? 'flex items-center gap-6 md:gap-8 flex-1' : ''}`}>
+      <div className={`relative z-10 ${viewMode === 'list' ? 'flex items-center gap-8 flex-1' : ''}`}>
         {/* Icon Section */}
         <div className={`${viewMode === 'list' ? 'flex-shrink-0' : 'mb-4 md:mb-6'}`}>
           <div className="relative">
@@ -191,9 +191,9 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             </div>
             
             {/* Floating Rating */}
-            <div className="absolute -top-2 -right-2 bg-white shadow-lg rounded-full px-2 py-1 border border-gray-100">
+            <div className="absolute -top-1 md:-top-2 -right-1 md:-right-2 bg-white shadow-lg rounded-full px-1.5 md:px-2 py-0.5 md:py-1 border border-gray-100">
               <div className="flex items-center gap-1">
-                <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                <Star className="w-2.5 h-2.5 md:w-3 md:h-3 fill-yellow-400 text-yellow-400" />
                 <span className="text-xs font-bold text-gray-800">{service.rating}</span>
               </div>
             </div>
@@ -209,7 +209,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             </h3>
             
             {/* Quick Info Bar */}
-            <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-3">
+            <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-2 md:mb-3">
               <div className="flex items-center gap-1 text-xs md:text-sm text-gray-600 bg-gray-100 px-2 md:px-3 py-1 rounded-full">
                 <Users className="w-3 h-3 md:w-4 md:h-4 text-teal-500" />
                 <span className="font-medium">{service.doctorCount} Dokter</span>
@@ -227,47 +227,54 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             </div>
           </div>
           
-          <p className={`text-sm md:text-base text-gray-600 mb-4 md:mb-6 leading-relaxed ${viewMode === 'list' ? 'line-clamp-2' : ''}`}>
+          <p className={`text-gray-600 mb-4 md:mb-6 leading-relaxed text-sm md:text-base ${viewMode === 'list' ? 'line-clamp-2' : ''} ${viewMode === 'grid' ? 'hidden md:block' : ''}`}>
             {service.description}
           </p>
 
           {/* Services List */}
           {(viewMode === 'grid' || isExpanded) && (
             <div className="mb-4 md:mb-6">
-              <h4 className="font-semibold text-gray-700 mb-3 flex items-center text-sm md:text-base">
+              <h4 className="font-semibold text-gray-700 mb-2 md:mb-3 flex items-center text-sm md:text-base">
                 <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-2 text-teal-500" />
                 Layanan Tersedia:
               </h4>
-              <div className="flex flex-wrap gap-2">
-                {service.services.map((srv: string, idx: number) => (
-                  <span key={idx} className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-teal-50 to-blue-50 text-teal-700 rounded-full text-xs md:text-sm font-medium border border-teal-100 hover:shadow-md transition-shadow duration-200">
+              <div className="flex flex-wrap gap-1.5 md:gap-2">
+                {service.services.slice(0, viewMode === 'grid' ? 2 : service.services.length).map((srv: string, idx: number) => (
+                  <span key={idx} className="px-2 md:px-4 py-1 md:py-2 bg-gradient-to-r from-teal-50 to-blue-50 text-teal-700 rounded-full text-xs md:text-sm font-medium border border-teal-100 hover:shadow-md transition-shadow duration-200">
                     {srv}
                   </span>
                 ))}
+                {viewMode === 'grid' && service.services.length > 2 && (
+                  <span className="px-2 md:px-4 py-1 md:py-2 bg-gray-100 text-gray-500 rounded-full text-xs md:text-sm font-medium">
+                    +{service.services.length - 2} lainnya
+                  </span>
+                )}
               </div>
             </div>
           )}
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:gap-4">
-            <div className="flex gap-2">
-              <button className="px-4 md:px-6 py-2.5 md:py-3 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-lg md:rounded-xl hover:shadow-lg hover:shadow-teal-500/25 transition-all duration-300 transform hover:scale-105 flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
-                <span className="text-sm md:text-base">Daftar</span>
+          <div className="flex items-center justify-between gap-2 md:gap-4">
+            <div className="flex gap-1 md:gap-2">
+              <button className="px-3 md:px-6 py-2 md:py-3 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-lg md:rounded-xl hover:shadow-lg hover:shadow-teal-500/25 transition-all duration-300 transform hover:scale-105 flex items-center gap-1 md:gap-2 text-xs md:text-sm">
+                <Calendar className="w-3 h-3 md:w-4 md:h-4" />
+                <span className="hidden md:inline">Daftar</span>
+                <span className="md:hidden">Daftar</span>
               </button>
               
-              <button className="px-3 md:px-4 py-2.5 md:py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg md:rounded-xl transition-colors duration-200 flex items-center gap-2">
-                <MessageCircle className="w-4 h-4" />
-                <span className="text-sm md:text-base">Chat</span>
+              <button className="px-2 md:px-4 py-2 md:py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg md:rounded-xl transition-colors duration-200 flex items-center gap-1 md:gap-2 text-xs md:text-sm">
+                <MessageCircle className="w-3 h-3 md:w-4 md:h-4" />
+                <span className="hidden md:inline">Chat</span>
               </button>
             </div>
             
             <button 
               onClick={() => setExpandedCard(isExpanded ? null : service.id)}
-              className="flex items-center text-teal-600 hover:text-teal-700 transition-colors duration-200 font-medium group/btn text-sm md:text-base"
+              className="flex items-center text-teal-600 hover:text-teal-700 transition-colors duration-200 font-medium group/btn text-xs md:text-sm"
             >
-              {isExpanded ? 'Tutup' : 'Lihat Detail'}
-              <ChevronDown className={`w-4 h-4 ml-1 transition-transform duration-300 group-hover/btn:scale-110 ${isExpanded ? 'rotate-180' : ''}`} />
+              <span className="hidden md:inline">{isExpanded ? 'Tutup' : 'Lihat Detail'}</span>
+              <span className="md:hidden">{isExpanded ? 'Tutup' : 'Detail'}</span>
+              <ChevronDown className={`w-3 h-3 md:w-4 md:h-4 ml-1 transition-transform duration-300 group-hover/btn:scale-110 ${isExpanded ? 'rotate-180' : ''}`} />
             </button>
           </div>
         </div>
@@ -281,7 +288,6 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
 const PoliPage = () => {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isStickySearchVisible, setIsStickySearchVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -613,7 +619,7 @@ const PoliPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative pt-32 pb-16 md:pb-24 overflow-hidden">
+      <section ref={heroRef} className="relative pt-32 pb-24 overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-blue-50 to-purple-50"></div>
         
@@ -641,14 +647,14 @@ const PoliPage = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-5xl mx-auto">
             {/* Badge */}
-            <div className="inline-flex items-center px-4 md:px-6 py-2 md:py-3 bg-white/80 backdrop-blur-sm text-teal-700 rounded-full text-xs md:text-sm font-medium mb-6 md:mb-8 shadow-lg border border-teal-100 hover:shadow-xl transition-all duration-300 animate-on-scroll">
-              <Sparkles className="w-4 h-4 md:w-5 md:h-5 mr-2 text-teal-500" />
+            <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-sm text-teal-700 rounded-full text-sm font-medium mb-8 shadow-lg border border-teal-100 hover:shadow-xl transition-all duration-300 animate-on-scroll">
+              <Sparkles className="w-5 h-5 mr-2 text-teal-500" />
               <span className="font-semibold">Pelayanan Poliklinik Spesialis Terdepan</span>
               <div className="ml-2 w-2 h-2 bg-teal-500 rounded-full animate-pulse"></div>
             </div>
             
             {/* Main Heading */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-6 md:mb-8 leading-tight animate-on-scroll">
+            <h1 className="text-4xl md:text-6xl xl:text-7xl font-black text-gray-900 mb-6 md:mb-8 leading-tight animate-on-scroll">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 via-blue-600 to-purple-600 animate-gradient-x">
                 Poliklinik
               </span>
@@ -661,7 +667,7 @@ const PoliPage = () => {
             </h1>
             
             {/* Subtitle */}
-            <p className="text-base md:text-xl lg:text-2xl text-gray-600 mb-8 md:mb-12 leading-relaxed max-w-4xl mx-auto animate-on-scroll">
+            <p className="text-base md:text-xl xl:text-2xl text-gray-600 mb-8 md:mb-12 leading-relaxed max-w-4xl mx-auto animate-on-scroll">
               Nikmati layanan poliklinik spesialis dengan 
               <span className="font-bold text-teal-600"> 12 poli unggulan</span>, 
               <span className="font-bold text-blue-600"> 40+ dokter berpengalaman</span>, 
@@ -671,18 +677,18 @@ const PoliPage = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-12 md:mb-16 animate-on-scroll">
-              <button className="group relative px-6 md:px-10 py-4 md:py-5 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 text-white font-bold rounded-2xl shadow-2xl hover:shadow-teal-500/25 transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 overflow-hidden">
+              <button className="group relative px-6 md:px-10 py-4 md:py-5 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 text-white font-bold rounded-xl md:rounded-2xl shadow-2xl hover:shadow-teal-500/25 transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 overflow-hidden w-full sm:w-auto">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-blue-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <span className="relative flex items-center text-sm md:text-base">
+                <span className="relative flex items-center justify-center text-sm md:text-base">
                   <Calendar className="w-5 h-5 md:w-6 md:h-6 mr-2 md:mr-3" />
                   Daftar Poli Sekarang
-                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-1 md:ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-white/30"></div>
               </button>
               
-              <button className="group relative px-6 md:px-8 py-4 md:py-5 bg-white/90 backdrop-blur-sm text-gray-800 font-semibold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-gray-200 hover:border-teal-300">
-                <span className="relative flex items-center text-sm md:text-base">
+              <button className="group relative px-6 md:px-8 py-4 md:py-5 bg-white/90 backdrop-blur-sm text-gray-800 font-semibold rounded-xl md:rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-gray-200 hover:border-teal-300 w-full sm:w-auto">
+                <span className="relative flex items-center justify-center text-sm md:text-base">
                   <Phone className="w-5 h-5 md:w-6 md:h-6 mr-2 md:mr-3 text-teal-600" />
                   Hubungi (0711) 414855
                 </span>
@@ -690,7 +696,7 @@ const PoliPage = () => {
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto animate-on-scroll">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-4xl mx-auto animate-on-scroll">
               <div className="bg-white/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-teal-200 group">
                 <div className="text-2xl md:text-3xl font-black text-teal-600 mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">12</div>
                 <div className="text-xs md:text-sm font-semibold text-gray-600 uppercase tracking-wider">Poli Spesialis</div>
@@ -800,8 +806,8 @@ const PoliPage = () => {
                       Hasil untuk: "{searchTerm}"
                     </span>
                   )}
-                  {/* Sort Options */}
-                  <div className="flex items-center gap-2">
+                  {/* Sort Options - Hidden on mobile for space */}
+                  <div className="hidden md:flex items-center gap-2">
                     <span className="text-xs font-semibold text-gray-600">Urutkan:</span>
                     <select className="px-2 md:px-3 py-1 bg-gray-50 border border-gray-200 rounded-lg text-xs font-medium text-gray-700 focus:outline-none focus:border-teal-500 transition-colors duration-200">
                       <option>Rating Tertinggi</option>
@@ -873,13 +879,13 @@ const PoliPage = () => {
       )}
 
       {/* Enhanced Services Section */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-white to-teal-50" data-services-section="true">
+      <section className="py-24 bg-gradient-to-br from-gray-50 via-white to-teal-50" data-services-section="true">
         <div className="container mx-auto px-4">
           {/* Services Grid/List */}
           <div className={`${
             viewMode === 'grid' 
-              ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8' 
-              : 'space-y-6 md:space-y-8'
+              ? 'grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-8' 
+              : 'space-y-4 md:space-y-8'
           } animate-on-scroll`}>
             {filteredServices.map((service, index) => (
               <ServiceCard 
@@ -897,33 +903,33 @@ const PoliPage = () => {
 
           {/* No Results State */}
           {filteredServices.length === 0 && (
-            <div className="text-center py-16 md:py-20 animate-on-scroll">
+            <div className="text-center py-20 animate-on-scroll">
               <div className="relative">
-                <div className="w-24 h-24 md:w-32 md:h-32 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8 shadow-inner">
-                  <Search className="w-12 h-12 md:w-16 md:h-16 text-gray-400" />
-                  <div className="absolute -top-2 -right-2 w-6 h-6 md:w-8 md:h-8 bg-orange-100 rounded-full flex items-center justify-center">
-                    <span className="text-orange-600 text-lg md:text-xl">😔</span>
+                <div className="w-32 h-32 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
+                  <Search className="w-16 h-16 text-gray-400" />
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                    <span className="text-orange-600 text-xl">😔</span>
                   </div>
                 </div>
               </div>
               
-              <h3 className="text-xl md:text-2xl font-bold text-gray-600 mb-3 md:mb-4">Tidak ada poliklinik ditemukan</h3>
-              <p className="text-sm md:text-base text-gray-500 mb-6 md:mb-8 max-w-md mx-auto">
+              <h3 className="text-2xl font-bold text-gray-600 mb-4">Tidak ada poliklinik ditemukan</h3>
+              <p className="text-gray-500 mb-8 max-w-md mx-auto">
                 Coba gunakan kata kunci yang berbeda atau pilih kategori lain untuk menemukan layanan yang Anda butuhkan
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button 
                   onClick={() => {
                     setSearchTerm('');
                     setSelectedCategory('all');
                   }}
-                  className="px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-teal-500/25 transition-all duration-300 transform hover:scale-105"
+                  className="px-8 py-4 bg-gradient-to-r from-teal-500 to-blue-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-teal-500/25 transition-all duration-300 transform hover:scale-105"
                 >
                   Reset Semua Filter
                 </button>
                 
-                <button className="px-6 md:px-8 py-3 md:py-4 bg-white text-gray-700 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-teal-300">
+                <button className="px-8 py-4 bg-white text-gray-700 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-teal-300">
                   Hubungi Customer Service
                 </button>
               </div>
@@ -932,24 +938,24 @@ const PoliPage = () => {
 
           {/* Featured Services Banner */}
           {filteredServices.length > 0 && (
-            <div className="mt-16 md:mt-20 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 rounded-2xl md:rounded-3xl p-6 md:p-8 text-white relative overflow-hidden animate-on-scroll">
+            <div className="mt-20 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 rounded-3xl p-8 text-white relative overflow-hidden animate-on-scroll">
               <div className="absolute inset-0 opacity-30">
-                <div className="w-full h-full bg-white/10 rounded-2xl md:rounded-3xl"></div>
+                <div className="w-full h-full bg-white/10 rounded-3xl"></div>
               </div>
               
               <div className="relative z-10 text-center">
-                <h3 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4">Butuh Konsultasi Segera?</h3>
-                <p className="text-base md:text-xl mb-6 md:mb-8 opacity-90">Tim medis kami siap membantu Anda 24/7 untuk layanan darurat</p>
+                <h3 className="text-3xl font-bold mb-4">Butuh Konsultasi Segera?</h3>
+                <p className="text-xl mb-8 opacity-90">Tim medis kami siap membantu Anda 24/7 untuk layanan darurat</p>
                 
-                <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
-                  <button className="px-6 md:px-8 py-3 md:py-4 bg-white text-teal-600 font-bold rounded-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3">
-                    <Phone className="w-4 h-4 md:w-5 md:h-5" />
-                    <span className="text-sm md:text-base">Hubungi Emergency: (0711) 414855</span>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button className="px-8 py-4 bg-white text-teal-600 font-bold rounded-xl hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3">
+                    <Phone className="w-5 h-5" />
+                    Hubungi Emergency: (0711) 414855
                   </button>
                   
-                  <button className="px-6 md:px-8 py-3 md:py-4 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 flex items-center justify-center gap-3">
-                    <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
-                    <span className="text-sm md:text-base">Chat Online</span>
+                  <button className="px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/30 transition-all duration-300 border border-white/30 flex items-center justify-center gap-3">
+                    <MessageCircle className="w-5 h-5" />
+                    Chat Online
                   </button>
                 </div>
               </div>
