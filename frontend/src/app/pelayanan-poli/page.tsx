@@ -619,7 +619,7 @@ const PoliPage = () => {
       </header>
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative pt-32 pb-24 overflow-hidden">
+      <section ref={heroRef} className="relative pt-32 pb-32 md:pb-40 min-h-screen overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-teal-50 via-blue-50 to-purple-50"></div>
         
@@ -637,24 +637,32 @@ const PoliPage = () => {
           <div className="absolute top-60 right-1/3 w-10 h-10 bg-green-200/30 rounded-full animate-float animation-delay-3000">
             <Eye className="w-5 h-5 text-green-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
           </div>
+          {/* Additional floating icons for bigger section */}
+          <div className="absolute bottom-60 right-16 w-18 h-18 bg-pink-200/30 rounded-full animate-float animation-delay-1000">
+            <Baby className="w-9 h-9 text-pink-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          </div>
+          <div className="absolute top-1/3 left-1/3 w-12 h-12 bg-orange-200/30 rounded-full animate-float animation-delay-4000">
+            <Activity className="w-6 h-6 text-orange-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+          </div>
         </div>
 
         {/* Gradient Orbs */}
         <div className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-r from-teal-400/20 to-blue-400/20 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
         <div className="absolute top-40 left-10 w-96 h-96 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
         <div className="absolute bottom-20 left-1/2 w-96 h-96 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+        <div className="absolute top-1/2 right-1/4 w-80 h-80 bg-gradient-to-r from-green-400/20 to-emerald-400/20 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-3000"></div>
         
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-5xl mx-auto">
+        <div className="container mx-auto px-4 relative z-10 flex items-center justify-center min-h-screen">
+          <div className="text-center max-w-6xl mx-auto py-16 md:py-24">
             {/* Badge */}
-            <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-sm text-teal-700 rounded-full text-sm font-medium mb-8 shadow-lg border border-teal-100 hover:shadow-xl transition-all duration-300 animate-on-scroll">
-              <Sparkles className="w-5 h-5 mr-2 text-teal-500" />
+            <div className="inline-flex items-center px-8 py-4 bg-white/80 backdrop-blur-sm text-teal-700 rounded-full text-base md:text-lg font-medium mb-12 shadow-lg border border-teal-100 hover:shadow-xl transition-all duration-300 animate-on-scroll">
+              <Sparkles className="w-6 h-6 mr-3 text-teal-500" />
               <span className="font-semibold">Pelayanan Poliklinik Spesialis Terdepan</span>
-              <div className="ml-2 w-2 h-2 bg-teal-500 rounded-full animate-pulse"></div>
+              <div className="ml-3 w-3 h-3 bg-teal-500 rounded-full animate-pulse"></div>
             </div>
             
             {/* Main Heading */}
-            <h1 className="text-4xl md:text-6xl xl:text-7xl font-black text-gray-900 mb-6 md:mb-8 leading-tight animate-on-scroll">
+            <h1 className="text-5xl md:text-7xl xl:text-8xl font-black text-gray-900 mb-8 md:mb-12 leading-tight animate-on-scroll">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 via-blue-600 to-purple-600 animate-gradient-x">
                 Poliklinik
               </span>
@@ -667,7 +675,7 @@ const PoliPage = () => {
             </h1>
             
             {/* Subtitle */}
-            <p className="text-base md:text-xl xl:text-2xl text-gray-600 mb-8 md:mb-12 leading-relaxed max-w-4xl mx-auto animate-on-scroll">
+            <p className="text-lg md:text-2xl xl:text-3xl text-gray-600 mb-12 md:mb-16 leading-relaxed max-w-5xl mx-auto animate-on-scroll">
               Nikmati layanan poliklinik spesialis dengan 
               <span className="font-bold text-teal-600"> 12 poli unggulan</span>, 
               <span className="font-bold text-blue-600"> 40+ dokter berpengalaman</span>, 
@@ -676,42 +684,42 @@ const PoliPage = () => {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-12 md:mb-16 animate-on-scroll">
-              <button className="group relative px-6 md:px-10 py-4 md:py-5 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 text-white font-bold rounded-xl md:rounded-2xl shadow-2xl hover:shadow-teal-500/25 transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 overflow-hidden w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-6 md:gap-8 justify-center items-center mb-16 md:mb-20 animate-on-scroll">
+              <button className="group relative px-8 md:px-12 py-5 md:py-6 bg-gradient-to-r from-teal-500 via-blue-500 to-purple-500 text-white font-bold rounded-xl md:rounded-2xl shadow-2xl hover:shadow-teal-500/25 transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 overflow-hidden w-full sm:w-auto text-lg md:text-xl">
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-blue-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <span className="relative flex items-center justify-center text-sm md:text-base">
-                  <Calendar className="w-5 h-5 md:w-6 md:h-6 mr-2 md:mr-3" />
+                <span className="relative flex items-center justify-center">
+                  <Calendar className="w-6 h-6 md:w-7 md:h-7 mr-3 md:mr-4" />
                   Daftar Poli Sekarang
-                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                  <ArrowRight className="w-5 h-5 md:w-6 md:h-6 ml-3 group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
                 <div className="absolute bottom-0 left-0 w-full h-1 bg-white/30"></div>
               </button>
               
-              <button className="group relative px-6 md:px-8 py-4 md:py-5 bg-white/90 backdrop-blur-sm text-gray-800 font-semibold rounded-xl md:rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-gray-200 hover:border-teal-300 w-full sm:w-auto">
-                <span className="relative flex items-center justify-center text-sm md:text-base">
-                  <Phone className="w-5 h-5 md:w-6 md:h-6 mr-2 md:mr-3 text-teal-600" />
+              <button className="group relative px-8 md:px-10 py-5 md:py-6 bg-white/90 backdrop-blur-sm text-gray-800 font-semibold rounded-xl md:rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 border border-gray-200 hover:border-teal-300 w-full sm:w-auto text-lg md:text-xl">
+                <span className="relative flex items-center justify-center">
+                  <Phone className="w-6 h-6 md:w-7 md:h-7 mr-3 md:mr-4 text-teal-600" />
                   Hubungi (0711) 414855
                 </span>
               </button>
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-4xl mx-auto animate-on-scroll">
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-teal-200 group">
-                <div className="text-2xl md:text-3xl font-black text-teal-600 mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">12</div>
-                <div className="text-xs md:text-sm font-semibold text-gray-600 uppercase tracking-wider">Poli Spesialis</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-5xl mx-auto animate-on-scroll">
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-teal-200 group">
+                <div className="text-3xl md:text-4xl xl:text-5xl font-black text-teal-600 mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300">12</div>
+                <div className="text-sm md:text-base font-semibold text-gray-600 uppercase tracking-wider">Poli Spesialis</div>
               </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group">
-                <div className="text-2xl md:text-3xl font-black text-blue-600 mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">40+</div>
-                <div className="text-xs md:text-sm font-semibold text-gray-600 uppercase tracking-wider">Dokter Ahli</div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 group">
+                <div className="text-3xl md:text-4xl xl:text-5xl font-black text-blue-600 mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300">40+</div>
+                <div className="text-sm md:text-base font-semibold text-gray-600 uppercase tracking-wider">Dokter Ahli</div>
               </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-purple-200 group">
-                <div className="text-2xl md:text-3xl font-black text-purple-600 mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">24/7</div>
-                <div className="text-xs md:text-sm font-semibold text-gray-600 uppercase tracking-wider">Layanan Siaga</div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-purple-200 group">
+                <div className="text-3xl md:text-4xl xl:text-5xl font-black text-purple-600 mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300">24/7</div>
+                <div className="text-sm md:text-base font-semibold text-gray-600 uppercase tracking-wider">Layanan Siaga</div>
               </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-green-200 group">
-                <div className="text-2xl md:text-3xl font-black text-green-600 mb-1 md:mb-2 group-hover:scale-110 transition-transform duration-300">98%</div>
-                <div className="text-xs md:text-sm font-semibold text-gray-600 uppercase tracking-wider">Kepuasan Pasien</div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-green-200 group">
+                <div className="text-3xl md:text-4xl xl:text-5xl font-black text-green-600 mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300">98%</div>
+                <div className="text-sm md:text-base font-semibold text-gray-600 uppercase tracking-wider">Kepuasan Pasien</div>
               </div>
             </div>
           </div>
