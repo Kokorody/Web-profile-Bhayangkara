@@ -782,40 +782,40 @@ const PoliPage = () => {
 
       {/* Sticky Search Bar */}
       {isStickySearchVisible && (
-        <section className={`py-4 md:py-8 bg-white/95 backdrop-blur-md sticky z-30 shadow-lg border-b border-gray-100 transition-all duration-300 ${
+        <section className={`py-3 md:py-4 bg-white/95 backdrop-blur-md sticky z-30 shadow-lg border-b border-gray-100 transition-all duration-300 ${
           isHeaderVisible ? 'top-36 md:top-20' : 'top-0'
         }`}>
           <div className="container mx-auto px-4">
-            <div className="bg-white/90 backdrop-blur-md rounded-2xl md:rounded-3xl shadow-xl border border-gray-200 p-4 md:p-8">
-              <div className="flex flex-col lg:flex-row gap-4 md:gap-8 items-center justify-between">
+            <div className="bg-white/90 backdrop-blur-md rounded-xl md:rounded-2xl shadow-lg border border-gray-200 p-3 md:p-4">
+              <div className="flex flex-col lg:flex-row gap-3 md:gap-4 items-center justify-between">
                 {/* Compact Search */}
-                <div className="relative flex-1 max-w-md md:max-w-2xl">
-                  <div className="absolute left-4 md:left-6 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                    <Search className="text-gray-400 w-5 h-5 md:w-6 md:h-6" />
+                <div className="relative flex-1 max-w-sm md:max-w-lg">
+                  <div className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <Search className="text-gray-400 w-4 h-4 md:w-5 md:h-5" />
                   </div>
                   <input
                     type="text"
                     placeholder="Cari poli atau layanan..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-12 md:pl-16 pr-4 md:pr-6 py-3 md:py-4 bg-gray-50 border-2 border-gray-200 rounded-xl md:rounded-2xl focus:border-teal-500 focus:outline-none focus:bg-white transition-all duration-300 shadow-inner text-base md:text-lg font-medium placeholder-gray-500"
+                    className="w-full pl-9 md:pl-12 pr-3 md:pr-4 py-2 md:py-2.5 bg-gray-50 border border-gray-200 rounded-lg md:rounded-xl focus:border-teal-500 focus:outline-none focus:bg-white transition-all duration-300 shadow-inner text-sm md:text-base font-medium placeholder-gray-500"
                   />
-                  <div className="absolute right-4 md:right-6 top-1/2 transform -translate-y-1/2">
-                    <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-r from-teal-500 to-blue-500 rounded-lg flex items-center justify-center">
-                      <Search className="w-3 h-3 md:w-4 md:h-4 text-white" />
+                  <div className="absolute right-3 md:right-4 top-1/2 transform -translate-y-1/2">
+                    <div className="w-5 h-5 md:w-6 md:h-6 bg-gradient-to-r from-teal-500 to-blue-500 rounded-md flex items-center justify-center">
+                      <Search className="w-3 h-3 md:w-3.5 md:h-3.5 text-white" />
                     </div>
                   </div>
                 </div>
 
                 {/* Compact Filters */}
-                <div className="flex items-center gap-3 md:gap-6">
+                <div className="flex items-center gap-2 md:gap-3">
                   {/* Category Filter */}
-                  <div className="flex items-center gap-2 md:gap-3">
-                    <Filter className="w-5 h-5 md:w-6 md:h-6 text-gray-500" />
+                  <div className="flex items-center gap-1 md:gap-2">
+                    <Filter className="w-4 h-4 md:w-5 md:h-5 text-gray-500" />
                     <select
                       value={selectedCategory}
                       onChange={(e) => setSelectedCategory(e.target.value)}
-                      className="px-3 md:px-6 py-2 md:py-4 bg-gray-50 border-2 border-gray-200 rounded-xl md:rounded-2xl focus:border-teal-500 focus:outline-none focus:bg-white transition-all duration-300 shadow-sm font-medium text-gray-700 text-sm md:text-base min-w-[150px] md:min-w-[200px]"
+                      className="px-2 md:px-3 py-2 md:py-2.5 bg-gray-50 border border-gray-200 rounded-lg md:rounded-xl focus:border-teal-500 focus:outline-none focus:bg-white transition-all duration-300 shadow-sm font-medium text-gray-700 text-xs md:text-sm min-w-[120px] md:min-w-[160px]"
                     >
                       {categories.map(cat => (
                         <option key={cat.id} value={cat.id}>
@@ -826,33 +826,33 @@ const PoliPage = () => {
                   </div>
 
                   {/* View Toggle */}
-                  <div className="flex items-center bg-gray-100 rounded-xl md:rounded-2xl p-1 md:p-2 shadow-inner">
+                  <div className="flex items-center bg-gray-100 rounded-lg md:rounded-xl p-1 shadow-inner">
                     <button
                       onClick={() => setViewMode('grid')}
-                      className={`p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-300 ${
+                      className={`p-1.5 md:p-2 rounded-md md:rounded-lg transition-all duration-300 ${
                         viewMode === 'grid' 
                           ? 'bg-white text-teal-600 shadow-lg scale-105' 
                           : 'text-gray-500 hover:text-gray-700'
                       }`}
                     >
-                      <Grid className="w-5 h-5 md:w-6 md:h-6" />
+                      <Grid className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
                     <button
                       onClick={() => setViewMode('list')}
-                      className={`p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-300 ${
+                      className={`p-1.5 md:p-2 rounded-md md:rounded-lg transition-all duration-300 ${
                         viewMode === 'list' 
                           ? 'bg-white text-teal-600 shadow-lg scale-105' 
                           : 'text-gray-500 hover:text-gray-700'
                       }`}
                     >
-                      <List className="w-5 h-5 md:w-6 md:h-6" />
+                      <List className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
                   </div>
                 </div>
               </div>
 
               {/* Results Summary */}
-              <div className="flex items-center justify-between text-xs md:text-sm text-gray-600 mt-3 md:mt-4">
+              <div className="flex items-center justify-between text-xs md:text-sm text-gray-600 mt-2 md:mt-3">
                 <span>
                   Menampilkan {filteredServices.length} dari {poliServices.length} poli
                 </span>
@@ -864,10 +864,10 @@ const PoliPage = () => {
               </div>
 
               {/* Quick Filters */}
-              <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-200">
-                <div className="flex flex-wrap gap-2 md:gap-3">
-                  <div className="text-xs md:text-sm font-semibold text-gray-600 flex items-center mr-2 md:mr-4">
-                    <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2 text-teal-500" />
+              <div className="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-gray-200">
+                <div className="flex flex-wrap gap-1.5 md:gap-2">
+                  <div className="text-xs md:text-sm font-semibold text-gray-600 flex items-center mr-2 md:mr-3">
+                    <Sparkles className="w-3 h-3 md:w-4 md:h-4 mr-1 text-teal-500" />
                     Filter Cepat:
                   </div>
                   <button 
@@ -878,7 +878,7 @@ const PoliPage = () => {
                         setSearchTerm('unggulan');
                       }
                     }}
-                    className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 rounded-full text-xs md:text-sm font-medium hover:shadow-md transition-all duration-200 border border-amber-200"
+                    className="px-2 md:px-3 py-1 md:py-1.5 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-800 rounded-full text-xs font-medium hover:shadow-md transition-all duration-200 border border-amber-200"
                   >
                     ⭐ Unggulan
                   </button>
@@ -890,7 +890,7 @@ const PoliPage = () => {
                         setSearchTerm('populer');
                       }
                     }}
-                    className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-pink-100 to-rose-100 text-pink-800 rounded-full text-xs md:text-sm font-medium hover:shadow-md transition-all duration-200 border border-pink-200"
+                    className="px-2 md:px-3 py-1 md:py-1.5 bg-gradient-to-r from-pink-100 to-rose-100 text-pink-800 rounded-full text-xs font-medium hover:shadow-md transition-all duration-200 border border-pink-200"
                   >
                     🔥 Populer
                   </button>
@@ -902,7 +902,7 @@ const PoliPage = () => {
                         setSearchTerm('24/7');
                       }
                     }}
-                    className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 rounded-full text-xs md:text-sm font-medium hover:shadow-md transition-all duration-200 border border-green-200"
+                    className="px-2 md:px-3 py-1 md:py-1.5 bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 rounded-full text-xs font-medium hover:shadow-md transition-all duration-200 border border-green-200"
                   >
                     🕐 24/7
                   </button>
@@ -911,7 +911,7 @@ const PoliPage = () => {
                       setSearchTerm('');
                       setSelectedCategory('all');
                     }}
-                    className="px-3 md:px-4 py-1.5 md:py-2 bg-gray-100 text-gray-600 rounded-full text-xs md:text-sm font-medium hover:bg-gray-200 transition-colors duration-200"
+                    className="px-2 md:px-3 py-1 md:py-1.5 bg-gray-100 text-gray-600 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors duration-200"
                   >
                     Reset
                   </button>
