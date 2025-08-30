@@ -171,7 +171,7 @@ const BeritaPage = () => {
         </div>
 
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-center space-y-4">
             <Link href="/" className="group flex items-center cursor-pointer">
               <div className="bg-white p-2 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
                 <img
@@ -183,23 +183,14 @@ const BeritaPage = () => {
               </div>
             </Link>
 
-            {/* Navigation */}
-            <nav className="hidden md:flex items-center space-x-4">
+            {/* Navigation - Below the logo */}
+            <nav className="flex items-center space-x-4">
               <Link href="/" className="text-gray-700 hover:text-teal-600 transition-colors duration-200 font-medium">
                 Home
               </Link>
               <div className="h-6 w-px bg-gray-300"></div>
               <span className="text-teal-600 font-semibold">Berita</span>
             </nav>
-
-            <button
-              className="md:hidden p-3 rounded-xl bg-gray-50 hover:bg-teal-50 transition-colors duration-200 border border-gray-200"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
           </div>
         </div>
       </motion.header>
