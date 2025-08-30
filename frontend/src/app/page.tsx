@@ -1202,16 +1202,16 @@ const HospitalWebsite = () => {
         
         <div className="container mx-auto px-4 relative z-10">
           {/* Centered Header */}
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="inline-block px-4 py-2 bg-teal-100 text-teal-700 rounded-full text-sm font-semibold uppercase tracking-wide">
+          <div className="text-center max-w-3xl mx-auto mb-8 md:mb-16">
+            <span className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-teal-100 text-teal-700 rounded-full text-xs md:text-sm font-semibold uppercase tracking-wide">
               Tentang Kami
             </span>
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mt-4">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mt-3 md:mt-4">
               Memberikan Pelayanan Kesehatan{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600">Terbaik</span>{' '}
               Untuk Anda
             </h2>
-            <p className="text-xl text-gray-600 leading-relaxed mt-4">
+            <p className="text-base md:text-xl text-gray-600 leading-relaxed mt-3 md:mt-4 px-4 md:px-0">
               RS Bhayangkara Mohammad Hasan Palembang telah melayani masyarakat dengan dedikasi tinggi dan komitmen untuk memberikan pelayanan kesehatan terbaik.
             </p>
           </div>
@@ -1221,20 +1221,20 @@ const HospitalWebsite = () => {
             <div className="space-y-8">
 
               {/* Main Description Card */}
-              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-blue-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="bg-white rounded-2xl p-4 md:p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div className="space-y-4 md:space-y-6">
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-teal-500 to-blue-500 rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
+                      <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h4M9 7h6m-6 4h6m-6 4h6m-6 4h6" />
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3">Tentang RS Bhayangkara Palembang</h3>
-                      <p className="text-gray-600 leading-relaxed mb-4">
-                        Kami melayani dengan Ikhlas dan Profesional, selain memberikan pelayanan kesehatan kepada Anggota Polri, RS Bhayangkara Palembang juga melayani pasien umum BPJS. Didukung oleh tenaga kesehatan yang Profesional, Terlatih dan Berpengalaman.
+                      <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2 md:mb-3">Tentang RS Bhayangkara Palembang</h3>
+                      <p className="text-sm md:text-base text-gray-600 leading-relaxed mb-3 md:mb-4">
+                        Kami melayani dengan Ikhlas dan Profesional, memberikan pelayanan kesehatan kepada Anggota Polri dan pasien umum BPJS.
                       </p>
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-sm md:text-base text-gray-600 leading-relaxed hidden md:block">
                         RS Bhayangkara Palembang salah satu Rumah Sakit yang memiliki pelayanan hemodialisa anak dan dewasa. Dukungan Peralatan canggih terkini dan terakreditasi seperti CT Scan, Ruang operasi dengan Sistem MOT (Modular Operating System), serta penunjang lainnya seperti Laboratium PCR yang tercanggih.
                       </p>
                     </div>
@@ -1242,10 +1242,10 @@ const HospitalWebsite = () => {
                   
                   <a 
                     href="/tentang-kami"
-                    className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:from-teal-700 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl group"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-600 to-blue-600 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl font-semibold hover:from-teal-700 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl group text-sm md:text-base"
                   >
                     Selengkapnya
-                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </a>
@@ -1587,8 +1587,8 @@ const HospitalWebsite = () => {
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">Temukan informasi terbaru seputar layanan dan kegiatan RS Bhayangkara</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-            {news.slice(0, 3).map((article) => (
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+            {news.slice(0, 6).map((article) => (
               <div 
                 key={article.id}
                 className="group relative"
@@ -1612,10 +1612,10 @@ const HospitalWebsite = () => {
                       </div>
                     </div>
                     <div className="p-3 md:p-6 relative bg-gradient-to-b from-white to-gray-50/50">
-                      <h3 className="font-bold text-gray-800 text-sm md:text-lg mb-2 md:mb-3 group-hover:text-teal-600 transition-colors leading-snug">
+                      <h3 className="font-bold text-gray-800 text-sm md:text-lg mb-2 md:mb-3 group-hover:text-teal-600 transition-colors leading-snug line-clamp-2">
                         {article.title}
                       </h3>
-                      <p className="text-gray-600 text-xs md:text-sm mb-3 md:mb-4 line-clamp-2">{article.excerpt}</p>
+                      <p className="text-gray-600 text-xs md:text-sm mb-3 md:mb-4 line-clamp-2 hidden md:block">{article.excerpt}</p>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 md:gap-3 text-xs text-gray-500">
                           <span className="hidden md:inline">{article.author}</span>
@@ -1662,38 +1662,38 @@ const HospitalWebsite = () => {
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">Apa kata mereka tentang pelayanan RS Bhayangkara</p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
             {testimonials.map((testimonial) => (
               <div 
                 key={`testimonial-${testimonial.name}-${testimonial.role}`}
                 className="group relative"
               >
                 <div className="absolute -inset-2 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl blur opacity-20 group-hover:opacity-30 transition-all duration-300"></div>
-                <div className="relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-8">
-                  <div className="mb-6">
+                <div className="relative bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-4 md:p-8">
+                  <div className="mb-4 md:mb-6">
                     <div className="flex items-center space-x-1">
                       {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={`star-${testimonial.name}-${i}`} className="w-5 h-5 text-yellow-400 fill-current" />
+                        <Star key={`star-${testimonial.name}-${i}`} className="w-3 h-3 md:w-5 md:h-5 text-yellow-400 fill-current" />
                       ))}
                     </div>
                   </div>
                   <blockquote className="relative">
-                    <div className="absolute -top-4 -left-2 text-teal-200 opacity-40 transform scale-150">
+                    <div className="absolute -top-4 -left-2 text-teal-200 opacity-40 transform scale-150 hidden md:block">
                       "
                     </div>
-                    <p className="text-gray-600 relative z-10 mb-6 leading-relaxed">
+                    <p className="text-gray-600 relative z-10 mb-4 md:mb-6 leading-relaxed text-xs md:text-base line-clamp-3 md:line-clamp-none">
                       {testimonial.message}
                     </p>
                   </blockquote>
-                  <div className="flex items-center mt-6 pt-6 border-t border-gray-100">
+                  <div className="flex items-center mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-100">
                     <div className="flex-shrink-0">
-                      <div className="w-12 h-12 bg-gradient-to-br from-teal-400/80 to-blue-500/80 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold text-lg">{testimonial.name.charAt(0)}</span>
+                      <div className="w-8 h-8 md:w-12 md:h-12 bg-gradient-to-br from-teal-400/80 to-blue-500/80 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-sm md:text-lg">{testimonial.name.charAt(0)}</span>
                       </div>
                     </div>
-                    <div className="ml-4">
-                      <h4 className="text-gray-900 font-semibold group-hover:text-teal-600 transition-colors">{testimonial.name}</h4>
-                      <p className="text-teal-600 text-sm">{testimonial.role}</p>
+                    <div className="ml-2 md:ml-4">
+                      <h4 className="text-gray-900 font-semibold group-hover:text-teal-600 transition-colors text-sm md:text-base">{testimonial.name}</h4>
+                      <p className="text-teal-600 text-xs md:text-sm">{testimonial.role}</p>
                     </div>
                   </div>
                 </div>
