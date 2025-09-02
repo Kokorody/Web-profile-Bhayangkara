@@ -1534,8 +1534,8 @@ const HospitalWebsite = () => {
             <div className="absolute -bottom-8 -left-4 w-24 h-24 bg-blue-100 rounded-full opacity-50 blur-xl"></div>
           </div>
           
-          {/* Doctors Grid with Animation - 2x2 Layout */}
-          <div className="grid grid-cols-2 gap-6 max-w-4xl mx-auto mb-6">
+          {/* Doctors Grid with Animation - Responsive Layout */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto mb-6">
             {displayedDoctors.slice(0, 4).map((doctor, index) => {
               const isAvailable = isCurrentlyAvailable(doctor);
               
@@ -1573,10 +1573,10 @@ const HospitalWebsite = () => {
                     </div>
                     
                     {/* Doctor Info */}
-                    <div className="p-3 relative bg-gradient-to-b from-white to-gray-50/50">
-                      <div className="space-y-1.5">
+                    <div className="p-4 sm:p-3 relative bg-gradient-to-b from-white to-gray-50/50">
+                      <div className="space-y-2 sm:space-y-1.5">
                         <div className="flex items-start justify-between">
-                          <h3 className="font-bold text-gray-800 text-sm leading-tight group-hover:text-teal-600 transition-colors line-clamp-2">
+                          <h3 className="font-bold text-gray-800 text-base sm:text-sm leading-tight group-hover:text-teal-600 transition-colors line-clamp-2">
                             {doctor.name}
                           </h3>
                           <div className="flex items-center gap-0.5 ml-2">
@@ -1586,48 +1586,50 @@ const HospitalWebsite = () => {
                           </div>
                         </div>
                         
-                        <div className="bg-gradient-to-r from-teal-50 to-blue-50 rounded-md p-1.5 border border-teal-100">
-                          <p className="text-teal-600 text-xs font-semibold mb-0.5">{doctor.specialization}</p>
-                          <p className="text-gray-600 text-xs">{doctor.role}</p>
+                        <div className="bg-gradient-to-r from-teal-50 to-blue-50 rounded-md p-2 sm:p-1.5 border border-teal-100">
+                          <p className="text-teal-600 text-sm sm:text-xs font-semibold mb-0.5">{doctor.specialization}</p>
+                          <p className="text-gray-600 text-sm sm:text-xs">{doctor.role}</p>
                         </div>
                         
                         {/* Additional Info */}
-                        <div className="grid grid-cols-2 gap-1.5 pt-1.5 border-t border-gray-100">
-                          <div className="flex items-center gap-1">
-                            <div className="w-3 h-3 bg-blue-100 rounded-full flex items-center justify-center">
-                              <Clock className="w-1.5 h-1.5 text-blue-600" />
+                        <div className="space-y-2 sm:space-y-1.5 pt-2 sm:pt-1.5 border-t border-gray-100">
+                          <div className="flex items-start gap-2 sm:gap-1">
+                            <div className="w-4 h-4 sm:w-3 sm:h-3 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-0">
+                              <Clock className="w-2 h-2 sm:w-1.5 sm:h-1.5 text-blue-600" />
                             </div>
-                            <div>
-                              <p className="text-xs text-gray-500">Pengalaman</p>
-                              <p className="text-xs font-semibold text-gray-700">{doctor.experience}</p>
+                            <div className="min-w-0 flex-1">
+                              <p className="text-sm sm:text-xs text-gray-500">Pengalaman</p>
+                              <p className="text-sm sm:text-xs font-semibold text-gray-700">{doctor.experience}</p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-1">
-                            <div className="w-3 h-3 bg-green-100 rounded-full flex items-center justify-center">
-                              <Calendar className="w-1.5 h-1.5 text-green-600" />
+                          <div className="flex items-start gap-2 sm:gap-1">
+                            <div className="w-4 h-4 sm:w-3 sm:h-3 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 sm:mt-0">
+                              <Calendar className="w-2 h-2 sm:w-1.5 sm:h-1.5 text-green-600" />
                             </div>
-                            <div>
-                              <p className="text-xs text-gray-500">Jadwal</p>
-                              <p className="text-xs font-semibold text-gray-700 line-clamp-1">{doctor.schedule}</p>
+                            <div className="min-w-0 flex-1">
+                              <p className="text-sm sm:text-xs text-gray-500">Jadwal</p>
+                              <p className="text-sm sm:text-xs font-semibold text-gray-700 break-words leading-relaxed">
+                                {doctor.schedule}
+                              </p>
                             </div>
                           </div>
                         </div>
                       </div>
                       
                       {/* Action Button */}
-                      <div className="mt-2">
+                      <div className="mt-3 sm:mt-2">
                         <Link
                           href={`/dokter/profile/${doctor.id}`}
-                          className="group relative w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white py-1.5 px-2 rounded-md text-xs font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-md hover:shadow-lg overflow-hidden block text-center"
+                          className="group relative w-full bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 text-white py-2.5 px-3 sm:py-1.5 sm:px-2 rounded-md text-sm sm:text-xs font-semibold transition-all duration-300 transform hover:scale-[1.02] shadow-md hover:shadow-lg overflow-hidden block text-center"
                         >
                           {/* Background shine effect */}
                           <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
                           
                           {/* Button content */}
-                          <div className="relative flex items-center justify-center gap-1">
-                            <Users className="w-2.5 h-2.5 transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
+                          <div className="relative flex items-center justify-center gap-1.5 sm:gap-1">
+                            <Users className="w-3.5 h-3.5 sm:w-2.5 sm:h-2.5 transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
                             <span className="font-medium tracking-wide">Lihat Profile</span>
-                            <ChevronRight className="w-2.5 h-2.5 transform group-hover:translate-x-1 transition-transform duration-300" />
+                            <ChevronRight className="w-3.5 h-3.5 sm:w-2.5 sm:h-2.5 transform group-hover:translate-x-1 transition-transform duration-300" />
                           </div>
                           
                           {/* Pulse effect on hover */}
