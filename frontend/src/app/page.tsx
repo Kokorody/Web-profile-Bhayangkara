@@ -1085,24 +1085,24 @@ const HospitalWebsite = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,_rgba(20,184,166,0.05)_0%,_transparent_50%)]"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
             {/* News Card */}
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-xl blur opacity-25 group-hover:opacity-75 transition-all duration-500"></div>
-              <div className="relative bg-gradient-to-br from-teal-600 to-teal-700 text-white p-3 md:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] min-h-[200px] md:min-h-[280px] flex flex-col">
-                <div className="flex items-center mb-2 md:mb-4">
-                  <div className="w-6 h-6 md:w-10 md:h-10 bg-white/20 rounded-lg flex items-center justify-center mr-2 md:mr-3">
-                    <svg className="w-3 h-3 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="relative bg-gradient-to-br from-teal-600 to-teal-700 text-white p-4 md:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] min-h-[180px] sm:min-h-[200px] md:min-h-[280px] flex flex-col">
+                <div className="flex items-center mb-3 md:mb-4">
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-white/20 rounded-lg flex items-center justify-center mr-3">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                     </svg>
                   </div>
-                  <h3 className="text-sm md:text-xl font-bold">Berita Klinik</h3>
+                  <h3 className="text-base md:text-xl font-bold">Berita Klinik</h3>
                 </div>
-                <p className="text-xs md:text-sm opacity-90 mb-3 md:mb-6 flex-grow leading-relaxed">
+                <p className="text-sm md:text-sm opacity-90 mb-4 md:mb-6 flex-grow leading-relaxed">
                   Kunjungan Kerja Dinkes Kota Palembang dan dinkes Provinsi ke Rumah Sakit Bhayangkara
                 </p>
-                <div className="text-xs opacity-75 mb-2 md:mb-4">28 Maret 2021</div>
-                <button className="bg-white text-teal-600 px-2 py-1 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-semibold hover:bg-gray-50 transition-colors duration-300 self-start">
+                <div className="text-xs opacity-75 mb-3 md:mb-4">28 Maret 2021</div>
+                <button className="bg-white text-teal-600 px-3 py-2 md:px-4 md:py-2 rounded-lg text-sm md:text-sm font-semibold hover:bg-gray-50 transition-colors duration-300 self-start">
                   Baca Selengkapnya
                 </button>
               </div>
@@ -1111,14 +1111,14 @@ const HospitalWebsite = () => {
             {/* Doctor Card */}
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-teal-500 rounded-xl blur opacity-20 group-hover:opacity-40 transition-all duration-500"></div>
-              <div className="relative bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] min-h-[280px] flex flex-col border border-gray-100">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-blue-500 rounded-lg flex items-center justify-center mr-3">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="relative bg-white p-4 md:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] min-h-[180px] sm:min-h-[200px] md:min-h-[280px] flex flex-col border border-gray-100">
+                <div className="flex items-center mb-3 md:mb-4">
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-teal-500 to-blue-500 rounded-lg flex items-center justify-center mr-3">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 group-hover:text-teal-600 transition-colors">Dokter</h3>
+                  <h3 className="text-base md:text-xl font-bold text-gray-800 group-hover:text-teal-600 transition-colors">Dokter</h3>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed flex-grow">
                   Dokter terbaik di Bhayangkara selalu memberikan profesionalisme, memberikan pelayanan medis yang berkualitas, serta penuh perhatian terhadap kesejahteraan.
@@ -1135,14 +1135,14 @@ const HospitalWebsite = () => {
             {/* 24 Hour Service Card */}
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-green-500 to-teal-500 rounded-xl blur opacity-20 group-hover:opacity-40 transition-all duration-500"></div>
-              <div className="relative bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] min-h-[280px] flex flex-col border border-gray-100">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-teal-500 rounded-lg flex items-center justify-center mr-3">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="relative bg-white p-4 md:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] min-h-[180px] sm:min-h-[200px] md:min-h-[280px] flex flex-col border border-gray-100">
+                <div className="flex items-center mb-3 md:mb-4">
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-green-500 to-teal-500 rounded-lg flex items-center justify-center mr-3">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 group-hover:text-green-600 transition-colors">Layanan 24 Jam</h3>
+                  <h3 className="text-base md:text-xl font-bold text-gray-800 group-hover:text-green-600 transition-colors">Layanan 24 Jam</h3>
                 </div>
                 <p className="text-gray-600 text-sm leading-relaxed flex-grow">
                   Layanan 24 jam di Bhayangkara hadir untuk memberikan perawatan medis terbaik kapan saja, memastikan pasien mendapatkan bantuan secepat mungkin.
@@ -1162,30 +1162,30 @@ const HospitalWebsite = () => {
             {/* Operating Hours Card */}
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl blur opacity-20 group-hover:opacity-40 transition-all duration-500"></div>
-              <div className="relative bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] min-h-[280px] flex flex-col border border-gray-100">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center mr-3">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="relative bg-white p-4 md:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] min-h-[180px] sm:min-h-[200px] md:min-h-[280px] flex flex-col border border-gray-100">
+                <div className="flex items-center mb-3 md:mb-4">
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center mr-3">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">Jam Buka</h3>
+                  <h3 className="text-base md:text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">Jam Buka</h3>
                 </div>
-                <div className="text-gray-600 text-sm space-y-3 flex-grow">
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="font-medium">Senin - Jumat</span>
-                    <span className="text-blue-600 font-semibold">8:00 - 17:00</span>
+                <div className="text-gray-600 text-sm space-y-2 md:space-y-3 flex-grow">
+                  <div className="flex justify-between items-center py-1 md:py-2 border-b border-gray-100">
+                    <span className="font-medium text-xs md:text-sm">Senin - Jumat</span>
+                    <span className="text-blue-600 font-semibold text-xs md:text-sm">8:00 - 17:00</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                    <span className="font-medium">Sabtu</span>
-                    <span className="text-blue-600 font-semibold">9:30 - 17:30</span>
+                  <div className="flex justify-between items-center py-1 md:py-2 border-b border-gray-100">
+                    <span className="font-medium text-xs md:text-sm">Sabtu</span>
+                    <span className="text-blue-600 font-semibold text-xs md:text-sm">9:30 - 17:30</span>
                   </div>
-                  <div className="flex justify-between items-center py-2">
-                    <span className="font-medium">Minggu</span>
-                    <span className="text-blue-600 font-semibold">9:30 - 15:00</span>
+                  <div className="flex justify-between items-center py-1 md:py-2">
+                    <span className="font-medium text-xs md:text-sm">Minggu</span>
+                    <span className="text-blue-600 font-semibold text-xs md:text-sm">9:30 - 15:00</span>
                   </div>
                 </div>
-                <div className="mt-4 bg-gradient-to-r from-blue-50 to-purple-50 p-3 rounded-lg">
+                <div className="mt-3 md:mt-4 bg-gradient-to-r from-blue-50 to-purple-50 p-2 md:p-3 rounded-lg">
                   <div className="flex items-center text-blue-600 text-xs font-medium">
                     <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse mr-2"></div>
                     <span>Layanan Darurat 24/7 Tersedia</span>
