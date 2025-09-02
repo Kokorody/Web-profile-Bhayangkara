@@ -20,6 +20,7 @@ const HospitalWebsite = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isFasilitasOpen, setIsFasilitasOpen] = useState(false);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+  const [isFloatingMenuOpen, setIsFloatingMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
@@ -181,7 +182,7 @@ const HospitalWebsite = () => {
     };
   }, [isMenuOpen]);
 
-  // Handle escape key to close mobile menu
+  // Handle escape key to close menus
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -191,12 +192,15 @@ const HospitalWebsite = () => {
         if (isChatbotOpen) {
           setIsChatbotOpen(false);
         }
+        if (isFloatingMenuOpen) {
+          setIsFloatingMenuOpen(false);
+        }
       }
     };
 
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [isMenuOpen, isChatbotOpen]);
+  }, [isMenuOpen, isChatbotOpen, isFloatingMenuOpen]);
 
   // Simplified intersection observer for better performance
   useLayoutEffect(() => {
@@ -1037,43 +1041,161 @@ const HospitalWebsite = () => {
           <div className="text-white/60 text-xs mt-2 text-center group-hover:text-white transition-colors duration-300">Scroll</div>
         </div>
         
-        {/* Floating action buttons */}
-        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-30 space-y-4">
-          {/* Primary: Direct to new tab - Most reliable */}
-          <button 
-            onClick={() => window.open('https://tmed.dika.live/', '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes')}
-            className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group relative"
-            title="Chat dengan Asisten Kesehatan (Rekomendasi)"
-          >
-            <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.126-.9L3 20l1.9-4.874A9.863 9.863 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
-            </svg>
-            {/* Recommended badge */}
-            <div className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center">
-              <span className="text-xs font-bold text-yellow-900">★</span>
+        {/* Modern Collapsible Floating Menu */}
+        <div className="fixed right-4 md:right-6 top-1/2 -translate-y-1/2 z-30">
+          {/* Desktop - Always expanded */}
+          <div className="hidden md:flex flex-col space-y-4">
+            {/* Primary: Direct to new tab - Most reliable */}
+            <button 
+              onClick={() => window.open('https://tmed.dika.live/', '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes')}
+              className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group relative"
+              title="Chat dengan Asisten Kesehatan (Rekomendasi)"
+            >
+              <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.126-.9L3 20l1.9-4.874A9.863 9.863 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
+              </svg>
+              <div className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center">
+                <span className="text-xs font-bold text-yellow-900">★</span>
+              </div>
+            </button>
+            
+            {/* Secondary: Modal popup */}
+            <button 
+              onClick={() => setIsChatbotOpen(true)}
+              className="w-14 h-14 bg-gradient-to-br from-teal-500 to-blue-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group relative opacity-80 hover:opacity-100"
+              title="Chat dalam Modal (Mungkin terbatas)"
+            >
+              <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-orange-500 rounded-full flex items-center justify-center">
+                <span className="text-xs font-bold text-white">!</span>
+              </div>
+            </button>
+            
+            {/* Emergency contact */}
+            <button className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group animate-pulse">
+              <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Mobile/Tablet - Collapsible Menu */}
+          <div className="md:hidden relative">
+            {/* Expanded Menu Items - Appear from bottom to top */}
+            <div className={`absolute bottom-16 right-0 flex flex-col-reverse space-y-reverse space-y-3 transition-all duration-500 ease-in-out transform ${
+              isFloatingMenuOpen 
+                ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
+                : 'opacity-0 translate-y-8 scale-90 pointer-events-none'
+            }`}>
+              {/* Emergency contact - Appears first (bottom) */}
+              <button 
+                onClick={() => {
+                  setIsFloatingMenuOpen(false);
+                  // Add emergency action here
+                }}
+                className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-full shadow-lg flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group animate-pulse"
+                title="Hubungi Darurat"
+              >
+                <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </button>
+              
+              {/* Modal chat - Appears second (middle) */}
+              <button 
+                onClick={() => {
+                  setIsFloatingMenuOpen(false);
+                  setIsChatbotOpen(true);
+                }}
+                className="w-12 h-12 bg-gradient-to-br from-teal-500 to-blue-500 rounded-full shadow-lg flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group relative opacity-90"
+                title="Chat Modal"
+              >
+                <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-orange-500 rounded-full flex items-center justify-center">
+                  <span className="text-xs font-bold text-white">!</span>
+                </div>
+              </button>
+              
+              {/* Primary chat - Appears last (top) */}
+              <button 
+                onClick={() => {
+                  setIsFloatingMenuOpen(false);
+                  window.open('https://tmed.dika.live/', '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+                }}
+                className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-500 rounded-full shadow-lg flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group relative"
+                title="Chat Telemedicine"
+              >
+                <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.126-.9L3 20l1.9-4.874A9.863 9.863 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
+                </svg>
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
+                  <span className="text-xs font-bold text-yellow-900">★</span>
+                </div>
+              </button>
             </div>
-          </button>
-          
-          {/* Secondary: Modal popup */}
-          <button 
-            onClick={() => setIsChatbotOpen(true)}
-            className="w-14 h-14 bg-gradient-to-br from-teal-500 to-blue-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group relative opacity-80 hover:opacity-100"
-            title="Chat dalam Modal (Mungkin terbatas)"
-          >
-            <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-orange-500 rounded-full flex items-center justify-center">
-              <span className="text-xs font-bold text-white">!</span>
-            </div>
-          </button>
-          
-          {/* Emergency contact */}
-          <button className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center text-white hover:scale-110 transition-all duration-300 group animate-pulse">
-            <svg className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-            </svg>
-          </button>
+
+            {/* Main Toggle Button */}
+            <button
+              onClick={() => setIsFloatingMenuOpen(!isFloatingMenuOpen)}
+              className={`relative w-14 h-14 rounded-full shadow-xl flex items-center justify-center text-white transition-all duration-500 transform hover:scale-110 ${
+                isFloatingMenuOpen 
+                  ? 'bg-gradient-to-br from-gray-600 to-gray-700 rotate-45' 
+                  : 'bg-gradient-to-br from-emerald-500 to-green-500 rotate-0'
+              }`}
+              title={isFloatingMenuOpen ? 'Tutup Menu' : 'Buka Menu Bantuan'}
+            >
+              {/* Animated Icon */}
+              <div className="relative w-6 h-6">
+                {/* Chat Icon - Visible when closed */}
+                <svg 
+                  className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${
+                    isFloatingMenuOpen ? 'opacity-0 rotate-180 scale-50' : 'opacity-100 rotate-0 scale-100'
+                  }`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.126-.9L3 20l1.9-4.874A9.863 9.863 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9z" />
+                </svg>
+                
+                {/* Close Icon - Visible when open */}
+                <svg 
+                  className={`absolute inset-0 w-6 h-6 transition-all duration-300 ${
+                    isFloatingMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-180 scale-50'
+                  }`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </div>
+
+              {/* Notification Badge - Only show when closed */}
+              <div className={`absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center transition-all duration-300 ${
+                isFloatingMenuOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
+              }`}>
+                <span className="text-xs font-bold text-yellow-900">3</span>
+              </div>
+
+              {/* Pulse Animation Ring - Only show when closed */}
+              <div className={`absolute inset-0 rounded-full bg-emerald-400 transition-all duration-300 ${
+                isFloatingMenuOpen ? 'opacity-0 scale-100' : 'opacity-30 scale-110 animate-ping'
+              }`}></div>
+            </button>
+
+            {/* Backdrop for closing menu when clicking outside */}
+            {isFloatingMenuOpen && (
+              <div 
+                className="fixed inset-0 bg-transparent -z-10"
+                onClick={() => setIsFloatingMenuOpen(false)}
+              />
+            )}
+          </div>
         </div>
       </section>
 
