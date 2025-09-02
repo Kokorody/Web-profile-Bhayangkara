@@ -297,7 +297,8 @@ const HospitalWebsite = () => {
 
         {/* Simplified Main Header */}
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          {/* Logo and Mobile Menu Button Row */}
+          <div className="flex items-center justify-between lg:justify-center">
             {/* Simplified Logo Section */}
             <div className="group flex items-center cursor-pointer">
               <div className="bg-white p-2 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
@@ -313,8 +314,28 @@ const HospitalWebsite = () => {
               </div>
             </div>
 
-            {/* Simplified Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-2">
+            {/* Simplified Mobile Menu Button - Only visible on tablet and mobile */}
+            <button
+              className="lg:hidden p-3 rounded-xl bg-gray-50 hover:bg-teal-50 transition-colors duration-200 border border-gray-200"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <div className="w-6 h-6 relative">
+                <div className={`absolute top-1 left-0 w-6 h-0.5 bg-gray-600 transition-transform duration-200 ${
+                  isMenuOpen ? 'rotate-45 translate-y-2' : ''
+                }`}></div>
+                <div className={`absolute top-3 left-0 w-6 h-0.5 bg-gray-600 transition-opacity duration-200 ${
+                  isMenuOpen ? 'opacity-0' : ''
+                }`}></div>
+                <div className={`absolute top-5 left-0 w-6 h-0.5 bg-gray-600 transition-transform duration-200 ${
+                  isMenuOpen ? '-rotate-45 -translate-y-2' : ''
+                }`}></div>
+              </div>
+            </button>
+          </div>
+
+          {/* Desktop Navigation - Below Logo on large screens */}
+          <div className="hidden lg:flex justify-center mt-4">
+            <nav className="flex items-center space-x-2">
               {/* HOME with Dropdown */}
               <div className="relative group">
                 <button
@@ -535,29 +556,11 @@ const HospitalWebsite = () => {
                 </span>
               </button>
             </nav>
-
-            {/* Simplified Mobile Menu Button */}
-            <button
-              className="md:hidden p-3 rounded-xl bg-gray-50 hover:bg-teal-50 transition-colors duration-200 border border-gray-200"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <div className="w-6 h-6 relative">
-                <div className={`absolute top-1 left-0 w-6 h-0.5 bg-gray-600 transition-transform duration-200 ${
-                  isMenuOpen ? 'rotate-45 translate-y-2' : ''
-                }`}></div>
-                <div className={`absolute top-3 left-0 w-6 h-0.5 bg-gray-600 transition-opacity duration-200 ${
-                  isMenuOpen ? 'opacity-0' : ''
-                }`}></div>
-                <div className={`absolute top-5 left-0 w-6 h-0.5 bg-gray-600 transition-transform duration-200 ${
-                  isMenuOpen ? '-rotate-45 -translate-y-2' : ''
-                }`}></div>
-              </div>
-            </button>
           </div>
         </div>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden fixed inset-x-0 top-24 z-50 transition-all duration-300 ${
+        <div className={`lg:hidden fixed inset-x-0 top-24 z-50 transition-all duration-300 ${
           isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}>
           <div className="bg-white shadow-xl border border-gray-100 mx-4 rounded-2xl overflow-hidden">
